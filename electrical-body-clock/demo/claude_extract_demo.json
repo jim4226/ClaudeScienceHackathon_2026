@@ -1,0 +1,249 @@
+[
+ {
+  "ecg_id": 11,
+  "report": "sinus arrhythmie sonst normales ekg",
+  "translation": "Sinus arrhythmia, otherwise normal ECG",
+  "claude_flags": {
+   "atrial": 0,
+   "av_conduction": 0,
+   "ventricular_conduction": 0,
+   "ischemia_stt": 0,
+   "myocardial_infarction": 0
+  },
+  "gt": {
+   "atrial": 1,
+   "av_conduction": 0,
+   "ventricular_conduction": 0,
+   "ischemia_stt": 0,
+   "myocardial_infarction": 0
+  }
+ },
+ {
+  "ecg_id": 17,
+  "report": "vorhof:hf  280 tachykardes vorhofflimmern ueberdrehter linkstyp qrs(t) abnormal    inferiorer infarkt     alter unbest.",
+  "translation": "Atrium: heart failure, 280 tachycardic atrial fibrillation, left axis deviation, QRS(T) abnormal, inferior infarct, age indeterminate.",
+  "claude_flags": {
+   "atrial": 1,
+   "av_conduction": 0,
+   "ventricular_conduction": 1,
+   "ischemia_stt": 1,
+   "myocardial_infarction": 1
+  },
+  "gt": {
+   "atrial": 1,
+   "av_conduction": 0,
+   "ventricular_conduction": 0,
+   "ischemia_stt": 0,
+   "myocardial_infarction": 0
+  }
+ },
+ {
+  "ecg_id": 32,
+  "report": "sinusrhythmus rechtstyp linksposteriorer hemiblock",
+  "translation": "Sinus rhythm, right axis deviation, left posterior fascicular block",
+  "claude_flags": {
+   "atrial": 0,
+   "av_conduction": 0,
+   "ventricular_conduction": 1,
+   "ischemia_stt": 0,
+   "myocardial_infarction": 0
+  },
+  "gt": {
+   "atrial": 0,
+   "av_conduction": 1,
+   "ventricular_conduction": 0,
+   "ischemia_stt": 0,
+   "myocardial_infarction": 0
+  }
+ },
+ {
+  "ecg_id": 41,
+  "report": "sinusrhythmus ueberdrehter linkstyp linksanteriorer hemiblock",
+  "translation": "Sinus rhythm, leftward axis deviation, left anterior fascicular block",
+  "claude_flags": {
+   "atrial": 0,
+   "av_conduction": 0,
+   "ventricular_conduction": 1,
+   "ischemia_stt": 0,
+   "myocardial_infarction": 0
+  },
+  "gt": {
+   "atrial": 0,
+   "av_conduction": 1,
+   "ventricular_conduction": 0,
+   "ischemia_stt": 0,
+   "myocardial_infarction": 0
+  }
+ },
+ {
+  "ecg_id": 45,
+  "report": "sinusrhythmus unvollst\u00c4ndiger rechtsschenkelblock sonst normales ekg",
+  "translation": "Sinus rhythm, incomplete right bundle branch block, otherwise normal ECG",
+  "claude_flags": {
+   "atrial": 0,
+   "av_conduction": 0,
+   "ventricular_conduction": 1,
+   "ischemia_stt": 0,
+   "myocardial_infarction": 0
+  },
+  "gt": {
+   "atrial": 0,
+   "av_conduction": 0,
+   "ventricular_conduction": 1,
+   "ischemia_stt": 0,
+   "myocardial_infarction": 0
+  }
+ },
+ {
+  "ecg_id": 52,
+  "report": "sinusrhythmus unvollst\u00c4ndiger rechtsschenkelblock m\u00c4ssige amplitudenkriterien f#r linkshypertrophie",
+  "translation": "Sinus rhythm, incomplete right bundle branch block, moderate amplitude criteria for left ventricular hypertrophy",
+  "claude_flags": {
+   "atrial": 0,
+   "av_conduction": 0,
+   "ventricular_conduction": 1,
+   "ischemia_stt": 0,
+   "myocardial_infarction": 0
+  },
+  "gt": {
+   "atrial": 0,
+   "av_conduction": 0,
+   "ventricular_conduction": 1,
+   "ischemia_stt": 0,
+   "myocardial_infarction": 0
+  }
+ },
+ {
+  "ecg_id": 8,
+  "report": "sinusrhythmus linkstyp qrs(t) abnormal    inferiorer infarkt     alter unbest.",
+  "translation": "Sinus rhythm, left axis deviation, QRS(T) abnormal. Inferior infarction, age indeterminate.",
+  "claude_flags": {
+   "atrial": 0,
+   "av_conduction": 0,
+   "ventricular_conduction": 1,
+   "ischemia_stt": 0,
+   "myocardial_infarction": 1
+  },
+  "gt": {
+   "atrial": 0,
+   "av_conduction": 0,
+   "ventricular_conduction": 0,
+   "ischemia_stt": 0,
+   "myocardial_infarction": 1
+  }
+ },
+ {
+  "ecg_id": 39,
+  "report": "sinusrhythmus linkstyp qrs(t) abnormal    inferiorer myokardschaden nicht auszuschliessen qt-verl\u00c4ngerung cordichin: 2-1-1 jetzt konstant sinusrhythmus g novodigal 0,2  1x1 tensobon :12,5 mg (chnidinspiegel:3,4(2,0-5,0),digoxinspiegel:0,62(0,5-2) 2x unter",
+  "translation": "Sinus rhythm, left axis deviation, QRS(T) abnormal. Inferior myocardial damage cannot be excluded. QT prolongation. Cordichin: 2-1-1, now constant. Sinus rhythm good. Novodigal 0.2 1\u00d71. Tensobon 12.5 mg. Quinidine level: 3.4 (range 2.0\u20135.0), digoxin level: 0.62 (range 0.5\u20132.0), 2\u00d7 under[dose/threshold].",
+  "claude_flags": {
+   "atrial": 0,
+   "av_conduction": 0,
+   "ventricular_conduction": 0,
+   "ischemia_stt": 1,
+   "myocardial_infarction": 1
+  },
+  "gt": {
+   "atrial": 0,
+   "av_conduction": 0,
+   "ventricular_conduction": 0,
+   "ischemia_stt": 1,
+   "myocardial_infarction": 1
+  }
+ },
+ {
+  "ecg_id": 26,
+  "report": "sinusrhythmus verdacht auf p-sinistrocardiale linkstyp unspezifisches abnormales t qt-verl\u00c4ngerung zweiter tag 3x2 cordichin erfolgreiche cardioversion von vorhofflattern (novodigal 0,2 1x1)",
+  "translation": "Sinus rhythm, suspected left-axis deviation (P-sinistrocardia, left-type), nonspecific abnormal T wave, QT prolongation. Second day, 3\u00d72 Cordichin. Successful cardioversion of atrial flutter (Novodigal 0.2, 1\u00d71).",
+  "claude_flags": {
+   "atrial": 1,
+   "av_conduction": 0,
+   "ventricular_conduction": 0,
+   "ischemia_stt": 1,
+   "myocardial_infarction": 0
+  },
+  "gt": {
+   "atrial": 0,
+   "av_conduction": 0,
+   "ventricular_conduction": 0,
+   "ischemia_stt": 1,
+   "myocardial_infarction": 0
+  }
+ },
+ {
+  "ecg_id": 28,
+  "report": "sinusrhythmus verdacht auf p-sinistrocardiale linkstyp unspezifisches abnormales t qt-verl\u00c4ngerung sr unter 3x1 cordichin stabil. novodigal 0.2 1x1 ass 100  1x1 tromcardin 1x2 neu:1/2 tensobon 25 f\u00dcr  rr",
+  "translation": "Sinus rhythm, suspected P-sinistrocardia, left axis deviation, nonspecific abnormal T wave, QT prolongation. Sinus rhythm stable under 3\u00d71 Cordichin. Novodigal 0.2 1\u00d71, ASA 100 1\u00d71, Tromcardin 1\u00d72. New: 1/2 Tensobon 25 for blood pressure control.",
+  "claude_flags": {
+   "atrial": 0,
+   "av_conduction": 0,
+   "ventricular_conduction": 1,
+   "ischemia_stt": 1,
+   "myocardial_infarction": 0
+  },
+  "gt": {
+   "atrial": 0,
+   "av_conduction": 0,
+   "ventricular_conduction": 0,
+   "ischemia_stt": 1,
+   "myocardial_infarction": 0
+  }
+ },
+ {
+  "ecg_id": 1,
+  "report": "sinusrhythmus periphere niederspannung",
+  "translation": "Sinus rhythm, peripheral low voltage",
+  "claude_flags": {
+   "atrial": 0,
+   "av_conduction": 0,
+   "ventricular_conduction": 0,
+   "ischemia_stt": 0,
+   "myocardial_infarction": 0
+  },
+  "gt": {
+   "atrial": 0,
+   "av_conduction": 0,
+   "ventricular_conduction": 0,
+   "ischemia_stt": 0,
+   "myocardial_infarction": 0
+  }
+ },
+ {
+  "ecg_id": 2,
+  "report": "sinusbradykardie sonst normales ekg",
+  "translation": "Sinus bradycardia, otherwise normal ECG",
+  "claude_flags": {
+   "atrial": 0,
+   "av_conduction": 0,
+   "ventricular_conduction": 0,
+   "ischemia_stt": 0,
+   "myocardial_infarction": 0
+  },
+  "gt": {
+   "atrial": 0,
+   "av_conduction": 0,
+   "ventricular_conduction": 0,
+   "ischemia_stt": 0,
+   "myocardial_infarction": 0
+  }
+ },
+ {
+  "ecg_id": 3,
+  "report": "sinusrhythmus normales ekg",
+  "translation": "Sinus rhythm, normal ECG",
+  "claude_flags": {
+   "atrial": 0,
+   "av_conduction": 0,
+   "ventricular_conduction": 0,
+   "ischemia_stt": 0,
+   "myocardial_infarction": 0
+  },
+  "gt": {
+   "atrial": 0,
+   "av_conduction": 0,
+   "ventricular_conduction": 0,
+   "ischemia_stt": 0,
+   "myocardial_infarction": 0
+  }
+ }
+]

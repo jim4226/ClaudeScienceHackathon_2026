@@ -1,0 +1,7 @@
+disease,hypothesised,observed_max,match,d_hyp,d_max
+atrial_disease,p,stt,False,0.214,0.317
+av_conduction_disease,pr,pr,True,0.493,0.493
+ventricular_conduction_disease,qrs,stt,False,-0.011,0.471
+hypertrophy,qrs,stt,False,0.058,0.531
+ischemia_or_stt_abnormality,stt,stt,True,0.562,0.562
+myocardial_infarction,stt,pr,False,0.341,0.362

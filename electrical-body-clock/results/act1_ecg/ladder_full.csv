@@ -1,0 +1,9 @@
+rung,MAE,R2,kind
+Chronological null (mean),14.01,0.0,ladder
+Biomarker elastic-net,13.25,0.1,ladder
+Biomarker grad-boost,11.54,0.3,ladder
+Deep global (whole strip),8.07,0.63,ladder
+QRS,9.1,0.54,subsystem
+ST-T,10.57,0.39,subsystem
+P,10.62,0.38,subsystem
+PR,11.76,0.24,subsystem

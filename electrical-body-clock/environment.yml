@@ -1,0 +1,22 @@
+name: electrical-body-clock
+channels:
+  - pytorch
+  - conda-forge
+dependencies:
+  - python=3.11
+  - numpy
+  - scipy
+  - pandas
+  - scikit-learn
+  - matplotlib
+  - seaborn
+  # ECG signal processing (Act I)
+  - pip
+  - pip:
+      - wfdb>=4.1          # PhysioNet waveform I/O (PTB-XL)
+      - neurokit2>=0.2.7   # ECG delineation (P/QRS/T fiducials)
+      - torch>=2.0         # 1D CNN subsystem clocks
+      - lifelines>=0.30    # Cox proportional-hazards (Act II mortality)
+      - xgboost>=2.0       # gradient-boosted interval-biomarker baseline
+      - pyreadstat>=1.2    # NHANES .XPT (SAS transport) reader
+      - tqdm

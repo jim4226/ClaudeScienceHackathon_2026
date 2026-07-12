@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Body Clock — ECG subsystem saliency on the heart</title>
+<style>
+  :root{--bg:#0d0f14;--fg:#e8eaf0;--muted:#9aa3b2;}
+  html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);
+    font-family:system-ui,Segoe UI,Roboto,sans-serif;overflow:hidden}
+  #wrap{display:flex;height:100vh;width:100vw}
+  #view{flex:1 1 60%;position:relative}
+  #side{flex:0 0 380px;max-width:42vw;padding:18px 20px;overflow:auto;
+    border-left:1px solid #222836;background:#0a0c11}
+  h1{font-size:15px;margin:0 0 2px}
+  .sub{color:var(--muted);font-size:12px;margin-bottom:14px;line-height:1.4}
+  #panel h2{font-size:14px;margin:6px 0 2px}
+  #panel .k{color:var(--muted);font-size:12px}
+  #panel .v{font-weight:600}
+  canvas#att{width:100%;height:150px;background:#11141b;border-radius:8px;
+    margin-top:10px;display:block}
+  .row{display:flex;justify-content:space-between;padding:3px 0;
+    border-bottom:1px solid #1a1f2b;font-size:13px}
+  .hint{color:var(--muted);font-size:12px;margin-top:14px;line-height:1.45}
+  #synbanner{position:absolute;top:10px;left:10px;background:#b00;color:#fff;
+    padding:5px 10px;border-radius:6px;font-weight:700;font-size:12px;z-index:9}
+  .legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+  .chip{display:flex;align-items:center;gap:5px;font-size:12px;cursor:pointer;
+    padding:3px 8px;border-radius:20px;background:#151a24}
+  .dot{width:10px;height:10px;border-radius:50%}
+</style></head>
+<body>
+<div id="wrap">
+  <div id="view"></div>
+  <div id="side">
+    <h1>Where each ECG subsystem clock looks</h1>
+    <div class="sub">Four 1-D CNN age clocks (P / PR / QRS / ST-T) on PTB-XL
+      median beats. Click a chamber (or a chip) to see that subsystem's
+      cohort-mean attention and its disease-driven aging. Saliency shows where
+      the model looks — not causation.</div>
+    <div class="legend" id="legend"></div>
+    <div id="panel">
+      <h2 id="p-title">Select a chamber</h2>
+      <div class="row"><span class="k">substrate</span><span class="v" id="p-sub">—</span></div>
+      <div class="row"><span class="k">specificity (own window)</span><span class="v" id="p-spec">—</span></div>
+      <div class="row"><span class="k">chance level</span><span class="v" id="p-chance">—</span></div>
+      <div class="row"><span class="k">clock R²</span><span class="v" id="p-r2">—</span></div>
+      <div class="row"><span class="k">disease</span><span class="v" id="p-dis">—</span></div>
+      <div class="row"><span class="k">disease-driven aging</span><span class="v" id="p-age">—</span></div>
+      <canvas id="att" width="340" height="150"></canvas>
+      <div class="hint" id="p-hint">Attention (y) over the median beat (x); the
+        shaded band is this clock's own P/PR/QRS/ST-T window.</div>
+    </div>
+  </div>
+</div>
+<script type="importmap">
+{ "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js" } }
+</script>
+<script type="module">
+import * as THREE from 'three';
+const DATA = {"synthetic": false, "beat": [0.7996, 0.8002, 0.8, 0.799, 0.7978, 0.7962, 0.7944, 0.7928, 0.7912, 0.7891, 0.7866, 0.7843, 0.7814, 0.7791, 0.7769, 0.7746, 0.7718, 0.7692, 0.7667, 0.765, 0.7635, 0.7621, 0.7611, 0.7598, 0.7584, 0.7574, 0.7564, 0.755, 0.7537, 0.7522, 0.7507, 0.7495, 0.7482, 0.7472, 0.7464, 0.7456, 0.7448, 0.7439, 0.7434, 0.7428, 0.7421, 0.7417, 0.7414, 0.741, 0.741, 0.7413, 0.7414, 0.7417, 0.7423, 0.7432, 0.7439, 0.7449, 0.7458, 0.7465, 0.7474, 0.7477, 0.7472, 0.7457, 0.7435, 0.7402, 0.7365, 0.7331, 0.7298, 0.7267, 0.7244, 0.7226, 0.721, 0.7199, 0.7196, 0.7195, 0.7193, 0.7195, 0.7199, 0.7212, 0.7232, 0.7241, 0.7258, 0.7352, 0.7679, 0.8179, 0.8619, 0.8494, 0.7009, 0.4409, 0.1794, 0.0264, 0.0125, 0.1469, 0.3287, 0.4846, 0.5982, 0.6713, 0.7147, 0.7405, 0.7573, 0.7696, 0.7785, 0.7857, 0.7923, 0.798, 0.8055, 0.8118, 0.8173, 0.822, 0.8269, 0.8322, 0.8378, 0.8452, 0.8546, 0.8643, 0.8746, 0.8851, 0.8966, 0.9086, 0.9219, 0.935, 0.948, 0.9605, 0.9723, 0.9821, 0.9905, 0.9967, 0.9996, 0.9997, 0.9966, 0.9902, 0.9809, 0.9692, 0.9557, 0.9401, 0.923, 0.9055, 0.8871, 0.869, 0.8521, 0.8369, 0.8228, 0.8105, 0.7999, 0.7907, 0.7827, 0.7759, 0.7708, 0.7668, 0.7635, 0.7615, 0.7596, 0.758, 0.7569, 0.7554, 0.7548, 0.7548, 0.7552, 0.7552, 0.7555, 0.7559, 0.7561, 0.7561, 0.7553, 0.754, 0.752, 0.7512, 0.7504, 0.7496, 0.7492, 0.7483, 0.7467, 0.7445, 0.7416, 0.7395, 0.7371, 0.7351, 0.7326, 0.731, 0.73, 0.73, 0.7285, 0.7261, 0.7235, 0.7209, 0.7205, 0.7215, 0.7224, 0.7217, 0.7201, 0.7205, 0.722, 0.7219, 0.7217, 0.7211, 0.7196, 0.7184, 0.7163, 0.7161, 0.7169, 0.7193, 0.7224, 0.7246, 0.7252, 0.7246], "clocks": {"P": {"color": "#2f7fd6", "attention": [0.4787, 0.546, 0.5503, 0.587, 0.5692, 0.6117, 0.5823, 0.6332, 0.6, 0.6011, 0.5356, 0.5323, 0.4729, 0.4715, 0.4117, 0.433, 0.3613, 0.3884, 0.3309, 0.3528, 0.3269, 0.3742, 0.3184, 0.3819, 0.3315, 0.3877, 0.3446, 0.3787, 0.3498, 0.3859, 0.343, 0.3932, 0.3386, 0.3811, 0.3477, 0.3698, 0.3445, 0.3861, 0.3172, 0.3781, 0.3238, 0.3783, 0.3343, 0.3578, 0.3287, 0.3578, 0.321, 0.3671, 0.322, 0.3657, 0.3249, 0.3481, 0.3233, 0.3695, 0.3255, 0.3764, 0.3224, 0.3857, 0.3441, 0.3853, 0.3456, 0.3996, 0.3644, 0.4235, 0.389, 0.4371, 0.4197, 0.45, 0.4167, 0.461, 0.4238, 0.4506, 0.4318, 0.4849, 0.4593, 0.4917, 0.4823, 0.4914, 0.4758, 0.5086, 0.4579, 0.6072, 0.7065, 0.9145, 0.8681, 0.8973, 0.7302, 0.7553, 0.5816, 0.5536, 0.4506, 0.4402, 0.3902, 0.42, 0.4055, 0.4317, 0.4227, 0.4586, 0.4236, 0.4232, 0.3868, 0.3257, 0.3311, 0.3147, 0.3424, 0.3209, 0.3618, 0.3505, 0.3805, 0.3475, 0.376, 0.3506, 0.3656, 0.3345, 0.3602, 0.3341, 0.3856, 0.3445, 0.3876, 0.349, 0.3991, 0.3526, 0.4241, 0.4094, 0.4513, 0.3798, 0.4434, 0.4128, 0.4222, 0.3851, 0.3971, 0.3385, 0.3711, 0.3063, 0.3558, 0.295, 0.3212, 0.2685, 0.3033, 0.2659, 0.3, 0.2654, 0.3, 0.278, 0.311, 0.2818, 0.3186, 0.2898, 0.3323, 0.3019, 0.347, 0.3237, 0.3545, 0.3264, 0.378, 0.3236, 0.3862, 0.3347, 0.3838, 0.344, 0.3731, 0.3482, 0.377, 0.3392, 0.3938, 0.3496, 0.3945, 0.3673, 0.3923, 0.3693, 0.4185, 0.3636, 0.4237, 0.3741, 0.431, 0.3868, 0.4191, 0.3821, 0.4073, 0.3654, 0.4089, 0.3552, 0.4031, 0.3689, 0.3983, 0.3708, 0.4052, 0.3505, 0.404, 0.355, 0.3971, 0.3576, 0.366, 0.3206, 0.3179, 0.2694, 0.2814, 0.2275, 0.2383, 0.1952], "window": [0.04, 0.2], "specificity": 0.158, "chance": 0.16, "r2": 0.26, "substrate": "atria", "disease": "atrial", "aging": 0.0}, "PR": {"color": "#12a15b", "attention": [0.3589, 0.3858, 0.3814, 0.4219, 0.4566, 0.5232, 0.5654, 0.6283, 0.6433, 0.6846, 0.6833, 0.7279, 0.7441, 0.7842, 0.773, 0.7962, 0.8066, 0.8521, 0.8345, 0.8606, 0.8443, 0.8711, 0.8816, 0.9046, 0.8962, 0.9177, 0.9052, 0.9321, 0.9374, 0.9608, 0.9427, 0.9541, 0.9564, 0.9931, 0.9699, 0.9826, 0.9547, 0.9692, 0.974, 0.9856, 0.9636, 0.9694, 0.9406, 0.9514, 0.9434, 0.9486, 0.9121, 0.9018, 0.8828, 0.8986, 0.8576, 0.859, 0.817, 0.8177, 0.8012, 0.8016, 0.7794, 0.7843, 0.7686, 0.7774, 0.7674, 0.7698, 0.7551, 0.748, 0.7413, 0.7504, 0.7171, 0.6954, 0.6423, 0.6164, 0.5818, 0.5565, 0.4914, 0.4508, 0.3768, 0.3371, 0.2831, 0.2839, 0.2678, 0.2961, 0.3102, 0.3986, 0.4899, 0.9105, 0.7207, 0.7238, 0.5364, 0.6584, 0.5519, 0.5668, 0.4505, 0.4693, 0.4052, 0.3626, 0.3221, 0.3244, 0.3388, 0.3738, 0.3408, 0.3697, 0.3655, 0.3854, 0.4291, 0.4007, 0.4098, 0.3905, 0.4039, 0.4067, 0.4099, 0.3804, 0.3683, 0.3411, 0.3407, 0.3154, 0.3108, 0.2828, 0.2762, 0.2661, 0.2844, 0.2417, 0.2694, 0.2575, 0.2881, 0.2549, 0.2993, 0.2737, 0.3288, 0.2874, 0.3177, 0.3013, 0.3534, 0.3403, 0.3676, 0.3684, 0.4155, 0.4041, 0.4527, 0.4616, 0.5107, 0.5284, 0.5767, 0.5923, 0.6408, 0.6571, 0.7087, 0.7312, 0.7699, 0.7724, 0.803, 0.8227, 0.8684, 0.8525, 0.8747, 0.8559, 0.8812, 0.89, 0.9017, 0.8854, 0.9002, 0.882, 0.9017, 0.8974, 0.9108, 0.8905, 0.8977, 0.894, 0.922, 0.8998, 0.9135, 0.8894, 0.9068, 0.9087, 0.9241, 0.9082, 0.9247, 0.9043, 0.925, 0.922, 0.94, 0.9183, 0.9228, 0.9198, 0.9504, 0.9209, 0.9379, 0.9042, 0.9196, 0.9087, 0.9122, 0.875, 0.8774, 0.8366, 0.8162, 0.7508, 0.7063, 0.6263, 0.5686, 0.509, 0.5079, 0.4937], "window": [0.15, 0.32], "specificity": 0.225, "chance": 0.17, "r2": 0.2, "substrate": "AV node", "disease": "AV block", "aging": 3.39}, "QRS": {"color": "#e07a1a", "attention": [0.1095, 0.1422, 0.1346, 0.1567, 0.159, 0.1861, 0.1912, 0.1907, 0.1939, 0.2075, 0.2112, 0.2002, 0.1947, 0.2123, 0.2084, 0.2221, 0.1996, 0.2093, 0.1912, 0.2026, 0.1924, 0.215, 0.2139, 0.2035, 0.1966, 0.2125, 0.2205, 0.2026, 0.1974, 0.2149, 0.2144, 0.2335, 0.2139, 0.2232, 0.2109, 0.2185, 0.2131, 0.236, 0.2398, 0.2271, 0.2192, 0.236, 0.2458, 0.2247, 0.2198, 0.2378, 0.235, 0.2491, 0.2215, 0.2274, 0.2113, 0.217, 0.1981, 0.2214, 0.2088, 0.1881, 0.1809, 0.1922, 0.1907, 0.174, 0.167, 0.1815, 0.1869, 0.2078, 0.2055, 0.2145, 0.2209, 0.2333, 0.2552, 0.2854, 0.3165, 0.318, 0.3308, 0.3768, 0.4375, 0.4388, 0.4572, 0.5242, 0.5363, 0.5995, 0.5423, 0.6878, 0.7155, 1.0, 0.7318, 0.6823, 0.5435, 0.5847, 0.4628, 0.3965, 0.3159, 0.2357, 0.1786, 0.1799, 0.1514, 0.1668, 0.1291, 0.136, 0.1181, 0.1323, 0.145, 0.1194, 0.1369, 0.1186, 0.1369, 0.1236, 0.1542, 0.15, 0.1482, 0.1398, 0.1609, 0.1582, 0.1643, 0.1547, 0.1721, 0.168, 0.1952, 0.1729, 0.2035, 0.1667, 0.2085, 0.1807, 0.2064, 0.2019, 0.195, 0.1961, 0.2008, 0.1753, 0.1873, 0.1661, 0.1782, 0.1662, 0.1651, 0.1432, 0.1654, 0.1329, 0.1558, 0.1369, 0.1554, 0.1505, 0.142, 0.141, 0.1609, 0.1689, 0.1554, 0.1502, 0.1702, 0.1707, 0.1911, 0.1733, 0.1856, 0.173, 0.1838, 0.1787, 0.2018, 0.2008, 0.1895, 0.1835, 0.1989, 0.2069, 0.1913, 0.1883, 0.2049, 0.2048, 0.2227, 0.2061, 0.2187, 0.2077, 0.2185, 0.215, 0.239, 0.2413, 0.2327, 0.226, 0.2445, 0.2568, 0.2382, 0.2338, 0.2511, 0.2497, 0.2669, 0.2481, 0.2585, 0.2488, 0.2567, 0.2488, 0.2696, 0.2701, 0.26, 0.2462, 0.2554, 0.2622, 0.2409, 0.2259, 0.2232, 0.2105, 0.2017, 0.1799, 0.182, 0.1597], "window": [0.3, 0.46], "specificity": 0.29, "chance": 0.16, "r2": 0.55, "substrate": "ventricles", "disease": "conduction/hypertrophy", "aging": 0.0}, "ST-T": {"color": "#c33d5a", "attention": [0.465, 0.5702, 0.5405, 0.5557, 0.5828, 0.6387, 0.6416, 0.7117, 0.7214, 0.7628, 0.7777, 0.7934, 0.7686, 0.8063, 0.7767, 0.8072, 0.7923, 0.8408, 0.8335, 0.8351, 0.8108, 0.8397, 0.8166, 0.8478, 0.8334, 0.8527, 0.8709, 0.8662, 0.8312, 0.853, 0.8171, 0.8348, 0.8152, 0.8519, 0.8372, 0.8233, 0.7856, 0.801, 0.7652, 0.7782, 0.7495, 0.7504, 0.7524, 0.7253, 0.6784, 0.6807, 0.6385, 0.6383, 0.6139, 0.6528, 0.6179, 0.6163, 0.6125, 0.6397, 0.6036, 0.639, 0.6424, 0.7039, 0.6949, 0.7489, 0.7365, 0.7665, 0.687, 0.717, 0.6857, 0.7195, 0.6772, 0.6406, 0.5754, 0.5641, 0.513, 0.4827, 0.4233, 0.3961, 0.3883, 0.3176, 0.2557, 0.2877, 0.262, 0.3195, 0.2863, 0.5856, 0.5555, 0.9209, 0.6984, 0.6309, 0.4083, 0.3707, 0.4054, 0.3243, 0.2818, 0.2041, 0.2148, 0.2072, 0.2006, 0.2321, 0.1995, 0.2115, 0.2357, 0.2579, 0.2665, 0.2461, 0.2874, 0.2814, 0.2986, 0.2487, 0.2705, 0.2556, 0.2984, 0.2558, 0.283, 0.2644, 0.2898, 0.2394, 0.2762, 0.2384, 0.2917, 0.2424, 0.3264, 0.2658, 0.3376, 0.296, 0.366, 0.2928, 0.4099, 0.3604, 0.4658, 0.4012, 0.4876, 0.4773, 0.5532, 0.5309, 0.6268, 0.6189, 0.714, 0.7256, 0.7688, 0.7878, 0.8467, 0.8674, 0.9019, 0.8983, 0.9321, 0.9585, 0.9623, 0.9244, 0.9372, 0.8942, 0.9078, 0.876, 0.9002, 0.8732, 0.8542, 0.8085, 0.8189, 0.7765, 0.8006, 0.7724, 0.7839, 0.7872, 0.7817, 0.7402, 0.7635, 0.7266, 0.751, 0.7309, 0.7777, 0.7635, 0.7666, 0.7403, 0.7744, 0.7445, 0.7774, 0.7627, 0.7896, 0.8053, 0.808, 0.7742, 0.7974, 0.7566, 0.7792, 0.7629, 0.8098, 0.7877, 0.7898, 0.7567, 0.7873, 0.7451, 0.779, 0.7506, 0.7636, 0.7646, 0.7582, 0.6425, 0.6231, 0.5176, 0.4789, 0.4171, 0.4278, 0.3875], "window": [0.46, 0.88], "specificity": 0.383, "chance": 0.42, "r2": 0.6, "substrate": "myocardium", "disease": "ischemia", "aging": 4.79}}, "clock_order": ["P", "PR", "QRS", "ST-T"]};
+const order = DATA.clock_order;
+
+// ---- scene ----
+const view = document.getElementById('view');
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x0d0f14);
+const cam = new THREE.PerspectiveCamera(45, view.clientWidth/view.clientHeight, 0.1, 100);
+cam.position.set(0, 0.4, 6.2);
+const renderer = new THREE.WebGLRenderer({antialias:true});
+renderer.setSize(view.clientWidth, view.clientHeight);
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+view.appendChild(renderer.domElement);
+scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+const key = new THREE.DirectionalLight(0xffffff, 0.9); key.position.set(3,4,5); scene.add(key);
+
+// disease-aging -> emissive intensity (heat)
+function agingColor(c){
+  const a = DATA.clocks[c].aging;         // years
+  const t = Math.min(1, a/5.0);           // 0..1
+  // cool grey -> hot red/orange
+  const col = new THREE.Color();
+  col.setHSL(0.62 - 0.62*t, 0.55, 0.32 + 0.18*t);
+  return col;
+}
+
+// build a stylised four-chamber heart from primitives; tag each with its clock
+const heart = new THREE.Group(); scene.add(heart);
+const meshes = {};
+function chamber(c, geo, pos){
+  const mat = new THREE.MeshStandardMaterial({
+    color: agingColor(c), roughness:0.55, metalness:0.05,
+    emissive: agingColor(c), emissiveIntensity: Math.min(0.6, DATA.clocks[c].aging/6)});
+  const m = new THREE.Mesh(geo, mat);
+  m.position.set(...pos); m.userData.clock = c; heart.add(m); meshes[c]=m; return m;
+}
+// atria (P) — two spheres on top
+const atria = new THREE.Group();
+[[-0.75,1.15,0],[0.75,1.15,0]].forEach(p=>{
+  const m = chamber('P', new THREE.SphereGeometry(0.62,32,24), p); atria.add(m);});
+// AV node (PR) — torus/disc in the middle
+chamber('PR', new THREE.TorusGeometry(0.42,0.16,16,32), [0,0.35,0]).rotation.x=Math.PI/2;
+// ventricles (QRS) — two big cones/ellipsoids below
+[[-0.7,-0.75,0],[0.7,-0.75,0]].forEach(p=>{
+  const g = new THREE.SphereGeometry(0.95,32,24); g.scale(1,1.35,1);
+  chamber('QRS', g, p);});
+// myocardium (ST-T) — translucent shell around the ventricles
+const shell = new THREE.Mesh(
+  new THREE.SphereGeometry(1.7,40,30),
+  new THREE.MeshStandardMaterial({color:agingColor('ST-T'), emissive:agingColor('ST-T'),
+    emissiveIntensity:Math.min(0.7,DATA.clocks['ST-T'].aging/6),
+    transparent:true, opacity:0.28, roughness:0.7, side:THREE.BackSide}));
+shell.position.set(0,-0.5,0); shell.userData.clock='ST-T'; heart.add(shell); meshes['ST-T']=shell;
+
+// ---- picking ----
+const ray = new THREE.Raycaster(); const mouse = new THREE.Vector2();
+function pick(e){
+  const r = renderer.domElement.getBoundingClientRect();
+  mouse.x = ((e.clientX-r.left)/r.width)*2-1;
+  mouse.y = -((e.clientY-r.top)/r.height)*2+1;
+  ray.setFromCamera(mouse, cam);
+  const hits = ray.intersectObjects(heart.children, true);
+  if(hits.length){ select(hits[0].object.userData.clock); }
+}
+renderer.domElement.addEventListener('click', pick);
+
+// ---- side panel + attention canvas ----
+const attC = document.getElementById('att'); const ctx = attC.getContext('2d');
+function drawAtt(c){
+  const d = DATA.clocks[c]; const W=attC.width,H=attC.height;
+  ctx.clearRect(0,0,W,H);
+  // window band
+  ctx.fillStyle = 'rgba(255,255,255,0.06)';
+  ctx.fillRect(d.window[0]*W,0,(d.window[1]-d.window[0])*W,H);
+  // beat (grey)
+  const beat = DATA.beat;
+  ctx.strokeStyle='rgba(180,190,205,0.5)'; ctx.lineWidth=1; ctx.beginPath();
+  beat.forEach((v,i)=>{const x=i/(beat.length-1)*W,y=H-8-v*(H-30);
+    i?ctx.lineTo(x,y):ctx.moveTo(x,y);}); ctx.stroke();
+  // attention (clock colour, filled)
+  const a = d.attention; ctx.beginPath();
+  ctx.moveTo(0,H);
+  a.forEach((v,i)=>{const x=i/(a.length-1)*W,y=H-8-v*(H-30);ctx.lineTo(x,y);});
+  ctx.lineTo(W,H); ctx.closePath();
+  ctx.fillStyle=d.color+'55'; ctx.fill();
+  ctx.strokeStyle=d.color; ctx.lineWidth=2; ctx.beginPath();
+  a.forEach((v,i)=>{const x=i/(a.length-1)*W,y=H-8-v*(H-30);i?ctx.lineTo(x,y):ctx.moveTo(x,y);});
+  ctx.stroke();
+}
+function select(c){
+  const d = DATA.clocks[c];
+  document.getElementById('p-title').textContent = c+'  ('+d.substrate+')';
+  document.getElementById('p-title').style.color = d.color;
+  document.getElementById('p-sub').textContent = d.substrate;
+  document.getElementById('p-spec').textContent = d.specificity.toFixed(2)
+     + '  ('+(d.specificity/d.chance).toFixed(2)+'x chance)';
+  document.getElementById('p-chance').textContent = d.chance.toFixed(2);
+  document.getElementById('p-r2').textContent = d.r2.toFixed(2)
+     + (d.r2<0.3?'  (weak clock)':'');
+  document.getElementById('p-dis').textContent = d.disease;
+  document.getElementById('p-age').textContent = d.aging>0?('+'+d.aging.toFixed(2)+' yr'):'~0 yr';
+  // pulse the selected mesh
+  Object.entries(meshes).forEach(([k,m])=>{
+    m.material.emissiveIntensity = (k===c? 0.9 : Math.min(0.6, DATA.clocks[k].aging/6));});
+  drawAtt(c);
+}
+
+// legend chips
+const legend = document.getElementById('legend');
+order.forEach(c=>{
+  const el = document.createElement('div'); el.className='chip';
+  el.innerHTML = "<span class='dot' style='background:"+DATA.clocks[c].color+"'></span>"+c;
+  el.onclick=()=>select(c); legend.appendChild(el);
+});
+
+// ---- animate ----
+let t=0;
+function loop(){ t+=0.005; heart.rotation.y=Math.sin(t)*0.5;
+  renderer.render(scene,cam); requestAnimationFrame(loop);}
+loop();
+addEventListener('resize',()=>{
+  cam.aspect=view.clientWidth/view.clientHeight; cam.updateProjectionMatrix();
+  renderer.setSize(view.clientWidth, view.clientHeight);});
+select('ST-T');   // open on the strongest disease signal
+</script>
+</body></html>

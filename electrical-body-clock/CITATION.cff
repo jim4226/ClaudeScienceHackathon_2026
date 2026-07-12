@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use this software or its results, please cite the paper below."
+title: "The Electrical Body Clock: subsystem-resolved ECG aging clocks"
+authors:
+  - family-names: "Mar"
+    given-names: "Jaron"
+    affiliation: "University of Miami"
+    email: "jim4226@miami.edu"
+date-released: "2026-07-10"
+license: MIT
+repository-code: "https://github.com/jim4226/electrical-body-clock"
+keywords:
+  - electrocardiography
+  - biological age
+  - deep learning
+  - cardiac aging
+  - organ-specific aging
+  - mortality prediction
+preferred-citation:
+  type: article
+  title: "The Electrical Body Clock: subsystem-resolved ECG aging clocks localize disease to its electrical substrate, and the same organ-resolved principle predicts mortality"
+  authors:
+    - family-names: "Mar"
+      given-names: "Jaron"
+      affiliation: "University of Miami"
+  year: 2026

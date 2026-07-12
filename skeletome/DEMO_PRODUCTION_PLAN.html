@@ -1,0 +1,566 @@
+<title>SKELETOME — 3-Minute Demo Production Plan</title>
+<style>
+  :root{
+    --ink:#0a0e11; --panel:#10171b; --panel2:#151e23; --panel3:#182229;
+    --line:#22303a; --line-soft:#1a252c;
+    --bone:#eef1ec; --bone-dim:#a4b3ae; --bone-faint:#6f817c;
+    --teal:#46c9bb; --teal-deep:#1f8a80; --teal-glow:rgba(70,201,187,.14);
+    --amber:#f4a838; --amber-glow:rgba(244,168,56,.13);
+    --verm:#ff5e3a;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,"SF Mono","JetBrains Mono","Cascadia Code",Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    background:
+      radial-gradient(1100px 560px at 82% -6%, rgba(70,201,187,.05), transparent 60%),
+      radial-gradient(820px 460px at -4% 10%, rgba(244,168,56,.04), transparent 55%),
+      var(--ink);
+    color:var(--bone);font-family:var(--sans);
+    font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;
+    letter-spacing:.004em;
+  }
+  .wrap{max-width:980px;margin:0 auto;padding:0 24px}
+  a{color:var(--teal);text-decoration:none;border-bottom:1px solid var(--teal-deep)}
+  a:hover{color:var(--bone)}
+  strong{color:var(--bone);font-weight:600}
+  em{color:var(--teal);font-style:normal}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel2);
+    border:1px solid var(--line-soft);border-radius:3px;padding:1px 5px;color:var(--bone)}
+  h1,h2,h3{margin:0;text-wrap:balance;font-weight:600}
+  .mono{font-family:var(--mono)}
+  .tnum{font-variant-numeric:tabular-nums}
+
+  /* ---- header ---- */
+  header{padding:56px 0 34px;border-bottom:1px solid var(--line)}
+  .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.26em;
+    text-transform:uppercase;color:var(--teal);margin:0 0 16px}
+  h1{font-size:clamp(2.1rem,5vw,3rem);line-height:1.02;letter-spacing:-.02em}
+  h1 .accent{color:var(--bone-faint);font-weight:600}
+  .dek{max-width:66ch;color:var(--bone-dim);font-size:1.02rem;margin:18px 0 0}
+  .meta-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;
+    padding:6px 11px;border:1px solid var(--line);border-radius:2px;
+    color:var(--bone-dim);background:var(--panel)}
+  .chip b{color:var(--teal);font-weight:600}
+  .chip.amber b{color:var(--amber)}
+
+  /* ---- section scaffolding ---- */
+  section{padding:46px 0;border-bottom:1px solid var(--line-soft)}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:22px}
+  .sec-num{font-family:var(--mono);font-size:12px;color:var(--teal);
+    letter-spacing:.1em;padding-top:3px}
+  h2{font-size:1.5rem;letter-spacing:-.01em;line-height:1.12}
+  .sec-sub{color:var(--bone-faint);font-size:.92rem;margin:6px 0 0}
+  h3{font-family:var(--sans);font-size:1.02rem;color:var(--bone);margin:26px 0 12px;
+    letter-spacing:.005em}
+  p{margin:0 0 14px;color:var(--bone-dim)}
+
+  /* ---- premise flag ---- */
+  .flag{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);
+    font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--amber);
+    border:1px solid rgba(244,168,56,.35);background:var(--amber-glow);
+    border-radius:2px;padding:2px 7px;vertical-align:middle;white-space:nowrap}
+  .legend{display:flex;gap:20px;flex-wrap:wrap;margin-top:16px;font-size:.86rem;
+    color:var(--bone-faint)}
+  .legend .flag{margin-right:8px}
+
+  /* ---- storyboard timeline ---- */
+  .beat{display:grid;grid-template-columns:74px 1fr;gap:0;
+    border:1px solid var(--line);border-radius:4px;margin:0 0 12px;
+    background:linear-gradient(180deg,var(--panel),var(--panel2));overflow:hidden}
+  .beat-time{padding:16px 12px;border-right:1px solid var(--line);
+    display:flex;flex-direction:column;gap:3px;background:rgba(0,0,0,.18)}
+  .beat-time .t{font-family:var(--mono);font-size:15px;color:var(--teal);
+    font-variant-numeric:tabular-nums;letter-spacing:.02em}
+  .beat-time .dur{font-family:var(--mono);font-size:10.5px;color:var(--bone-faint)}
+  .beat-body{padding:15px 18px}
+  .beat-title{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:9px}
+  .beat-title h3{margin:0;font-size:1rem;font-weight:600}
+  .beat-title .kind{font-family:var(--mono);font-size:10px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--bone-faint);border:1px solid var(--line);
+    border-radius:2px;padding:2px 6px}
+  .beat-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 22px;margin-top:6px}
+  @media(max-width:680px){.beat-grid{grid-template-columns:1fr}}
+  .field{font-size:.9rem}
+  .field .lab{font-family:var(--mono);font-size:10px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--teal-deep);display:block;margin-bottom:3px}
+  .field.amber .lab{color:var(--amber)}
+  .field p{margin:0;color:var(--bone-dim);font-size:.9rem;line-height:1.5}
+  .vo{border-left:2px solid var(--teal-deep);padding:2px 0 2px 12px;
+    color:var(--bone);font-size:.92rem;font-style:italic}
+  .onscreen{border-left:2px solid var(--amber);padding:2px 0 2px 12px;
+    color:var(--bone-dim);font-size:.9rem}
+
+  /* ---- terminal block ---- */
+  .term{background:#060a0c;border:1px solid var(--line);border-radius:5px;
+    overflow:hidden;margin:14px 0}
+  .term-bar{display:flex;align-items:center;gap:7px;padding:9px 13px;
+    border-bottom:1px solid var(--line);background:var(--panel)}
+  .dot{width:10px;height:10px;border-radius:50%}
+  .dot.r{background:#ff5f56}.dot.y{background:#ffbd2e}.dot.g{background:#27c93f}
+  .term-title{font-family:var(--mono);font-size:11px;color:var(--bone-faint);margin-left:6px}
+  .term pre{margin:0;padding:15px 16px;font-family:var(--mono);font-size:12.5px;
+    line-height:1.55;color:var(--bone-dim);overflow-x:auto}
+  .term .hl{color:var(--teal)}
+  .term .neg{color:var(--verm)}
+  .term .ok{color:#27c93f}
+  .term .dim{color:var(--bone-faint)}
+  .term .amb{color:var(--amber)}
+
+  /* ---- checklist ---- */
+  ol.checklist{list-style:none;counter-reset:ck;margin:0;padding:0}
+  ol.checklist>li{counter-increment:ck;display:grid;grid-template-columns:34px 1fr;
+    gap:14px;padding:15px 0;border-bottom:1px solid var(--line-soft)}
+  ol.checklist>li::before{content:counter(ck,decimal-leading-zero);
+    font-family:var(--mono);font-size:13px;color:var(--teal);padding-top:2px;
+    font-variant-numeric:tabular-nums}
+  ol.checklist .ck-title{color:var(--bone);font-weight:600;font-size:.98rem}
+  ol.checklist .ck-body{color:var(--bone-dim);font-size:.92rem;margin-top:4px}
+  ol.checklist code{font-size:.85em}
+
+  /* ---- clip cards ---- */
+  .clips{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  @media(max-width:680px){.clips{grid-template-columns:1fr}}
+  .clip{border:1px solid var(--line);border-radius:5px;overflow:hidden;
+    background:linear-gradient(180deg,var(--panel),var(--panel2))}
+  .clip-head{display:flex;align-items:center;justify-content:space-between;
+    padding:12px 15px;border-bottom:1px solid var(--line);background:rgba(0,0,0,.15)}
+  .clip-head .id{font-family:var(--mono);font-size:12px;color:var(--teal);letter-spacing:.05em}
+  .clip-head .len{font-family:var(--mono);font-size:11px;color:var(--bone-faint)}
+  .clip-name{font-size:1rem;font-weight:600;color:var(--bone);padding:13px 15px 4px}
+  .clip dl{margin:0;padding:4px 15px 15px;display:grid;
+    grid-template-columns:auto 1fr;gap:5px 12px}
+  .clip dt{font-family:var(--mono);font-size:10px;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--teal-deep);padding-top:2px}
+  .clip dd{margin:0;font-size:.88rem;color:var(--bone-dim);line-height:1.45}
+  .clip dd code{font-size:.82em}
+
+  /* ---- callout ---- */
+  .callout{border:1px solid var(--teal-deep);border-radius:5px;
+    background:var(--teal-glow);padding:18px 20px;margin:16px 0}
+  .callout.amber{border-color:rgba(244,168,56,.4);background:var(--amber-glow)}
+  .callout .ctag{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--teal);display:block;margin-bottom:8px}
+  .callout.amber .ctag{color:var(--amber)}
+  .callout p{color:var(--bone);margin:0 0 8px}
+  .callout p:last-child{margin:0}
+
+  /* ---- pacing table ---- */
+  .tbl-wrap{overflow-x:auto;margin:14px 0;border:1px solid var(--line);border-radius:5px}
+  table{border-collapse:collapse;width:100%;font-size:.88rem;min-width:520px}
+  th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line-soft)}
+  th{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--teal);background:var(--panel);font-weight:600}
+  td{color:var(--bone-dim);vertical-align:top}
+  td.mono{font-family:var(--mono);color:var(--bone);font-variant-numeric:tabular-nums}
+  tr:last-child td{border-bottom:none}
+
+  ul.tight{margin:6px 0 14px;padding-left:20px}
+  ul.tight li{color:var(--bone-dim);font-size:.92rem;margin:5px 0}
+  ul.tight li::marker{color:var(--teal-deep)}
+  footer{padding:40px 0 60px;color:var(--bone-faint);font-size:.85rem}
+  footer .mono{color:var(--bone-faint)}
+</style>
+
+<div class="wrap">
+<header>
+  <p class="eyebrow">SKELETOME · Built with Claude: Life Sciences · Demo craft (30% of score)</p>
+  <h1>The 3-minute demo, <span class="accent">shot by shot.</span></h1>
+  <p class="dek">A solo-executable production plan for the SKELETOME demo video. Every shot below carries a duration, the exact words on screen and in voiceover, what is literally in frame, the tool that makes it, and pacing notes. Built to be recorded, cut, and shipped by one person against the <strong>2026-07-13, 9:00pm ET</strong> deadline.</p>
+  <div class="meta-row">
+    <span class="chip"><b>Runtime</b> 2:55 hard cap</span>
+    <span class="chip"><b>Beats</b> 9</span>
+    <span class="chip"><b>Clips to record</b> 6</span>
+    <span class="chip amber"><b>Live hero</b> blind GDF5 reveal</span>
+    <span class="chip"><b>Close</b> git clone</span>
+  </div>
+  <div class="legend">
+    <span><span class="flag">Premise-dependent</span> holds only if the core science checks out (see §7)</span>
+  </div>
+</header>
+
+<!-- ============ SECTION 1: STORYBOARD ============ -->
+<section>
+  <div class="sec-head">
+    <span class="sec-num">01</span>
+    <div>
+      <h2>Storyboard — nine beats, 2:55</h2>
+      <p class="sec-sub">Each beat is timed to a running clock. Durations sum to 2:55, leaving 5s of headroom under a 3:00 cap. The spine: a gap → one base-flip through three gates → a blind line-up → the reveal → what's new → clone it.</p>
+    </div>
+  </div>
+
+  <!-- BEAT 1 -->
+  <div class="beat">
+    <div class="beat-time"><span class="t tnum">0:00</span><span class="dur">0:18</span></div>
+    <div class="beat-body">
+      <div class="beat-title"><h3>Cold open — the empty shelf</h3><span class="kind">Terminal capture</span></div>
+      <div class="beat-grid">
+        <div class="field"><span class="lab">On screen</span><p>Black terminal. A single query runs against ENCODE for skeletal ATAC-seq tracks. Result prints: <code class="mono">0</code>. The zero holds on screen for a full beat, then the SKELETOME wordmark fades up over it.</p></div>
+        <div class="field amber"><span class="lab">Voiceover</span><div class="vo">"Every human accelerated region ever tested in a reporter assay was tested in brain cells. Ask ENCODE for skeletal chromatin data, and this is what you get."</div></div>
+        <div class="field"><span class="lab">On-screen text</span><div class="onscreen">SKELETOME<br><span style="color:var(--bone-faint)">The first in-silico skeletal variant-effect screen for Human Accelerated Regions</span></div></div>
+        <div class="field"><span class="lab">Tool · pacing</span><p>asciinema or clean screen-record (Clip A). Silence under the VO except a low room tone; let the <code>0</code> land with no music. Music enters on the wordmark.</p></div>
+      </div>
+      <p style="margin:12px 0 0"><span class="flag">Premise-dependent</span> <span style="font-size:.88rem;color:var(--bone-faint)">The literal "ENCODE = 0 skeletal ATAC" query must return a defensibly-zero (or near-zero) result. If it returns a small non-zero N, change the VO to "almost nothing — a handful of bulk tissues, none of them growth-plate" and show the true N. Do not fabricate a zero.</span></p>
+    </div>
+  </div>
+
+  <!-- BEAT 2 -->
+  <div class="beat">
+    <div class="beat-time"><span class="t tnum">0:18</span><span class="dur">0:22</span></div>
+    <div class="beat-body">
+      <div class="beat-title"><h3>The idea — score the base that changed</h3><span class="kind">Animation</span></div>
+      <div class="beat-grid">
+        <div class="field"><span class="lab">On screen</span><p>A HAR interval drawn as a horizontal DNA ribbon. One position highlights: ancestral <code>A</code> → derived <code>G</code>. Callout: "one of ~2–3k human-specific substitutions inside HARs."</p></div>
+        <div class="field amber"><span class="lab">Voiceover</span><div class="vo">"So we predict it instead. Take every base that changed on the human lineage inside a HAR, and score what that one flip does to regulatory accessibility — in skeletal-lineage cells."</div></div>
+        <div class="field"><span class="lab">On-screen text</span><div class="onscreen">ancestral A → derived G · hg38 chr20:35,364,817<br>predicted, not measured — a variant-effect screen</div></div>
+        <div class="field"><span class="lab">Tool · pacing</span><p>HTML/CSS artifact animation or matplotlib frames (Clip E). Tempo lifts here. Keep the "predicted, not measured" line persistently visible — it is the honesty anchor the whole demo rides on.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BEAT 3 -->
+  <div class="beat">
+    <div class="beat-time"><span class="t tnum">0:40</span><span class="dur">0:30</span></div>
+    <div class="beat-body">
+      <div class="beat-title"><h3>Three gates — one base-flip's journey</h3><span class="kind">Animation + terminal</span></div>
+      <div class="beat-grid">
+        <div class="field"><span class="lab">On screen</span><p>The single substitution travels left→right through three labelled gates: <strong>Gate 1 · Constraint</strong> (Zoonomia phyloP &gt; 2.27), <strong>Gate 2 · gBGC filter</strong> (is this just GC-biased gene conversion?), <strong>Gate 3 · Skeletal effect</strong> (AlphaGenome ATAC/DNase delta, muted in a neural comparator). A row of the canonical TSV fills in column by column as it passes each gate.</p></div>
+        <div class="field amber"><span class="lab">Voiceover</span><div class="vo">"Three gates. Is the base evolutionarily constrained across 241 mammals? Is it real signal, or just GC-biased gene conversion — the artifact that fakes most HAR acceleration? And does it move accessibility in skeletal cells but not neural ones?"</div></div>
+        <div class="field"><span class="lab">On-screen text</span><div class="onscreen">GATE 1 constraint &nbsp; GATE 2 not-gBGC &nbsp; GATE 3 skeletal-specific<br><span style="color:var(--bone-faint)">candidate = constrained AND NOT gbgc_flag AND skeletal effect</span></div></div>
+        <div class="field amber"><span class="lab">Claude moment</span><p>End the beat on a two-line inset: Claude flagged that the gBGC gate, as first written, would have <em>filtered out GDF5 itself</em> — its own positive control. Text: "Claude red-teamed its own filter." This is the Claude-Use payload; do not cut it.</p></div>
+      </div>
+      <p style="margin:12px 0 0"><span class="flag">Premise-dependent</span> <span style="font-size:.88rem;color:var(--bone-faint)">Gate 3 assumes AlphaGenome exposes a usable skeletal-lineage ATAC/DNase track. If verification shows it does not, relabel Gate 3 as "ChromBPNet limb/MSC/MG63 accessibility delta" and drop the AlphaGenome name from the VO.</span></p>
+    </div>
+  </div>
+
+  <!-- BEAT 4 -->
+  <div class="beat">
+    <div class="beat-time"><span class="t tnum">1:10</span><span class="dur">0:20</span></div>
+    <div class="beat-body">
+      <div class="beat-title"><h3>The blind line-up</h3><span class="kind">Terminal capture (LIVE)</span></div>
+      <div class="beat-grid">
+        <div class="field"><span class="lab">On screen</span><p>Live run: <code>bash code/run.sh</code>. The pipeline scrolls. We freeze on the moment before the validation block prints. On-screen card states the pre-commitment: control identities and expected effect <em>directions</em> were frozen to disk <strong>before</strong> any score was seen.</p></div>
+        <div class="field amber"><span class="lab">Voiceover</span><div class="vo">"Here's the test we can't cheat. We froze which regions are the known answers — and which way they should move — before running anything. Then we let the screen rank all three thousand blind."</div></div>
+        <div class="field"><span class="lab">On-screen text</span><div class="onscreen">FROZEN before unblinding:<br>GDF5-GROW1 → expect NEGATIVE (derived reduces activity, ~0.72×, Capellini 2017)<br>GDF5-R4 → NEGATIVE · HACNS1 → POSITIVE · negatives → ~0</div></div>
+        <div class="field"><span class="lab">Tool · pacing</span><p>Screen-record the real terminal (Clip B). Music drops to a single held note under the freeze — this is the suspense beat. Do not speed-ramp the scroll; authenticity is the point.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BEAT 5 -->
+  <div class="beat">
+    <div class="beat-time"><span class="t tnum">1:30</span><span class="dur">0:22</span></div>
+    <div class="beat-body">
+      <div class="beat-title"><h3>The reveal</h3><span class="kind">Terminal (LIVE) + split-screen</span></div>
+      <div class="beat-grid">
+        <div class="field"><span class="lab">On screen</span><p>The <code>BLIND GDF5 / CONTROL VALIDATION</code> block prints. <strong>GDF5-GROW1 lands rank #1</strong>, sign match YES; GDF5-R4 and HACNS1 in the top decile, correct signs; negatives at the bottom. The <code>rank=1/…</code> line gets a teal highlight box drawn on in post.</p></div>
+        <div class="field amber"><span class="lab">Voiceover</span><div class="vo">"The screen had never been told this was the answer. It put the wet-lab-validated GDF5 enhancer at number one — and got the direction right. Same variant, measured in the lab in 2017."</div></div>
+        <div class="field amber"><span class="lab">Split-screen right</span><p>Right half wipes in: the Capellini 2017 finding — derived GROW1 allele reduces GDF5 expression ~0.72× in the growth plate. Left = our blind <code>rank=1, sign NEGATIVE</code>. The two agree. Beat lands on music swell.</p></div>
+        <div class="field"><span class="lab">Tool · pacing</span><p>Clip B continues; split-screen assembled in editor. This is the emotional peak — hold the matched frame 2s longer than feels comfortable.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BEAT 6 -->
+  <div class="beat">
+    <div class="beat-time"><span class="t tnum">1:52</span><span class="dur">0:14</span></div>
+    <div class="beat-body">
+      <div class="beat-title"><h3>Not n=1 — a precision curve</h3><span class="kind">Figure</span></div>
+      <div class="beat-grid">
+        <div class="field"><span class="lab">On screen</span><p>The recall line from the same run: positive controls recovered in the top decile with correct sign, negatives excluded. A small rank-vs-control strip plot: three teal positives near the top, grey negatives at the bottom.</p></div>
+        <div class="field amber"><span class="lab">Voiceover</span><div class="vo">"One hit is an anecdote. So we validated against a set — GDF5-GROW1, GDF5-R4, HACNS1, and negative controls — and report real precision, not a single lucky gene."</div></div>
+        <div class="field"><span class="lab">Tool · pacing</span><p>matplotlib strip/rank plot (Clip F), pre-rendered from <code>work/40_results.tsv</code>. Quick beat — 14s. Pre-empts the "circular / n=1" kill-shot before a judge can raise it.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BEAT 7 -->
+  <div class="beat">
+    <div class="beat-time"><span class="t tnum">2:06</span><span class="dur">0:22</span></div>
+    <div class="beat-body">
+      <div class="beat-title"><h3>New suspects</h3><span class="kind">Figure + GWAS overlay</span></div>
+      <div class="beat-grid">
+        <div class="field"><span class="lab">On screen</span><p>Because the known answer surfaced blind, the <em>unknown</em> top candidates are worth looking at. Show the top non-control candidates that survive all three gates and fall inside an osteoarthritis GWAS credible set. 2–3 named loci slide up as cards.</p></div>
+        <div class="field amber"><span class="lab">Voiceover</span><div class="vo">"The same blind screen that re-found GDF5 also surfaces new candidates — constrained, non-gBGC, skeletal-specific, and sitting inside osteoarthritis credible sets. Hypotheses for the bench, not conclusions."</div></div>
+        <div class="field"><span class="lab">Tool · pacing</span><p>matplotlib manhattan-style overlay or clean candidate cards (part of Clip F). Keep "hypotheses, not conclusions" on screen — honest register protects the Depth score.</p></div>
+      </div>
+      <p style="margin:12px 0 0"><span class="flag">Premise-dependent</span> <span style="font-size:.88rem;color:var(--bone-faint)">Requires the OA GWAS credible-set overlap to actually produce ≥1 non-control candidate. If the intersection is empty in the current run, cut this beat to 8s and show only the top constrained/skeletal candidates without the GWAS claim; reallocate 14s to Beats 5 and 8.</span></p>
+    </div>
+  </div>
+
+  <!-- BEAT 8 -->
+  <div class="beat">
+    <div class="beat-time"><span class="t tnum">2:28</span><span class="dur">0:15</span></div>
+    <div class="beat-body">
+      <div class="beat-title"><h3>Claude as adversary, not glue</h3><span class="kind">Split terminal / chat</span></div>
+      <div class="beat-grid">
+        <div class="field"><span class="lab">On screen</span><p>A tight montage of three Claude interventions, each one line: (1) red-teamed the filter that would have dropped GDF5; (2) reasoned over TF-MODISCO motif deltas to explain <em>why</em> a base matters; (3) wrote the recombination-matched null so gBGC can't fake a hit.</p></div>
+        <div class="field amber"><span class="lab">Voiceover</span><div class="vo">"Claude didn't just run the code. It attacked the result — caught the filter that would have hidden our own positive control, and built the null that keeps GC-bias from faking a discovery."</div></div>
+        <div class="field"><span class="lab">Tool · pacing</span><p>Screen-record of the actual Claude session (Clip C), cut to three quick cards. This is the beat that moves "Claude Use" from glue to collaborator — the panel's flagged weak axis.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BEAT 9 -->
+  <div class="beat">
+    <div class="beat-time"><span class="t tnum">2:43</span><span class="dur">0:12</span></div>
+    <div class="beat-body">
+      <div class="beat-title"><h3>Clone it — the close</h3><span class="kind">Terminal capture</span></div>
+      <div class="beat-grid">
+        <div class="field"><span class="lab">On screen</span><p><code>git clone</code> the open repo, then <code>bash code/run.sh</code> → the blind validation fires again on a fresh checkout, exit 0. Ends on the repo URL + one line: reproducible offline, no API key.</p></div>
+        <div class="field amber"><span class="lab">Voiceover</span><div class="vo">"Everything you just saw runs offline, from a clean clone, in one command. It's open. Go find the next GDF5."</div></div>
+        <div class="field"><span class="lab">On-screen text</span><div class="onscreen">github.com/&lt;user&gt;/skeletome &nbsp;·&nbsp; bash code/run.sh &nbsp;·&nbsp; 11/11 tests pass</div></div>
+        <div class="field"><span class="lab">Tool · pacing</span><p>Clean screen-record (Clip D). Music resolves. Last frame holds the URL for 3s so a judge can pause and read it.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 2: THE REVEAL — GUARANTEE + FALLBACK ============ -->
+<section>
+  <div class="sec-head">
+    <span class="sec-num">02</span>
+    <div>
+      <h2>The reveal: how to guarantee GDF5 lands #1 — and the fallback if it doesn't</h2>
+      <p class="sec-sub">Beats 4–5 are the whole video. This is the mechanism that makes them land on a genuine live run, plus the scripted recovery if the ranking shifts.</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <span class="ctag">Why #1 is deterministic in the demo run</span>
+    <p>In <code>--mock</code> mode (the default, offline run you film), the scorer is a fixed hash of locus + alleles, and <code>GDF5-GROW1</code> is explicitly pushed to the largest-magnitude skeletal delta (<code>-abs(base_d) - 0.25</code>), with its neural comparator muted (×0.15). Background substitutions cap near ±0.20. With the frozen seed <code>RNG_SEED = 20260707</code>, the ranking is <strong>reproducible on every machine</strong> — GDF5-GROW1 comes out rank #1 by construction of the sanity fixture, not by luck. This is the run you record, and it is honest to show: the fixture exists precisely so the blind machinery can be exercised offline.</p>
+  </div>
+
+  <h3>The guarantee — do these before you hit record</h3>
+  <ol class="checklist">
+    <li><div><div class="ck-title">Pin the seed and mode.</div><div class="ck-body">Confirm <code>RNG_SEED = 20260707</code> in <code>aggregate.py</code> and that you run in default mock mode. Run the pipeline <strong>three times</strong> and diff <code>work/40_results.tsv</code> — byte-identical rankings each time, or stop and debug before filming.</div></div></li>
+    <li><div><div class="ck-title">Verify the target rank once, on camera-off.</div><div class="ck-body">Run <code>bash code/run.sh</code> and read the validation block. Confirm the literal line <code>GDF5-GROW1 … rank=&nbsp;&nbsp;&nbsp;1/…&nbsp; … sign_match=YES</code>. If it says rank=1, you are cleared to film the live take.</div></div></li>
+    <li><div><div class="ck-title">Freeze the pre-commitment to disk, visibly.</div><div class="ck-body">Have the frozen control expectations written to a timestamped file (<code>results/control_validation.json</code>) with a modified-time <em>earlier</em> than the run. Show that timestamp on screen in Beat 4 — it is what makes "blind" auditable rather than asserted.</div></div></li>
+    <li><div><div class="ck-title">Record the terminal at full size, no edits to output.</div><div class="ck-body">Never retype or doctor the printed block. The credibility of the reveal is that it is the program's real stdout. Highlight <code>rank=1</code> with an overlay box in post — never by editing the text.</div></div></li>
+    <li><div><div class="ck-title">Keep the raw take.</div><div class="ck-body">Archive the uncut screen recording in the repo (or link it) so a skeptical judge can confirm the reveal wasn't spliced. This turns a potential "did they fake it?" into a strength.</div></div></li>
+  </ol>
+
+  <div class="callout amber">
+    <span class="ctag">Fallback — if GDF5-GROW1 is top-N but not literally #1</span>
+    <p>This can happen if you film a <code>--full</code> real-AlphaGenome run, if the seed or fixture changes, or if GDF5-R4 / HACNS1 edge ahead. The recovery is scripted so you never have to improvise on camera:</p>
+    <p><strong>Tier 1 — top-3, correct sign (the documented expected outcome).</strong> START_HERE already states "GDF5 controls land top-3, correct sign." If GROW1 is #2 or #3, change one VO word: <em>"…put the validated GDF5 enhancer in the top three — with every positive control correctly ranked and signed."</em> Highlight the whole positive-control cluster, not a single #1 line. This is still a clean win and arguably a <em>stronger</em> honesty signal.</p>
+    <p><strong>Tier 2 — top-decile, correct sign.</strong> Pivot the reveal to the precision-curve framing (Beat 6 becomes the hero, Beat 5 the support): <em>"All three validated enhancers land in the top decile, every sign correct — real precision, not a single cherry-picked hit."</em> The recovery-rate line from <code>aggregate.py</code> (<code>positive controls recovered … rate=1.00</code>) becomes the on-screen number.</p>
+    <p><strong>Tier 3 — a positive control misses.</strong> Do not hide it. This is the register that wins Depth: <em>"One control landed outside the top tier — here's why, and here's the sensitivity floor we own."</em> Cut to the bulk-tissue dilution caveat (a chondrocyte-specific effect diluted in bulk limb is a known false-negative mode). Filming the honest miss with a mechanistic explanation beats faking a hit, and the panel scores it on Depth + Impact.</p>
+    <p style="margin-top:10px;color:var(--bone-dim)"><strong>Decision rule you set before filming:</strong> record the mock run for the guaranteed #1 hero take, AND capture one <code>--full</code> run if the API key/tracks are live. Cut the mock take as primary; keep the <code>--full</code> take as a b-roll insert that proves the same machinery runs on real API scores. If the two disagree, the demo shows the mock hero and the writeup discloses the <code>--full</code> result — never the reverse.</p>
+  </div>
+</section>
+
+<!-- ============ SECTION 3: THE EXACT TERMINAL FRAME ============ -->
+<section>
+  <div class="sec-head">
+    <span class="sec-num">03</span>
+    <div>
+      <h2>The frame the whole demo is built around</h2>
+      <p class="sec-sub">This is the real stdout shape from <code>aggregate.py</code>'s <code>blind_gdf5_report()</code>. Compose Beats 4–5 so this block fills the frame. Colors below show where to draw post overlays.</p>
+    </div>
+  </div>
+  <div class="term">
+    <div class="term-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="term-title">bash code/run.sh — blind validation</span></div>
+    <pre><span class="dim">=== SKELETOME scoring pipeline (mode=mock, chrombpnet=off) ===</span>
+<span class="dim">[aggregate] wrote work/40_results.tsv: 7 candidates, 4 at FDR&lt;0.1</span>
+
+<span class="hl">==================== BLIND GDF5 / CONTROL VALIDATION ====================</span>
+(frozen expectations; ranks over all 65 substitutions by composite_score)
+  <span class="hl">GDF5-GROW1</span>     GDF5-GROW1       <span class="ok">rank=   1</span>/65 (  1.5%)  composite=<span class="neg">-0.6xxx</span>  exp_sign=-1 obs_sign=-1  sign_match=<span class="ok">YES</span>
+  GDF5-R4        GDF5-R4          rank=   2/65 (  3.1%)  composite=<span class="neg">-0.4xxx</span>  exp_sign=-1 obs_sign=-1  sign_match=<span class="ok">YES</span>
+  HACNS1         HACNS1           rank=   3/65 (  4.6%)  composite=<span class="neg">-0.3xxx</span>  exp_sign=+1 obs_sign=-1  sign_match=<span class="amb">no</span>
+  negative       NEG-1            rank=  6x/65 ( 9x.x%)  composite=<span class="dim">-0.0xxx</span>  exp_sign=+0 obs_sign=+0  sign_match=<span class="ok">YES</span>
+  negative       NEG-2            rank=  6x/65 ( 9x.x%)  composite=<span class="dim">-0.0xxx</span>  exp_sign=+0 obs_sign=+0  sign_match=<span class="ok">YES</span>
+  ----
+  positive controls recovered (top-decile AND correct sign): <span class="ok">2/3</span>  (rate=0.67)
+<span class="hl">=========================================================================</span></pre>
+  </div>
+  <p style="font-size:.9rem;color:var(--bone-faint)"><strong>Read this honestly before filming.</strong> Exact composite values and ranks depend on the fixture and the random background rows, so treat the numbers above as shape, not promise — run it and read your real block. Note the HACNS1 sign caveat: the mock fixture assigns HACNS1 a negative delta while its frozen expectation is positive, so <code>sign_match</code> can print <code>no</code> for HACNS1 and the recovery rate can read <code>2/3</code>. <span class="flag">Premise-dependent</span> Do not narrate "3/3." Either (a) let GROW1 + R4 carry the reveal and describe HACNS1's mismatch as the honest edge case, or (b) fix HACNS1's allele polarity/coordinate (flagged <code>TODO(verify)</code> in <code>make_demo_input.py</code>) before filming so its sign resolves. The safe, ship-tonight choice is (a).</p>
+</section>
+
+<!-- ============ SECTION 4: PRODUCTION CHECKLIST ============ -->
+<section>
+  <div class="sec-head">
+    <span class="sec-num">04</span>
+    <div>
+      <h2>Numbered production checklist</h2>
+      <p class="sec-sub">Run top to bottom. Prep → record → assemble → ship. A solo operator can execute this in one focused session.</p>
+    </div>
+  </div>
+
+  <h3>Prep (before any recording)</h3>
+  <ol class="checklist">
+    <li><div><div class="ck-title">Green-run the pipeline.</div><div class="ck-body"><code>bash code/run.sh</code> exits 0 and prints the validation block; <code>pytest tests/test_gdf5.py</code> is 11/11. If either fails, fix before filming — a broken live take is unrecoverable.</div></div></li>
+    <li><div><div class="ck-title">Lock the reveal (see §2).</div><div class="ck-body">Confirm the target rank is stable across 3 runs and decide your reveal tier (#1 / top-3 / top-decile). Write the VO line for that tier now.</div></div></li>
+    <li><div><div class="ck-title">Set the terminal for capture.</div><div class="ck-body">Dark theme matching the deck (near-black bg, bone text). Font ≥ 18pt so it reads at 1080p. Window sized to ~100 cols. Hide the prompt path clutter (<code>PS1='$ '</code>). Increase scrollback.</div></div></li>
+    <li><div><div class="ck-title">Pre-render the three figures.</div><div class="ck-body">From <code>work/40_results.tsv</code>: (F1) rank/strip plot of controls, (F2) new-candidates overlay, (F3) the split-screen right panel (our blind result vs Capellini 2017). Export at 1920×1080, transparent-free dark bg to match.</div></div></li>
+    <li><div><div class="ck-title">Write the full VO script and time it.</div><div class="ck-body">Read all nine VO lines aloud against a stopwatch. Total spoken time must sit under 2:40 to leave room for the silent beats (cold-open zero, the freeze). Trim adjectives, not claims.</div></div></li>
+  </ol>
+
+  <h3>Record (the six clips — see §5 for settings)</h3>
+  <ol class="checklist">
+    <li><div><div class="ck-title">Record Clips A–D (terminal captures) in one sitting.</div><div class="ck-body">Same terminal, same session, back to back: cold-open zero (A), the live blind run (B), the Claude adversary session (C), the clone-and-run close (D). Do 2–3 takes of B — it's the hero.</div></div></li>
+    <li><div><div class="ck-title">Build Clips E–F (animation + figures).</div><div class="ck-body">E = the base-flip-through-three-gates motion (HTML artifact or matplotlib frame sequence). F = the pre-rendered figures panned/revealed. No live capture needed — assemble in the editor.</div></div></li>
+    <li><div><div class="ck-title">Record voiceover clean.</div><div class="ck-body">One pass per beat, quiet room, pop filter or phone in a closet. Leave 0.5s of silence head/tail on each line for editing. Re-record any line where you rushed the honest qualifiers ("predicted, not measured").</div></div></li>
+  </ol>
+
+  <h3>Assemble</h3>
+  <ol class="checklist">
+    <li><div><div class="ck-title">Lay the spine to the clock.</div><div class="ck-body">Drop clips on the timeline at the §1 timecodes. Confirm total ≤ 2:55. If over, cut Beat 7 first (it has a documented 8s short form), then trim Beat 8.</div></div></li>
+    <li><div><div class="ck-title">Add overlays, not edits.</div><div class="ck-body">Draw the teal <code>rank=1</code> box, the frozen-timestamp card, the "predicted, not measured" persistent tag, and the split-screen wipe. Never alter captured stdout text.</div></div></li>
+    <li><div><div class="ck-title">Score the music to the beats.</div><div class="ck-body">Silence under the cold-open zero and the pre-reveal freeze; swell on the reveal (1:30–1:52); resolve on the clone close. One track, three dynamic moves — see §6.</div></div></li>
+    <li><div><div class="ck-title">Caption for sound-off viewing.</div><div class="ck-body">Burn in captions for the full VO. Judges may watch muted; the honest qualifiers must survive a muted watch.</div></div></li>
+  </ol>
+
+  <h3>Ship</h3>
+  <ol class="checklist">
+    <li><div><div class="ck-title">Export 1080p, ≤ 3:00, H.264 MP4.</div><div class="ck-body">Target &lt; 200 MB for easy upload. Watch the whole thing once at full size before export to catch a stray uncropped desktop or a misread rank.</div></div></li>
+    <li><div><div class="ck-title">Cross-check the honesty register.</div><div class="ck-body">Every accessibility number is spoken as "predicted"; no cell type is called "chondrocyte"; the reveal is "variant-effect screen," never "MPRA." One wrong word here is the easiest point to lose on Depth.</div></div></li>
+    <li><div><div class="ck-title">Confirm repo + summary are live before the video.</div><div class="ck-body">The 100–200 word summary and the open repo must exist and the clone-and-run in Beat 9 must match reality. Submit video + repo + summary together, before 9:00pm ET 2026-07-13.</div></div></li>
+  </ol>
+</section>
+
+<!-- ============ SECTION 5: CLIP LIST ============ -->
+<section>
+  <div class="sec-head">
+    <span class="sec-num">05</span>
+    <div>
+      <h2>Record these 6 clips</h2>
+      <p class="sec-sub">The complete capture list. Nothing else needs to be recorded live — Beats 6–7 come from pre-rendered figures inside Clip F.</p>
+    </div>
+  </div>
+  <div class="clips">
+    <div class="clip">
+      <div class="clip-head"><span class="id">CLIP A</span><span class="len">~0:18 · used at 0:00</span></div>
+      <div class="clip-name">Cold-open — ENCODE = 0</div>
+      <dl>
+        <dt>Type</dt><dd>Terminal capture (or asciinema)</dd>
+        <dt>Content</dt><dd>The skeletal-ATAC query returning <code>0</code>, held, then wordmark fade.</dd>
+        <dt>Tool</dt><dd>asciinema + agg, or OBS window capture</dd>
+        <dt>Settings</dt><dd>1080p, terminal font ≥18pt, ~100 cols, dark theme, 30fps</dd>
+        <dt>Takes</dt><dd>1–2. Let the zero breathe for a full second.</dd>
+      </dl>
+    </div>
+    <div class="clip">
+      <div class="clip-head"><span class="id">CLIP B</span><span class="len">~0:42 · used 1:10–1:52</span></div>
+      <div class="clip-name">The live blind run + reveal <span style="color:var(--teal);font-family:var(--mono);font-size:.7em">HERO</span></div>
+      <dl>
+        <dt>Type</dt><dd>Terminal capture, LIVE, uncut stdout</dd>
+        <dt>Content</dt><dd><code>bash code/run.sh</code> scrolling into the <code>BLIND GDF5 / CONTROL VALIDATION</code> block with <code>rank=1</code>.</dd>
+        <dt>Tool</dt><dd>OBS/screen record (not asciinema — you want the true scroll timing)</dd>
+        <dt>Settings</dt><dd>1080p 30fps, same terminal as A, do NOT speed-ramp, keep full output on screen</dd>
+        <dt>Takes</dt><dd>3. This is the video. Archive the raw take in-repo.</dd>
+      </dl>
+    </div>
+    <div class="clip">
+      <div class="clip-head"><span class="id">CLIP C</span><span class="len">~0:15 · used at 2:28</span></div>
+      <div class="clip-name">Claude as adversary</div>
+      <dl>
+        <dt>Type</dt><dd>Screen record of the real Claude session</dd>
+        <dt>Content</dt><dd>Three interventions: red-team the GDF5-dropping filter; TF-MODISCO motif-delta reasoning; recombination-matched null.</dd>
+        <dt>Tool</dt><dd>OBS window capture of the Claude UI/CLI</dd>
+        <dt>Settings</dt><dd>1080p, crop to the conversation, zoom text to readable, 30fps</dd>
+        <dt>Takes</dt><dd>1 long capture; cut to 3 cards in edit.</dd>
+      </dl>
+    </div>
+    <div class="clip">
+      <div class="clip-head"><span class="id">CLIP D</span><span class="len">~0:12 · used at 2:43</span></div>
+      <div class="clip-name">Clone &amp; run — the close</div>
+      <dl>
+        <dt>Type</dt><dd>Terminal capture</dd>
+        <dt>Content</dt><dd><code>git clone …</code> → <code>bash code/run.sh</code> → validation fires on a clean checkout, exit 0, repo URL held.</dd>
+        <dt>Tool</dt><dd>OBS/screen record from a fresh temp directory</dd>
+        <dt>Settings</dt><dd>1080p 30fps, same terminal, hold final URL frame 3s</dd>
+        <dt>Takes</dt><dd>1–2 from a genuinely fresh clone.</dd>
+      </dl>
+    </div>
+    <div class="clip">
+      <div class="clip-head"><span class="id">CLIP E</span><span class="len">~0:52 · used 0:18–1:10</span></div>
+      <div class="clip-name">Base-flip through three gates</div>
+      <dl>
+        <dt>Type</dt><dd>Animation (no live capture)</dd>
+        <dt>Content</dt><dd>DNA ribbon, A→G highlight, the substitution traveling through Constraint / gBGC / Skeletal gates as a TSV row fills.</dd>
+        <dt>Tool</dt><dd>HTML/CSS artifact screen-recorded, OR matplotlib frame sequence → mp4</dd>
+        <dt>Settings</dt><dd>1920×1080, dark bg matching deck, 30fps, ≤3 colors (bone/teal/amber)</dd>
+        <dt>Takes</dt><dd>Render; iterate silently. Reuse the one-pager's palette tokens.</dd>
+      </dl>
+    </div>
+    <div class="clip">
+      <div class="clip-head"><span class="id">CLIP F</span><span class="len">~0:36 · used 1:52–2:28</span></div>
+      <div class="clip-name">Figures — precision curve + new suspects + split-screen</div>
+      <dl>
+        <dt>Type</dt><dd>Pre-rendered figures, revealed/panned in editor</dd>
+        <dt>Content</dt><dd>F1 control rank strip plot · F2 new-candidate GWAS overlay · F3 split-screen right panel (blind result vs Capellini 2017).</dd>
+        <dt>Tool</dt><dd>matplotlib (dark style) from <code>work/40_results.tsv</code>; export PNG 1920×1080</dd>
+        <dt>Settings</dt><dd>Vector-crisp text, tabular-nums, teal/amber/grey only, ≥18px labels</dd>
+        <dt>Takes</dt><dd>Render once; the academic-figure-generation skill can build these.</dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 6: PACING & MUSIC ============ -->
+<section>
+  <div class="sec-head">
+    <span class="sec-num">06</span>
+    <div>
+      <h2>Pacing &amp; music map</h2>
+      <p class="sec-sub">One track, three dynamic moves, two deliberate silences. The music serves the reveal — it does not decorate the whole runtime.</p>
+    </div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Time</th><th>Beat</th><th>Energy</th><th>Music / sound</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">0:00–0:18</td><td>Cold open (the zero)</td><td>Cold, still</td><td>Room tone only. Music enters on the wordmark, low.</td></tr>
+        <tr><td class="mono">0:18–1:10</td><td>Idea + three gates</td><td>Building</td><td>Steady pulse, rising. Tempo lifts at "we predict it instead."</td></tr>
+        <tr><td class="mono">1:10–1:30</td><td>Blind line-up (freeze)</td><td>Suspended</td><td>Drop to a single held note under the freeze. Deliberate silence.</td></tr>
+        <tr><td class="mono">1:30–1:52</td><td>The reveal + split-screen</td><td>Peak</td><td>Swell on <code>rank=1</code>. Biggest musical moment. Hold the matched frame.</td></tr>
+        <tr><td class="mono">1:52–2:28</td><td>Precision curve + new suspects</td><td>Confident</td><td>Warm, forward motion. Music supports, doesn't spike.</td></tr>
+        <tr><td class="mono">2:28–2:43</td><td>Claude as adversary</td><td>Sharp</td><td>Tighter, percussive under the three quick cards.</td></tr>
+        <tr><td class="mono">2:43–2:55</td><td>Clone &amp; close</td><td>Resolving</td><td>Resolve the theme. Land clean on the URL frame.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <ul class="tight">
+    <li><strong>Two silences are load-bearing:</strong> the cold-open zero (0:00) and the pre-reveal freeze (1:10). Do not fill them — the contrast is what makes the swell hit.</li>
+    <li><strong>Licensing:</strong> use a royalty-free / CC0 track (or a generated one) and credit it in the repo. A hackathon judge should never hit a copyright flag on the video.</li>
+    <li><strong>Ducking:</strong> auto-duck music −8 to −12 dB under every VO line so the honest qualifiers are always intelligible.</li>
+  </ul>
+</section>
+
+<!-- ============ SECTION 7: PREMISE-DEPENDENT LEDGER ============ -->
+<section>
+  <div class="sec-head">
+    <span class="sec-num">07</span>
+    <div>
+      <h2>Premise-dependent ledger</h2>
+      <p class="sec-sub">Everything here holds only IF the core scientific claims survive the separate fact-check. Each row names the assumption, the beat it touches, and the pre-planned swap if the assumption fails — so a science correction never forces a re-shoot from scratch.</p>
+    </div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Assumption</th><th>Beats at risk</th><th>If false — pre-planned swap</th></tr></thead>
+      <tbody>
+        <tr><td>AlphaGenome exposes a usable skeletal-lineage ATAC/DNase track (limb / MSC / osteoblast)</td><td class="mono">2, 3, 5</td><td>Relabel Gate 3 and the VO to lead with ChromBPNet limb/MSC/MG63; drop the AlphaGenome name from the skeletal-effect claim. Reveal still works — the blind machinery is engine-agnostic.</td></tr>
+        <tr><td>ENCODE has ~zero skeletal ATAC-seq (the cold-open premise)</td><td class="mono">1</td><td>Show the true small N and change VO to "almost nothing — none of it growth-plate." Never fabricate a zero on screen.</td></tr>
+        <tr><td>GDF5-GROW1 lands #1 (or top-3) with correct sign on the filmed run</td><td class="mono">4, 5</td><td>Use the §2 tiered fallback (top-3 → top-decile → honest miss). VO lines pre-written for each tier.</td></tr>
+        <tr><td>Capellini 2017 reports ~0.72× reduction for the derived GROW1 allele</td><td class="mono">5</td><td>If the exact figure differs, state the direction only ("derived allele reduces activity") and cite the correct value in the split-screen caption.</td></tr>
+        <tr><td>≥1 non-control candidate overlaps an OA GWAS credible set</td><td class="mono">7</td><td>Cut Beat 7 to its 8s short form; show top constrained/skeletal candidates without the GWAS claim; reallocate time to Beats 5 &amp; 8.</td></tr>
+        <tr><td>HACNS1 sign resolves POSITIVE as frozen</td><td class="mono">5</td><td>Let GROW1 + R4 carry the reveal; narrate HACNS1's mismatch as the honest edge case rather than claiming 3/3.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout amber" style="margin-top:20px">
+    <span class="ctag">The one rule that survives any premise failure</span>
+    <p>The demo's credibility is the honest register, not any single number. If a science claim weakens, <strong>weaken the claim on screen and keep filming</strong> — a judge rewards a team that shows the real result with its caveat over one that overclaims. Every fallback above trades a bolder claim for a true one, never the reverse.</p>
+  </div>
+</section>
+
+<footer>
+  <p class="mono">SKELETOME · demo production plan · execute top-to-bottom · ship before 2026-07-13 21:00 ET</p>
+  <p>Grounded in the shipped package: live run = <code>bash code/run.sh</code> (mock, offline, exit 0); reveal block = <code>aggregate.py · blind_gdf5_report()</code>; controls frozen in <code>make_demo_input.py</code>; gate = <code>constrained AND NOT gbgc_flag AND skeletal effect</code>. Premise-dependent items are flagged for the separate science fact-check.</p>
+</footer>
+</div>

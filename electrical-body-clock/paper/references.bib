@@ -1,0 +1,240 @@
+% references.bib — The Electrical Body Clock
+% Subsystem-resolved ECG aging clocks (Act I, PTB-XL) + organ-resolved
+% physiological aging and mortality (Act II, NHANES).
+% All entries resolved and verified against CrossRef/OpenAlex.
+% UTF-8; compile with bibtex (\bibliographystyle{unsrt}) or biber.
+
+
+
+%% ===== ECG deep-learning age (whole-signal lineage) =====
+@article{attia2019ecgage,
+  author  = {Attia, Zachi I and Friedman, Paul A and Noseworthy, Peter A and Lopez-Jimenez, Francisco and Ladewig, Dorothy J and Satam, Gaurav and Pellikka, Patricia A and Munger, Thomas M and Asirvatham, Samuel J and Scott, Christopher G and Carter, Rickey E and Kapa, Suraj},
+  title   = {Age and Sex Estimation Using Artificial Intelligence From Standard 12-Lead ECGs},
+  journal = {Circ Arrhythm Electrophysiol},
+  year    = {2019},
+  volume  = {12},
+  number  = {9},
+  pages   = {e007284},
+  doi     = {10.1161/CIRCEP.119.007284},
+  pmid    = {31450977},
+  pmcid   = {PMC7661045},
+}
+
+@article{lima2021ecgage,
+  author  = {Lima, Emilly M and Ribeiro, Antônio H and Paixão, Gabriela M M and Ribeiro, Manoel Horta and Pinto-Filho, Marcelo M and Gomes, Paulo R and Oliveira, Derick M and Sabino, Ester C and Duncan, Bruce B and Giatti, Luana and Barreto, Sandhi M and Meira, Wagner and others},
+  title   = {Deep neural network-estimated electrocardiographic age as a mortality predictor},
+  journal = {Nat Commun},
+  year    = {2021},
+  volume  = {12},
+  number  = {1},
+  pages   = {5117},
+  doi     = {10.1038/s41467-021-25351-7},
+  pmid    = {34433816},
+  pmcid   = {PMC8387361},
+}
+
+@article{ladejobi2021ecgage,
+  author  = {Ladejobi, Adetola O and Medina-Inojosa, Jose R and Shelly Cohen, Michal and Attia, Zachi I and Scott, Christopher G and LeBrasseur, Nathan K and Gersh, Bernard J and Noseworthy, Peter A and Friedman, Paul A and Kapa, Suraj and Lopez-Jimenez, Francisco},
+  title   = {The 12-lead electrocardiogram as a biomarker of biological age},
+  journal = {European Heart Journal - Digital Health},
+  year    = {2021},
+  volume  = {2},
+  number  = {3},
+  pages   = {379--389},
+  doi     = {10.1093/ehjdh/ztab043},
+}
+
+@article{barros2024ecgage,
+  author  = {Barros, Andrew and German Mesner, Ian and Nguyen, N Rich and Moorman, J Randall},
+  title   = {Age prediction from 12-lead electrocardiograms using deep learning: a comparison of four models on a contemporary, freely available dataset},
+  journal = {Physiol Meas},
+  year    = {2024},
+  volume  = {45},
+  number  = {8},
+  pages   = {08NT01},
+  doi     = {10.1088/1361-6579/ad6746},
+  pmid    = {39048099},
+  pmcid   = {PMC11334242},
+}
+
+@article{wang2025ecgage,
+  author  = {Wang, Jiahao and Yan, Li and Liu, Yaqi and Wu, Jian and Yu, Xiankai and Lu, Weiwei and Wang, Mingjie and Cai, Wenjie},
+  title   = {Improving age prediction using ECG signals: Insights into lifestyle impacts},
+  journal = {J Electrocardiol},
+  year    = {2025},
+  volume  = {92},
+  pages   = {154083},
+  doi     = {10.1016/j.jelectrocard.2025.154083},
+  pmid    = {40716194},
+}
+
+
+%% ===== Datasets =====
+@article{wagner2020ptbxl,
+  author  = {Wagner, Patrick and Strodthoff, Nils and Bousseljot, Ralf-Dieter and Kreiseler, Dieter and Lunze, Fatima I and Samek, Wojciech and Schaeffter, Tobias},
+  title   = {PTB-XL, a large publicly available electrocardiography dataset},
+  journal = {Sci Data},
+  year    = {2020},
+  volume  = {7},
+  number  = {1},
+  pages   = {154},
+  doi     = {10.1038/s41597-020-0495-6},
+  pmid    = {32451379},
+  pmcid   = {PMC7248071},
+}
+
+@article{goldberger2000physionet,
+  author  = {Goldberger, Ary L. and Amaral, Luis A. N. and Glass, Leon and Hausdorff, Jeffrey M. and Ivanov, Plamen Ch. and Mark, Roger G. and Mietus, Joseph E. and Moody, George B. and Peng, Chung-Kang and Stanley, H. Eugene},
+  title   = {{PhysioBank, PhysioToolkit, and PhysioNet}: components of a new research resource for complex physiologic signals},
+  journal = {Circulation},
+  year    = {2000},
+  volume  = {101},
+  number  = {23},
+  pages   = {e215--e220},
+  doi     = {10.1161/01.CIR.101.23.e215},
+}
+
+
+%% ===== Software =====
+@article{makowski2021neurokit2,
+  author  = {Makowski, Dominique and Pham, Tam and Lau, Zen J and Brammer, Jan C and Lespinasse, François and Pham, Hung and Schölzel, Christopher and Chen, S H Annabel},
+  title   = {NeuroKit2: A Python toolbox for neurophysiological signal processing},
+  journal = {Behav Res Methods},
+  year    = {2021},
+  volume  = {53},
+  number  = {4},
+  pages   = {1689--1696},
+  doi     = {10.3758/s13428-020-01516-y},
+  pmid    = {33528817},
+}
+
+@article{davidson2019lifelines,
+  author  = {Davidson-Pilon, Cameron},
+  title   = {lifelines: survival analysis in Python},
+  journal = {Journal of Open Source Software},
+  year    = {2019},
+  volume  = {4},
+  number  = {40},
+  pages   = {1317},
+  doi     = {10.21105/joss.01317},
+}
+
+
+%% ===== Age-gap / biological-age methodology =====
+@article{cole2018brainage,
+  author  = {Cole, J H and Ritchie, S J and Bastin, M E and Valdés Hernández, M C and Muñoz Maniega, S and Royle, N and Corley, J and Pattie, A and Harris, S E and Zhang, Q and Wray, N R and Redmond, P and others},
+  title   = {Brain age predicts mortality},
+  journal = {Mol Psychiatry},
+  year    = {2017},
+  volume  = {23},
+  number  = {5},
+  pages   = {1385--1392},
+  doi     = {10.1038/mp.2017.62},
+  pmid    = {28439103},
+  pmcid   = {PMC5984097},
+}
+
+@article{beheshti2019biascorr,
+  author  = {Beheshti, Iman and Nugent, Scott and Potvin, Olivier and Duchesne, Simon},
+  title   = {Bias-adjustment in neuroimaging-based brain age frameworks: A robust scheme},
+  journal = {NeuroImage: Clinical},
+  year    = {2019},
+  volume  = {24},
+  pages   = {102063},
+  doi     = {10.1016/j.nicl.2019.102063},
+}
+
+@article{delange2020biascorr,
+  author  = {de Lange, Ann-Marie G and Cole, James H},
+  title   = {Commentary: Correction procedures in brain-age prediction},
+  journal = {Neuroimage Clin},
+  year    = {2020},
+  volume  = {26},
+  pages   = {102229},
+  doi     = {10.1016/j.nicl.2020.102229},
+  pmid    = {32120292},
+  pmcid   = {PMC7049655},
+}
+
+@article{zhang2023residualbias,
+  author  = {Zhang, Biao and Zhang, Shuqin and Feng, Jianfeng and Zhang, Shihua},
+  title   = {Age-level bias correction in brain age prediction},
+  journal = {NeuroImage: Clinical},
+  year    = {2023},
+  volume  = {37},
+  pages   = {103319},
+  doi     = {10.1016/j.nicl.2023.103319},
+}
+
+
+%% ===== Confounding and causal-inference design =====
+@article{westreich2013table2,
+  author  = {Westreich, D. and Greenland, S.},
+  title   = {The Table 2 Fallacy: Presenting and Interpreting Confounder and Modifier Coefficients},
+  journal = {American Journal of Epidemiology},
+  year    = {2013},
+  volume  = {177},
+  number  = {4},
+  pages   = {292--298},
+  doi     = {10.1093/aje/kws412},
+}
+
+
+%% ===== Multi-organ physiological aging (Act II bridge) =====
+@article{tian2023organage,
+  author  = {Tian, Ye Ella and Cropley, Vanessa and Maier, Andrea B and Lautenschlager, Nicola T and Breakspear, Michael and Zalesky, Andrew},
+  title   = {Heterogeneous aging across multiple organ systems and prediction of chronic disease and mortality},
+  journal = {Nat Med},
+  year    = {2023},
+  volume  = {29},
+  number  = {5},
+  pages   = {1221--1231},
+  doi     = {10.1038/s41591-023-02296-6},
+  pmid    = {37024597},
+}
+
+@article{oh2023organage,
+  author  = {Oh, Hamilton Se-Hwee and Rutledge, Jarod and Nachun, Daniel and Pálovics, Róbert and Abiose, Olamide and Moran-Losada, Patricia and Channappa, Divya and Urey, Deniz Yagmur and Kim, Kate and Sung, Yun Ju and Wang, Lihua and Timsina, Jigyasha and Western, Dan and Liu, Menghan and Kohlfeld, Pat and Budde, John and Wilson, Edward N. and Guen, Yann and Maurer, Taylor M. and Haney, Michael and Yang, Andrew C. and He, Zihuai and Greicius, Michael D. and Andreasson, Katrin I. and Sathyan, Sanish and Weiss, Erica F. and Milman, Sofiya and Barzilai, Nir and Cruchaga, Carlos and Wagner, Anthony D. and Mormino, Elizabeth and Lehallier, Benoit and Henderson, Victor W. and Longo, Frank M. and Montgomery, Stephen B. and Wyss-Coray, Tony},
+  title   = {Organ aging signatures in the plasma proteome track health and disease},
+  journal = {Nature},
+  year    = {2023},
+  volume  = {624},
+  number  = {7990},
+  pages   = {164--172},
+  doi     = {10.1038/s41586-023-06802-1},
+}
+
+
+%% ===== Statistics =====
+@article{benjamini1995fdr,
+  author  = {Benjamini, Yoav and Hochberg, Yosef},
+  title   = {Controlling the False Discovery Rate: A Practical and Powerful Approach to Multiple Testing},
+  journal = {Journal of the Royal Statistical Society Series B: Statistical Methodology},
+  year    = {1995},
+  volume  = {57},
+  number  = {1},
+  pages   = {289--300},
+  doi     = {10.1111/j.2517-6161.1995.tb02031.x},
+}
+
+@article{harrell1996cindex,
+  author  = {Harrell, Frank E. and Lee, Kerry L. and Mark, Daniel B.},
+  title   = {Multivariable prognostic models: issues in developing models, evaluating assumptions and adequacy, and measuring and reducing errors},
+  journal = {Statistics in Medicine},
+  year    = {1996},
+  volume  = {15},
+  number  = {4},
+  pages   = {361--387},
+  doi     = {10.1002/(SICI)1097-0258(19960229)15:4<361::AID-SIM168>3.0.CO;2-4},
+}
+
+@article{levey2009ckdepi,
+  author  = {Levey, Andrew S. and Stevens, Lesley A. and Schmid, Christopher H. and Zhang, Yaping (Lucy) and Castro, Alejandro F. and Feldman, Harold I. and Kusek, John W. and Eggers, Paul and Van Lente, Frederick and Greene, Tom and Coresh, Josef},
+  title   = {A New Equation to Estimate Glomerular Filtration Rate},
+  journal = {Annals of Internal Medicine},
+  year    = {2009},
+  volume  = {150},
+  number  = {9},
+  pages   = {604--612},
+  doi     = {10.7326/0003-4819-150-9-200905050-00006},
+}
