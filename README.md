@@ -4,9 +4,31 @@
 
 **Author:** Jaron Mar · University of Miami
 
-One research program, two arms. Both rest on the same computational-biology
-method — and the shared method *is* the contribution. The arms differ only in
-the system they resolve: the **aging heart** and the **evolving genome**.
+This repository is a single hackathon research program built around one
+computational-biology method, applied to two very different systems. Biology
+routinely compresses a complex system into a single aggregate score — one
+"ECG-age" for the whole heart, one undifferentiated set of "human accelerated
+regions" assayed in a single cell type. That compression is convenient, but it
+hides *where* a signal actually comes from, and it makes a real biological
+effect hard to separate from a confound. The goal here is the opposite: take
+the monolithic signal apart into the distinct biological substrates that
+generate it, model each one on its own, and then show the resolution is both
+real and useful.
+
+Applied to the **aging heart**, the method decomposes a single ECG "age" into
+four separate subsystem clocks — atria, conduction axis, ventricle, and
+repolarization — and shows the resulting fingerprint localizes disease to its
+correct electrical substrate, while the same organ-age-gap idea, carried to a
+national cohort, predicts all-cause mortality. Applied to the **evolving
+genome**, the same recipe produces the first in-silico skeletal variant-effect
+screen of human accelerated regions: it resolves their regulatory effect to
+bone- and cartilage-relevant cell contexts — a lineage every prior HAR reporter
+assay skipped — separates the majority that are evolutionary noise from the
+genuinely skeletal-regulatory minority, and validates itself by blindly
+re-discovering a known human skeletal enhancer. **The novelty is the method** —
+substrate resolution plus blind-control validation — shown to hold across two
+organ systems, two data modalities, and two populations; each arm also lands a
+concrete first in its own field.
 
 ---
 
