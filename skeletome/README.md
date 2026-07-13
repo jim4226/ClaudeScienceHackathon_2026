@@ -15,7 +15,8 @@ substitutions.
 
 ## What is real vs. illustrative
 
-**Real (committed result tables, from public reference data):**
+**Real (committed result tables in [`results/`](results/), from public reference data
+and a real Borzoi run):**
 - The **substitution catalogue** — 1,955 human-specific substitutions across the
   312 Zoonomia HARs (UCSC `hars312`, Keough 2023, doi:10.1126/science.abm1696).
 - **Constraint** from the 241-mammal Zoonomia Cactus alignment phyloP
@@ -23,8 +24,16 @@ substitutions.
 - The **gBGC discriminator** (48% weak→strong, 35% strong→weak, 17% neutral).
 - **GWAS proximity** to osteoarthritis / bone-mineral-density credible sets
   (10 HARs within 25 kb; 0 exact-base overlaps).
-- The predicted **skeletal-minus-neural accessibility contrast** per candidate
-  (`skeletome_top_candidates.csv`), spanning −2.45 to 4.69.
+- The predicted **skeletal-minus-neural accessibility contrast** for every one of
+  the 1,958 substitutions ([`results/borzoi_scores_full.csv`](results/borzoi_scores_full.csv)),
+  spanning −2.45 to 4.69, with the top candidates in
+  [`results/skeletome_top_candidates.csv`](results/skeletome_top_candidates.csv) and
+  the run summary in [`results/skeletome_pipeline_summary.json`](results/skeletome_pipeline_summary.json).
+  These are genuine Borzoi (`johahi/borzoi-replicate-0`) sequence-to-coverage
+  contrasts over 16 skeletal-lineage vs 81 neural accessibility tracks — the engine
+  is [`claude_science_package/code/borzoi_score.py`](claude_science_package/code/borzoi_score.py);
+  they are **not** produced by the offline mock below (whose schema is entirely
+  disjoint from these tables).
 - The **honest negative:** the 10 GWAS-proximal HARs are not significantly more
   skeletal-specific than matched controls (matched permutation null, 50,000 draws,
   p = 0.24).

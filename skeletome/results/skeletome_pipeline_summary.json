@@ -1,0 +1,68 @@
+{
+  "n_hars": 312,
+  "n_substitutions_har": 1955,
+  "n_substitutions_total_incl_controls": 1958,
+  "subs_per_har": {
+    "mean": 6.27,
+    "max": 38,
+    "min": 0,
+    "hars_with_subs": 312
+  },
+  "constraint": {
+    "phylop_gt_2_27": 1208,
+    "phylop_gt_2_27_frac": 0.618,
+    "phylop_gt_1_6": 1463,
+    "phylop_gt_1_6_frac": 0.748
+  },
+  "gbgc": {
+    "W_to_S": 936,
+    "S_to_W": 688,
+    "neutral": 331,
+    "W_to_S_fraction": 0.479
+  },
+  "candidates": 722,
+  "gdf5_controls": {
+    "rs4911178_GROW1": {
+      "chrom": "chr20",
+      "pos_hg38": 35364817,
+      "ref": "G",
+      "alt": "A",
+      "phylop_241way": 7.036,
+      "gbgc": "S->W",
+      "survives_constraint": true,
+      "candidate": true
+    },
+    "rs143384_GDF5_5UTR": {
+      "chrom": "chr20",
+      "pos_hg38": 35437976,
+      "ref": "G",
+      "alt": "A",
+      "phylop_241way": 4.957,
+      "gbgc": "S->W",
+      "survives_constraint": true,
+      "candidate": true
+    },
+    "rs6060369_GDF5prom": {
+      "chrom": "chr20",
+      "pos_hg38": 35319358,
+      "ref": "T",
+      "alt": "C",
+      "phylop_241way": -0.071,
+      "gbgc": "W->S",
+      "survives_constraint": false,
+      "candidate": false
+    }
+  },
+  "gdf5_survives_constraint": true,
+  "gwas_overlap": {
+    "oa_variants": 936,
+    "bmd_variants": 903,
+    "unique_total": 1841,
+    "hars_within_25kb_of_oabmd": 10,
+    "priority_hars_candidate_and_near": 10,
+    "exact_base_overlaps": 0
+  },
+  "phylop_source": "https://hgdownload.soe.ucsc.edu/goldenPath/hg38/cactus241way/cactus241way.phyloP.bw",
+  "alignment_source": "UCSC cactus241wayBM (Zoonomia 241-mammal Cactus)",
+  "har_source": "UCSC track hars312 (Keough 2023 Table S1, doi:10.1126/science.abm1696)"
+}
