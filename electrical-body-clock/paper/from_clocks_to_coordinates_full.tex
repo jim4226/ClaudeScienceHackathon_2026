@@ -80,7 +80,7 @@ geometry frozen on CODE-15 \emph{before any outcome was read}. The radius \D\ wa
 single prespecified confirmatory mortality test (hazard ratio \num{1.01} per SD, 95\% CI
 \numrange{0.98}{1.04}, $p=\num{0.48}$; $n=\num{74715}$, \num{2583} deaths)---the honest negative
 that motivates a signed analysis. A randomized $I_{\text{Kr}}$ blocker (dofetilide) displaced the
-ST-T repolarization clock ($+\num{4.2}$~SD$\cdot$h, false-discovery-rate $p=\num{0.002}$),
+ST-T repolarization clock ($+\num{4.2}$~SD$\cdot$h, FDR-adjusted $q=\num{0.002}$),
 defining a covariance-scaled signed \emph{direction} $\mathbf{w}_{I_{\text{Kr}}}$---the coordinate
 the unsigned radius discards. A second $I_{\text{Kr}}$ blocker (quinidine, $+\num{0.83}$ on the frozen axis) gave
 within-cohort held-mechanism support, while the active multichannel comparators
@@ -91,14 +91,15 @@ carried into an independent external cohort (Chapman--Shaoxing/Ningbo, $n=\num{4
 QT-extension cases), the direction added \emph{conditional} information about physician-assigned
 QT-interval extension beyond conventional intervals, \A\ and \D\ (fully adjusted odds ratio
 \num{1.23} per SD, 95\% CI \numrange{1.10}{1.36}, $p=\num{1.9e-4}$; marginally null, odds ratio
-\num{1.00}---a suppression effect). The shared axis \A\ was separately robust and
+\num{1.00}---an adjustment-dependent, potentially model-dependent association consistent with
+statistical suppression). The shared axis \A\ was separately robust and
 mortality-associated (development hazard ratio \num{1.22} per SD) and generalized to whole-body
 organ-system aging (NHANES, $+\num{1.21}$ per SD); the underlying whole-ECG clock additionally
 reconstructed on a geographically distinct cohort ($r=\num{0.646}$ with chronological age),
 whereas \A\ itself, a residual over age-adapted gaps, correlates with age only weakly there
 ($r=\num{0.26}$). Supporting analyses posed related coordinate-based questions at other
 biological scales---whole-body CT and brain MRI---using scale-appropriate representations rather
-than the electrical (\A/\D/\S) geometry itself; a separate exploratory evolutionary-genomics
+than the electrical (\A/\D)/signed-direction geometry itself; a separate exploratory evolutionary-genomics
 screen scored \num{1955} substitutions from the \num{312}-element Zoonomia HAR catalogue and found
 no matched enrichment near skeletal GWAS loci ($p=\num{0.24}$), yielding hypotheses rather than
 validated regulatory findings. Biological age is not one clock but a direction in a state space.
@@ -195,9 +196,12 @@ direction in a state space.
 \section{Part~I --- The electrical witness: a shared axis and an orthogonal disagreement radius}
 \label{sec:parti}
 
-Part~I develops the study's methodological core in full: independent age clocks for the
+Part~I develops the study's methodological core in full: separately trained age clocks for the
 four electrical phases of the heartbeat, compressed into two orthogonal coordinates under a frozen,
-outcome-blind geometry, and then carried unchanged to whole-body and brain-imaging scales.
+outcome-blind geometry. The supporting scales then pose analogous shared-axis/disagreement
+questions with scale-appropriate constructions---the brain-imaging arm reusing the same
+covariance-normalized Mahalanobis radius, the others adapting it---rather than instantiating one
+identical geometry throughout.
 
 \subsection{Two coordinates from four phase clocks}
 \label{sec:construct}
@@ -398,7 +402,7 @@ effect---so it provides no positive external support for a transportable phase-d
 effect rather than firm evidence against one; a better-powered external replication is
 required.
 
-\subsection{The signed coordinate the radius discards defines a transportable perturbation direction}
+\subsection{An orientation the radius discards defines a transportable perturbation direction}
 \label{sec:transport}
 
 That the radius \D\ is null on every confirmatory-grade endpoint---structure, acute
@@ -536,8 +540,8 @@ age clock transferred at $r=\num{0.64}$ and all four phase clocks transferred po
 ($n=\num{44595}$ with usable age; QRS $r=\num{0.57}$, P $r=\num{0.52}$, ST-T $r=\num{0.46}$,
 AV $r=\num{0.34}$). On the subset entering the disagreement-geometry analysis
 ($n=\num{44550}$ after \D-score quality control), the shared axis and disagreement radius
-were nearly uncorrelated ($r=-\num{0.17}$), as expected from their construction on
-orthogonal subspaces. External disagreement was lowest in atrial-fibrillation/flutter records,
+were empirically nearly uncorrelated ($r=-\num{0.17}$), consistent with \A\ being orthogonal to
+the contrast subspace by construction. External disagreement was lowest in atrial-fibrillation/flutter records,
 consistent with delineation-driven behavior rather than a coordination signal. These
 cohorts carry no mortality follow-up comparable to CODE-15, so this establishes generality
 of the age-structure geometry only, not an external mortality replication
@@ -613,14 +617,14 @@ outcome? To probe this prospectively, the identical shared-axis/disagreement
 construction was applied to a third scale---brain imaging---with a motor outcome and a fully
 prespecified, hash-locked, outcome-blind protocol (Methods). In the Aging Brain Cohort
 (AABC / HCP-Aging Release~2; \num{1396} adults, \num{2878} visits, controlled access),
-four independent brain-age clocks were trained on distinct imaging views---cortical
-\emph{structure}, \emph{myelin} (T1w/T2w), \emph{perfusion} (arterial spin labeling) and
-\emph{function} (resting-state fMRI)---the geometry was frozen, and only then was a
+four separately trained, channel-specific brain-age clocks were fit on complementary imaging
+modalities---cortical \emph{structure}, \emph{myelin} (T1w/T2w), \emph{perfusion} (arterial spin
+labeling) and \emph{function} (resting-state fMRI)---the geometry was frozen, and only then was a
 locomotor outcome opened. All four clocks recovered chronological age well on held-out data
 (Pearson $r=\num{0.59}$, \num{0.51}, \num{0.51} and \num{0.50}), passing the
-pre-specified $r\ge\num{0.20}$ gate, and the shared axis and disagreement radius were
-nearly uncorrelated ($r=-\num{0.03}$), as expected from their construction on orthogonal
-subspaces (Figs.~\ref{fig:s5}--\ref{fig:s8}).
+pre-specified $r\ge\num{0.20}$ gate. The shared axis is orthogonal to the contrast subspace by
+construction, and the shared axis and disagreement radius were empirically nearly uncorrelated
+($r=-\num{0.03}$; Figs.~\ref{fig:s5}--\ref{fig:s8}).
 
 The prespecified primary test---whether baseline brain-channel disagreement predicts
 subsequent annualized decline in 4-metre gait speed, beyond the shared axis, baseline
@@ -649,9 +653,10 @@ coordinate was rebuilt from raw voxels in a fully independent pipeline: all \num
 T1-weighted scans of the open-access LEMON cohort (\num{151} younger, 20--35~y; \num{69}
 older, 55--80~y) were processed end-to-end into four \emph{complementary} T1-derived
 estimates of structural brain age---a deep brain-age regression, gray-matter fraction, the
-ventricle--brain ratio and the brain-tissue fraction (Methods)---and $\D$ was defined, exactly
-as elsewhere, as each brain's internal inconsistency across those four oriented, cohort-standardized
-views (Fig.~\ref{fig:lemon}). Because the age clock carries a domain-shift bias across the
+ventricle--brain ratio and the brain-tissue fraction (Methods)---and a within-brain dispersion
+coordinate was defined as the standard deviation across those four oriented, cohort-standardized
+views: a simpler construct check of internal inconsistency, not the covariance-normalized
+Mahalanobis radius \D\ used in the electrical, organ-system and AABC arms (Fig.~\ref{fig:lemon}). Because the age clock carries a domain-shift bias across the
 MP2RAGE acquisition (rank $r=\num{0.95}$ against binned age but a compressed slope; Fig.~\ref{fig:lemonval}),
 the test was pre-specified on the bias-invariant young-versus-older \emph{difference} in $\D$
 rather than on absolute values. The four clocks agree closely in younger brains but diverge in
@@ -671,7 +676,7 @@ widened sulci and thinned cortex that distinguish an older LEMON brain from a yo
 plainly evident on the segmented volumes themselves (Fig.~\ref{fig:lemonanat}).
 
 
-\clearpage
+\bigskip
 \section{Part~II --- A supporting structural atlas: a whole-body CT age clock and the skeleton as bridge organ}
 \label{sec:partii}
 
@@ -790,7 +795,7 @@ mind.
 
 
 
-\clearpage
+\bigskip
 \section{Part~III --- Supporting evolutionary-genomics screen: predicted skeletal-lineage effects in the Zoonomia HAR catalogue}
 \label{sec:partiii}
 
@@ -898,7 +903,7 @@ comparatively unexamined, is empirically the case.
 
 
 
-\clearpage
+\bigskip
 \section{Cross-scale synthesis}
 \label{sec:synthesis}
 
@@ -995,7 +1000,9 @@ covariance-normalized residual among slow organ-system clocks may behave differe
 from one among fast electrical-phase clocks---and that where a disagreement coordinate is
 informative is itself an empirical question, to be settled by prespecified tests rather
 than assumed. A prospective brain-imaging arm makes the same point in the opposite
-direction: applying the identical geometry to four imaging views of brain aging
+direction: applying the same shared-axis/disagreement construction---the identical
+covariance-normalized Mahalanobis radius, separately calibrated on the brain cohort---to four
+separately trained, channel-specific clocks across complementary imaging modalities of brain aging
 (structure, myelin, perfusion, function) and a longitudinal gait outcome, under a
 hash-locked outcome-blind protocol, returned a clean null on the prespecified test---brain-channel
 disagreement did not forecast motor decline, even though the underlying brain-age clocks
@@ -1491,10 +1498,12 @@ with the ANTsX ecosystem \citep{tustison2021antsx}: a deep brain-age regression
 \citep{bashyam2020deepbrainnet}; gray-matter fraction from a six-tissue \texttt{deep\_atropos}
 segmentation; the ventricle--brain ratio from a DKT parcellation; and the brain-tissue fraction
 (segmented tissue over total intracranial volume). Each view was oriented so that higher means
-older-appearing and $z$-scored across the cohort, and the disagreement coordinate was defined,
-exactly as in the electrical and organ-system arms, as the standard deviation across a subject's
-four oriented $z$-scores---a mean-invariant measure of internal inconsistency between the clocks,
-not distance from the cohort center. The four views are complementary rather than statistically
+older-appearing and $z$-scored across the cohort, and a within-brain dispersion coordinate was
+defined as the standard deviation across a subject's four oriented $z$-scores---a mean-invariant
+measure of internal inconsistency between the clocks, not distance from the cohort center. This is
+a deliberately simpler construct check than the covariance-normalized Mahalanobis radius \D\ used
+in the electrical, organ-system and AABC arms; it shares the shared-axis/disagreement motivation
+but not the exact metric. The four views are complementary rather than statistically
 independent: all are derived from the same T1-weighted acquisition and are therefore correlated,
 so their disagreement measures within-modality inconsistency across analysis views, not agreement
 between independently acquired measurements. Because the deep brain-age clock was trained on conventional
@@ -1789,9 +1798,10 @@ while the non-$I_{\text{Kr}}$ comparators do not (ranolazine $+\num{0.21}$, vera
 $+\num{0.12}$; intervals include zero). \textbf{(c)}~Geometry: in the raw whitened coordinates, for every exam the signed
 score is bounded by the unsigned radius, $|S_{\text{raw}}|\le\D_{\text{raw}}$ (the standardized
 $S_{I_{\text{Kr}}}$ and \D\ are separately $z$-scored, so the bound is a fact about the raw
-geometry, not the standardized scores). The radius keeps the
-magnitude and discards the sign; the perturbation axis is precisely the discarded
-coordinate. The frozen axis was carried into an independent external cohort
+geometry, not the standardized scores). The radius retains contrast magnitude while
+discarding all angular orientation in the whitened contrast space; $S_{I_{\text{Kr}}}$ retains
+one exploratory projection onto the perturbation-defined direction, one of the orientations the
+radius collapses. The frozen axis was carried into an independent external cohort
 (Chapman--Shaoxing/Ningbo), where it added conditional information about physician-assigned
 QT-interval extension beyond conventional intervals, \A\ and \D\ (fully adjusted odds ratio
 \num{1.23} per SD, $p=\num{1.9e-4}$; \S\ref{sec:transport}).}
@@ -2150,8 +2160,8 @@ hash-locked, outcome-blind protocol (\S\ref{sec:neuromethods}; \S\ref{sec:neuro}
 result was a clean null on the prespecified test: baseline brain-channel disagreement did not
 predict subsequent 4-metre gait-speed decline (Fig.~\ref{fig:s8}). The four brain-age
 clocks were nonetheless strong (held-out $r$ \numrange{0.50}{0.59}), and the shared axis
-and disagreement radius were nearly uncorrelated, as their orthogonal-subspace construction
-implies (Fig.~\ref{fig:s7}), so the null
+and disagreement radius were empirically nearly uncorrelated (Fig.~\ref{fig:s7}), consistent with
+the shared axis being orthogonal to the contrast subspace by construction, so the null
 concerns the disagreement--gait link specifically, not clock quality.
 
 \begin{figure}[htbp]
@@ -2197,8 +2207,9 @@ gaps form the shared axis and disagreement radius.}
 \caption{\textbf{Brain shared axis and disagreement radius (real AABC Release~2,
 $n=\num{2469}$ complete four-channel visits).} \textbf{(a)} The shared brain-aging axis
 $\A_{\text{brain}}$ (mean of four channel age gaps) and the disagreement radius
-$\D_{\text{brain}}$ (standardized Mahalanobis contrast length) are nearly uncorrelated
-($r=-\num{0.03}$), reflecting their orthogonal-subspace construction. \textbf{(b)} Participants in the highest disagreement
+$\D_{\text{brain}}$ (standardized Mahalanobis contrast length) are empirically nearly uncorrelated
+($r=-\num{0.03}$), consistent with $\A_{\text{brain}}$ being orthogonal to the contrast subspace by
+construction. \textbf{(b)} Participants in the highest disagreement
 decile diverge sharply across channels (here a low functional age gap against older
 structure/myelin), whereas low-disagreement participants track together; the disagreement
 radius captures that within-person spread.}

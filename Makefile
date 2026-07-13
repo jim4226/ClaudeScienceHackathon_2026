@@ -15,7 +15,7 @@ TECTONIC ?= tectonic
 ARM := electrical-body-clock
 PAPER := $(ARM)/paper
 
-.PHONY: all verify demo-smoke paper manifest clean help
+.PHONY: all verify verify-root demo-smoke paper manifest clean help
 
 help:
 	@grep -E '^\t?#|^[a-zA-Z_-]+:' $(MAKEFILE_LIST) | sed 's/^/  /'
@@ -23,12 +23,19 @@ help:
 all: verify demo-smoke paper
 
 # ---------------------------------------------------------------- verify
-verify:
+verify: verify-root
 	$(PYTHON) $(ARM)/scripts/verify_release.py
 
-# regenerate the SHA-256 manifest (run after changing any released artifact)
+# verify the ROOT manifest (manuscript .tex/.bib, Skeletome tables + scorer,
+# root docs, build recipe, and the per-arm manifest itself)
+verify-root:
+	$(PYTHON) scripts/verify_root_manifest.py
+
+# regenerate BOTH SHA-256 manifests (run after changing any released artifact);
+# the arm manifest is regenerated first so the root manifest seals its new hash
 manifest:
 	$(PYTHON) $(ARM)/scripts/make_manifest.py
+	$(PYTHON) scripts/make_root_manifest.py
 
 # ---------------------------------------------------------------- demo
 demo-smoke:

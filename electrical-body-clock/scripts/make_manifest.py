@@ -28,14 +28,23 @@ FILES = [
     "demo/hf_space/hv_bundle/FROZEN_DISAGREEMENT_DEFINITIONS_RC2.json",
     "demo/hf_space/inference.py",
     "demo/hf_space/app.py",
+    # compiled PDFs
     "paper/from_clocks_to_coordinates_full.pdf",
     "paper/clocks_to_coordinates.pdf",
     "paper/manuscript.pdf",
+    # manuscript SOURCE + bibliography (reproducibility: the .tex must be sealed
+    # alongside the PDF so a reviewer can confirm the released source compiles it)
+    "paper/from_clocks_to_coordinates_full.tex",
+    "paper/clocks_to_coordinates.tex",
+    "paper/manuscript.tex",
+    "paper/references.bib",
+    "paper/references_c2c.bib",
+    "paper/TOOLCHAIN.md",
 ]
 
 # extensions worth hashing inside DIRS (skip caches, __pycache__, etc.)
 KEEP = {".json", ".csv", ".parquet", ".md", ".py", ".pt", ".hea", ".dat",
-        ".pdf", ".png"}
+        ".pdf", ".png", ".tex", ".bib"}
 
 
 def iter_files():
