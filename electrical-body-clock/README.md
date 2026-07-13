@@ -21,6 +21,18 @@ predictors in healthy people, read out the bias-corrected age-gap, and ask what 
 localizes to and what it predicts.* That recipe reproduces across two measurement
 modalities and two populations.
 
+> **Manuscripts.** This arm has two papers in [`paper/`](paper/):
+> [`clocks_to_coordinates.pdf`](paper/clocks_to_coordinates.pdf) is the **current
+> account** — it reframes the four subsystem clocks as a *shared aging axis A* and an
+> orthogonal *disagreement radius D*, reports the pre-registered CODE-15 mortality test
+> for D (null, HR 1.01/SD), and adds a controlled-perturbation result: a randomized IKr
+> blocker (dofetilide) displaces the ST–T repolarization clock, defining a signed
+> direction the unsigned radius discards, with external replication in Chapman–Shaoxing/
+> Ningbo (n = 44,550). [`manuscript.pdf`](paper/manuscript.pdf) is the original
+> disease-localization write-up whose numbers the `src/`, `figures/`, and `results/`
+> tables below directly reproduce. Read `clocks_to_coordinates` for the current science;
+> read `manuscript` for the fully-reproducible ladder + specificity results.
+
 ## The two acts
 
 ### Act I — the heart's electrical subsystems (PTB-XL)
@@ -70,10 +82,13 @@ electrical-body-clock/
 │   └── figures/            # figure-generation scripts
 ├── results/
 │   ├── act1_ecg/           # clock performance, specificity, bootstrap CIs (CSV/parquet)
+│   │   └── external_validation/  # Chapman–Shaoxing/Ningbo clock-transfer metrics
 │   └── act2_nhanes/        # Cox HRs, C-index ladder, smoking attribution
+│       └── robustness/     # cross-validated C-index folds, leave-one-system-out D
 ├── figures/                # publication figures (PNG) — Fig 1–7
 ├── demo/                   # interactive patient-fingerprint demo
-├── paper/                  # manuscript.tex/.pdf/.docx, references.bib
+├── paper/                  # clocks_to_coordinates.{tex,pdf} (current) + manuscript.{tex,pdf,docx}
+│                           #   + references.bib; figs_c2c/ holds current-paper figures
 └── data/                   # download scripts ONLY (no data redistributed)
 ```
 

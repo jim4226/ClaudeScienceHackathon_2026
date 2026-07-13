@@ -1,0 +1,78 @@
+{
+  "leave_one_system_out": {
+    "full6_D_HR": 1.213,
+    "full6_D_p": 3.06e-05,
+    "p_method": "design-t (df=47) two-sided; NOT the svycoxph summary Pr(>|z|) column which mis-reported drop-CV as 0.089",
+    "finding": "D_body mortality signal beyond age+sex+A_body is ROBUST to dropping ANY single organ system: all six leave-one-out versions significant at design-df p<0.05 (max p=0.0032, drop-Cardiovascular; others p<3e-3 to 5e-21). Dropping Cardiovascular attenuates D most (HR 1.29->1.09) -> the CV gap is D's single largest contributor, but the signal is genuinely multi-system and does not collapse on removing any one clock.",
+    "rows": [
+      {
+        "dropped": "Cardiovascular",
+        "D_HR": 1.09242953414462,
+        "D_lo": 1.03175409605436,
+        "D_hi": 1.15667317593916,
+        "z": 3.11225792254744,
+        "D_p_designt": 0.0031556044424335,
+        "sig_05": true
+      },
+      {
+        "dropped": "Metabolic",
+        "D_HR": 1.19758018126671,
+        "D_lo": 1.16000561371468,
+        "D_hi": 1.23637185338275,
+        "z": 11.3784124238462,
+        "D_p_designt": 4.2199203449804805e-15,
+        "sig_05": true
+      },
+      {
+        "dropped": "Renal",
+        "D_HR": 1.28539071589466,
+        "D_lo": 1.22657909738274,
+        "D_hi": 1.34702221490134,
+        "z": 10.7844035017143,
+        "D_p_designt": 2.6465688559179102e-14,
+        "sig_05": true
+      },
+      {
+        "dropped": "Hepatic",
+        "D_HR": 1.25654809439823,
+        "D_lo": 1.21686256366991,
+        "D_hi": 1.29752788907731,
+        "z": 14.3154383424282,
+        "D_p_designt": 9.34454062419439e-19,
+        "sig_05": true
+      },
+      {
+        "dropped": "Immune",
+        "D_HR": 1.11548887618466,
+        "D_lo": 1.0540989601138,
+        "D_hi": 1.1804540939471,
+        "z": 3.88416457806761,
+        "D_p_designt": 0.0003201156506431,
+        "sig_05": true
+      },
+      {
+        "dropped": "Hematologic",
+        "D_HR": 1.26493300638483,
+        "D_lo": 1.22880969244862,
+        "D_hi": 1.30211823724582,
+        "z": 16.3184503976526,
+        "D_p_designt": 5.45534810082858e-21,
+        "sig_05": true
+      }
+    ]
+  },
+  "survey_weighted_cv_cindex": {
+    "method": "10-fold CV, folds at PSU level within strata (clusters not split); svycoxph trained per fold; survey-weighted concordance (reverse=TRUE) on held-out fold",
+    "B0_age_sex": 0.8127,
+    "B1_plus_A": 0.8262,
+    "B2_plus_D": 0.8304,
+    "deltaC_A": 0.0135,
+    "deltaC_D": 0.0042,
+    "deltaC_D_paired_t_p": 0.0004991,
+    "deltaC_D_CI": [
+      0.0027,
+      0.0058
+    ],
+    "finding": "Out-of-fold survey-weighted deltaC(+D_body)=+0.0042 (per-fold paired-t p=5e-4, CI +0.0027..+0.0058), matching prior bootstrap +0.0041. D's mortality increment beyond A survives cross-validation under the survey design."
+  }
+}

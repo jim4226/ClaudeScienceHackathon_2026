@@ -1,0 +1,6 @@
+clock,n_raw,r_raw,R2_raw,MAE_raw,cal_slope_raw,cal_intercept_raw,CITL_raw,kind_raw,n_adapted,r_adapted,R2_adapted,MAE_adapted,cal_slope_adapted,cal_intercept_adapted,CITL_adapted,kind_adapted,MAE_Female,MAE_Male,R2_Female,R2_Male,n_Female,n_Male,r_Female,r_Male
+global,44595,0.6455,0.3773,10.899,0.4886,33.073,3.164,raw_prediction_vs_chronological_age,44595,0.6431,0.3305,12.331,0.5103,23.901,-4.735,frozen_CODE15_adapter_applied,11.467,10.459,0.3288,0.4125,19492.0,25103.0,0.6417,0.6584
+P,44595,0.5137,0.1953,12.992,0.3858,38.043,2.127,raw_prediction_vs_chronological_age,44595,0.5174,0.059,15.685,0.256,34.719,-8.789,frozen_CODE15_adapter_applied,13.364,12.704,0.162,0.217,19492.0,25103.0,0.5064,0.5219
+AV,44595,0.3329,0.029,13.898,0.1798,51.755,3.793,raw_prediction_vs_chronological_age,44595,0.3397,-0.1323,17.368,0.122,41.766,-9.58,frozen_CODE15_adapter_applied,14.182,13.677,-0.0031,0.0488,19492.0,25103.0,0.3375,0.3323
+QRS,44595,0.581,0.2897,11.895,0.4616,32.392,0.907,raw_prediction_vs_chronological_age,44595,0.574,0.0899,14.668,0.4506,23.622,-8.508,frozen_CODE15_adapter_applied,11.893,11.896,0.2934,0.2823,19492.0,25103.0,0.5915,0.576
+STT,44595,0.4629,0.0981,13.215,0.2482,50.376,6.412,raw_prediction_vs_chronological_age,44595,0.4606,0.015,15.915,0.2447,35.726,-8.446,frozen_CODE15_adapter_applied,14.21,12.443,-0.007,0.1772,19492.0,25103.0,0.4319,0.4957
