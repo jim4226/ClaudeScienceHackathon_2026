@@ -4,7 +4,7 @@
 
 [![CI](https://github.com/jim4226/ClaudeScienceHackathon_2026/actions/workflows/ci.yml/badge.svg)](https://github.com/jim4226/ClaudeScienceHackathon_2026/actions/workflows/ci.yml)
 
-**Author:** Jaron Mohammed · University of Miami
+**Author:** Jaron Mohammed 
 
 This repository is a single research program built around one idea: **the
 "biological age" a model reads off a physiological signal is better represented
