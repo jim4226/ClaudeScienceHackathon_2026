@@ -55,27 +55,40 @@ across two organ systems, two data modalities, and two populations.
 
 ## Arm I — the aging heart · [`electrical-body-clock/`](electrical-body-clock/)
 
-*Subsystem-resolved ECG aging clocks localize disease to its electrical
-substrate, and the same organ-resolved principle predicts mortality.*
+*A phase-resolved ECG-age representation hides mechanism-aligned physiological
+directions behind its scalar output — and a controlled human perturbation
+recovers one of them.*
 
 - **Decompose:** four disjoint 1D-CNN age clocks over the P wave, PR segment,
-  QRS complex, and ST–T segment of 21,373 adult PTB-XL ECGs.
-- **Localize (Act I — PTB-XL):** each subsystem carries a genuine but partial
-  age signal (test R²: QRS 0.54, ST–T 0.39, P 0.38, PR 0.24) — weaker than a
-  whole-strip global clock (R² 0.63, MAE 8.1 y), so no single subsystem holds
-  all cardiac age information. An FDR-controlled disease × subsystem matrix
-  localizes single-substrate diseases to their canonical subsystem:
-  bundle-branch block → QRS, ischemia → ST–T, AV block → PR.
-- **Localize (Act II — NHANES):** the same organ-age-gap principle predicts
-  all-cause mortality — hepatic HR 1.38, hematologic HR 1.36; C-index ladder
-  0.817 → 0.845 (ΔC +0.028).
-- **Validate:** two negative controls (device/site confound, mask-shuffle
-  leakage); an independent median-beat pipeline reproduces the ladder within
-  noise.
+  QRS complex, and ST–T segment (21,373 adult PTB-XL ECGs), reframed as a
+  *shared aging axis A* and an orthogonal *disagreement radius D*, with the
+  geometry frozen on CODE-15 before any outcome was read.
+- **Localize:** an FDR-controlled disease × subsystem matrix localizes
+  single-substrate diseases to their canonical subsystem (bundle-branch block →
+  QRS, ischemia → ST–T, AV block → PR); the same organ-age-gap principle carried
+  to NHANES predicts all-cause mortality (hepatic HR 1.38, hematologic HR 1.36;
+  C-index 0.817 → 0.845).
+- **The central result:** the unsigned radius D was *null* on its single
+  pre-registered CODE-15 mortality test (HR 1.01/SD, p = 0.48) — the honest
+  negative that motivates a *signed* analysis. A randomized IKr blocker
+  (dofetilide) displaces the ST–T repolarization clock, defining a
+  covariance-scaled signed direction the radius discards; frozen and carried
+  unchanged into an external cohort (Chapman–Shaoxing/Ningbo, n = 44,550), it
+  adds conditional information about physician-assigned QT-interval extension.
+- **Multiscale atlas (supporting):** the same A/D decomposition read at other
+  scales — a whole-body CT skeleton clock, an image-derived disagreement
+  coordinate from 220 real LEMON brain-MRI T1 volumes, and an in-silico genomic
+  screen — as a visually rich companion, explicitly exploratory, not
+  independent confirmation of the electrical result.
+- **Validate:** pre-registered outcome firewall; negative controls (device/site
+  confound, mask-shuffle leakage); an independent median-beat pipeline
+  reproduces the ladder within noise.
 
-Ships all source (`src/`), released result tables (`results/`), seven figures,
-a self-contained interactive demo (`demo/`), and the compiled paper
-(`paper/manuscript.{tex,pdf,docx}`). MIT.
+Ships all source (`src/`), released result tables (`results/`), figures, a
+self-contained interactive demo (`demo/`), and three papers in `paper/`: the
+current 54-page technical account (`from_clocks_to_coordinates_full`), its
+6-page judge-cut (`clocks_to_coordinates`), and the original reproducible
+disease-localization write-up (`manuscript`). MIT.
 
 ---
 

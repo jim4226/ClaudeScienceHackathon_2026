@@ -1,0 +1,189 @@
+{
+  "arm": "3_chapman_ningbo_phenotype",
+  "dataset": "ecg-arrhythmia 1.0.0 (Chapman-Shaoxing + Ningbo, combined)",
+  "label": "physician-assigned QT-interval extension, SNOMED 111975006",
+  "framing": "external phenotype test; result is CONDITIONAL/SUPPRESSION not simple separation (marginal S_IKr null)",
+  "scorer": "frozen S_IKr from PERTURBATION_TRANSPORT_LOCK.json; z faithfulness vs stored = 0.0",
+  "gate": {
+    "n_cases": 386,
+    "cases_required": 100,
+    "yield_frac": 0.993,
+    "yield_required": 0.7,
+    "passed": true
+  },
+  "primary_preregistered": {
+    "model": "qt_ext ~ S_IKr + age + sex + HR + QTc + QRS + whole_age + A + D",
+    "test": "1-df nested LRT for S_IKr",
+    "LR": 13.905,
+    "p_LRT": 0.000192,
+    "OR_per_SD": 1.225,
+    "OR_CI95": [
+      1.1,
+      1.364
+    ],
+    "N": 44550,
+    "n_cases": 386,
+    "verdict": "PASS"
+  },
+  "adjustment_ladder_marginal_to_full": {
+    "marginal": {
+      "LR": 0.0,
+      "p": 0.996,
+      "OR": 1.0,
+      "CIlo": 0.905,
+      "CIhi": 1.106,
+      "n": 44550,
+      "cases": 386
+    },
+    "partial_age_sex": {
+      "LR": 2.867,
+      "p": 0.0904,
+      "OR": 1.091,
+      "CIlo": 0.986,
+      "CIhi": 1.207,
+      "n": 44550,
+      "cases": 386
+    },
+    "partial_intervals": {
+      "LR": 7.202,
+      "p": 0.00728,
+      "OR": 1.153,
+      "CIlo": 1.039,
+      "CIhi": 1.279,
+      "n": 44550,
+      "cases": 386
+    },
+    "full": {
+      "LR": 13.905,
+      "p": 0.000192,
+      "OR": 1.225,
+      "CIlo": 1.1,
+      "CIhi": 1.364,
+      "n": 44550,
+      "cases": 386
+    },
+    "interpretation": "OR/p rise monotonically with adjustment (marginal null -> full p=2e-4): conditional/suppression, S_IKr is a SHAPE coordinate unmasked by QRS+A."
+  },
+  "firth_penalized": {
+    "OR": 1.2243618255591746,
+    "CIlo": 1.100768471165181,
+    "CIhi": 1.3618321374156126,
+    "wald_p": 0.00019270525150079696
+  },
+  "rhythm_exclusion_sensitivities": {
+    "excl_AFlutter_AFib": {
+      "LR": 6.059,
+      "p": 0.0138,
+      "OR": 1.177,
+      "CIlo": 1.033,
+      "CIhi": 1.342,
+      "n": 34877,
+      "cases": 227
+    },
+    "excl_SinusBrady": {
+      "LR": 2.773,
+      "p": 0.0959,
+      "OR": 1.125,
+      "CIlo": 0.979,
+      "CIhi": 1.291,
+      "n": 28052,
+      "cases": 245
+    },
+    "excl_both": {
+      "LR": 0.496,
+      "p": 0.481,
+      "OR": 0.931,
+      "CIlo": 0.763,
+      "CIhi": 1.136,
+      "n": 18379,
+      "cases": 86
+    },
+    "interpretation": "Effect holds excluding AFlutter/AFib (p=0.014) but attenuates to null excluding both flutter AND bradycardia (p=0.48, 86 cases). Signal is NOT independent of rhythm context; report as a limitation."
+  },
+  "per_site": {
+    "Ningbo": {
+      "LR": 9.668,
+      "p": 0.00188,
+      "OR": 1.198,
+      "CIlo": 1.069,
+      "CIhi": 1.344,
+      "n": 34343,
+      "cases": 329
+    },
+    "Chapman_Shaoxing": {
+      "LR": 5.584,
+      "p": 0.0181,
+      "OR": 1.444,
+      "CIlo": 1.059,
+      "CIhi": 1.967,
+      "n": 10207,
+      "cases": 57
+    },
+    "interpretation": "Ningbo (329 cases) independently confirms (p=0.0019, OR 1.20). Chapman-Shaoxing (57 cases) same direction, UNDERPOWERED (reported with CI, no pass/fail)."
+  },
+  "bootstrap_incremental_vs_scalars": {
+    "point_incremental_LR": {
+      "S_IKr": 13.91,
+      "QTc": 8.41,
+      "A": 10.37,
+      "D": 3.3
+    },
+    "S_IKr_incremental_LR_boot_mean": 15.34,
+    "S_IKr_incremental_LR_boot_CI95": [
+      2.86,
+      35.22
+    ],
+    "pairwise_diff_S_minus_X": {
+      "QTc_z": {
+        "mean_diff": 5.32271622448445,
+        "CIlo": -18.169540507456862,
+        "CIhi": 27.527860209404874,
+        "frac_S_greater": 0.7166666666666667
+      },
+      "A_z": {
+        "mean_diff": 3.9094585178225985,
+        "CIlo": -15.598038418520696,
+        "CIhi": 27.656172886244764,
+        "frac_S_greater": 0.6216666666666667
+      },
+      "D_z": {
+        "mean_diff": 11.056119056609784,
+        "CIlo": -5.185358466951606,
+        "CIhi": 32.9242668242542,
+        "frac_S_greater": 0.8983333333333333
+      }
+    },
+    "interpretation": "S_IKr incremental LR CI excludes 0 (adds real information). But S_IKr is NOT statistically distinguishable from QTc, A, or D (all pairwise diff CIs include 0). Do NOT claim S_IKr is 'stronger' than QTc or D."
+  },
+  "qtc_distribution_by_case": {
+    "cases": {
+      "count": 386.0,
+      "mean": 387.6,
+      "std": 102.6,
+      "min": 183.0,
+      "5%": 237.0,
+      "25%": 294.3,
+      "50%": 393.3,
+      "75%": 479.4,
+      "95%": 545.0,
+      "max": 575.8,
+      "frac_lt_350ms": 0.417,
+      "frac_gt_480ms": 0.249
+    },
+    "noncases": {
+      "count": 44164.0,
+      "mean": 403.7,
+      "std": 69.7,
+      "min": 125.0,
+      "5%": 272.1,
+      "25%": 372.4,
+      "50%": 412.2,
+      "75%": 442.9,
+      "95%": 495.6,
+      "max": 785.8,
+      "frac_lt_350ms": 0.186,
+      "frac_gt_480ms": 0.079
+    }
+  },
+  "label_quality_note": "42% of raw cases QTc<350ms; dominant rhythms AFlutter/SinusBrady where automated QT delineation fails. Reliable-QT subset filter (QTc 350-600, HR 40-120) is POST-HOC robustness, NOT preregistered."
+}

@@ -1,0 +1,64 @@
+{
+  "analysis": "Image-derived cross-view structural aging disagreement (LEMON T1)",
+  "cohort": {
+    "n_total": 220,
+    "n_young": 151,
+    "n_older": 69,
+    "young_def": "age bin lower<35",
+    "older_def": "age bin lower>=55",
+    "age_source": "LEMON 5-yr bins, midpoint proxy",
+    "completeness": "220/220 archived subjects processed (100%)"
+  },
+  "views": [
+    "deep_brain_age(DeepBrainNet)",
+    "gm_fraction(deep_atropos)",
+    "ventricle_brain_ratio(DKT)",
+    "brain_tissue_fraction(atropos/ICV)"
+  ],
+  "D_definition": "std across 4 age-oriented, cohort-z-scored views (mean-invariant, per-subject internal inconsistency)",
+  "primary_result": {
+    "D_young_mean": 0.3396,
+    "D_older_mean": 0.5167,
+    "diff": 0.1771,
+    "diff_95CI": [
+      0.112,
+      0.2423
+    ],
+    "mannwhitney_U": 7556.0,
+    "p_mannwhitney_1sided": 4.2632581600980455e-08,
+    "welch_t": 5.35,
+    "p_welch_2sided": 4.870681286772472e-07,
+    "cohens_d": 0.844
+  },
+  "controls": {
+    "permutation_p_5000": 0.0002,
+    "permutation_null_95CI": [
+      -0.0624,
+      0.0652
+    ],
+    "leave_one_view_out_p": {
+      "brain_age": 0.000633,
+      "gm_fraction": 0.0,
+      "ventricle_brain_ratio": 0.000502,
+      "brain_tissue_fraction": 0.0
+    },
+    "leave_one_view_out_max_p": 0.000633,
+    "D_range_form_p": 4.598379396713793e-08,
+    "extremity_adjusted": {
+      "model": "D ~ |overall_level| + older",
+      "beta_extremity": -0.0554,
+      "p_extremity": 0.0934,
+      "beta_older": 0.2105,
+      "p_older": 2.2674595792625943e-08
+    },
+    "within_older_age_spearman": {
+      "r": -0.0181,
+      "p": 0.8829
+    },
+    "whole_cohort_age_spearman": {
+      "r": 0.2666,
+      "p": 6.2e-05
+    }
+  },
+  "interpretation": "Four independent structural aging clocks agree in young brains but diverge in older brains. The effect is a young->older step change (no within-older gradient), survives dropping any single view, and remains after controlling for overall aging extremity -- genuine cross-scale disagreement, not uniform old-appearance. Image-native analogue of the project's disagreement coordinate D."
+}

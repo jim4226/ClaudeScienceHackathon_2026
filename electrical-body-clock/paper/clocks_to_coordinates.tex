@@ -1,21 +1,26 @@
 % Author normalized to 'Jaron Mar' for repo consistency (CITATION.cff/LICENSE).
 % Figure paths rewritten from Claude Science artifact markers to local figs_c2c/.
-\documentclass[11pt]{article}
+% JUDGE CUT (6 pp) — condensed companion to from_clocks_to_coordinates_full.pdf (54 pp).
+\documentclass[10pt]{article}
 % ==================================================================
-% JUDGE CUT — condensed companion to the full technical manuscript
-% "From Clocks to Coordinates" (manuscript_bodyvector.pdf, 53 pp).
-% Leads with the perturbation discovery. Every number is lifted verbatim
-% from the frozen artifacts cited in the full manuscript; nothing new is asserted.
+% JUDGE CUT v2 — condensed companion to the full technical manuscript
+% "From Clocks to Coordinates" (manuscript_bodyvector.pdf, 54 pp).
+% Redesigned for visual priority: the perturbation discovery leads, the
+% external-transport figure (Chapman) is promoted to a full panel, and
+% the multiscale atlas (CT skeleton + brain MRI) closes the account.
+% Every number is lifted verbatim from the frozen artifacts cited in the
+% full manuscript; nothing new is asserted. Six review blockers applied.
 % ==================================================================
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage[margin=0.9in]{geometry}
+\usepackage[margin=0.82in]{geometry}
 \usepackage{amsmath,amssymb}
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{siunitx}
 \usepackage{authblk}
 \usepackage{xcolor}
+\usepackage{tcolorbox}
 \usepackage[hidelinks]{hyperref}
 \hypersetup{
   pdftitle={From Clocks to Coordinates (judge cut)},
@@ -23,12 +28,35 @@
 }
 \usepackage[numbers,sort&compress]{natbib}
 \usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
 \captionsetup{font=small,labelfont=bf}
 \sisetup{detect-weight=true,detect-family=true}
+\usepackage{titlesec}
+\titlespacing*{\section}{0pt}{1.1ex plus .3ex}{0.7ex plus .2ex}
+\setlength{\textfloatsep}{7pt plus 2pt minus 2pt}
+\setlength{\floatsep}{6pt plus 2pt minus 2pt}
+\setlength{\intextsep}{6pt plus 2pt minus 2pt}
+\setlength{\parskip}{0pt}
+\renewcommand{\floatpagefraction}{0.85}
+\renewcommand{\topfraction}{0.92}
+\renewcommand{\bottomfraction}{0.7}
+\renewcommand{\textfraction}{0.08}
 \newcommand{\D}{\ensuremath{D}}
 \newcommand{\A}{\ensuremath{A}}
 \newcommand{\wikr}{\ensuremath{\mathbf{w}_{I_{\text{Kr}}}}}
 \newcommand{\Ikr}{\ensuremath{I_{\text{Kr}}}}
+
+% --- figure handles (resolved to frozen artifacts at build) ----------
+\newcommand{\figConcept}{figs_c2c/fig1_concept.pdf}
+\newcommand{\figArobust}{figs_c2c/fig2_A_robust.pdf}
+\newcommand{\figCompass}{figs_c2c/fig_perturbation_compass.pdf}
+\newcommand{\figChapman}{figs_c2c/fig_chapman_transport.pdf}
+\newcommand{\figDdissoc}{figs_c2c/fig3_D_dissociated.pdf}
+\newcommand{\figAtlas}{figs_c2c/fig5_atlas.pdf}
+\newcommand{\figSkeleton}{figs_c2c/fig_skeleton_aging.png}
+\newcommand{\figLemonAnat}{figs_c2c/fig3_segmentation_overlays.png}
+\newcommand{\figQR}{figs_c2c/repo_qr.png}
 
 \title{\textbf{From Clocks to Coordinates:}\\
 \textbf{Controlled Human Perturbations Reveal Hidden Directions in ECG Biological Age}\\[4pt]
@@ -39,30 +67,33 @@
 
 \begin{document}
 \maketitle
-\vspace{-2em}
+\vspace{-2.2em}
 
+% ===================== PAGE 1 — CLAIM + ABSTRACT =====================
 \begin{abstract}
 \noindent
 Neural ``ECG age'' and organ-age models return a single scalar, collapsing biophysically
-distinct processes into one number. This work shows biological age is better read as a
-\emph{direction} in a state space. Four phase-of-heartbeat age clocks compress into a
-\emph{shared axis} \A\ and an orthogonal \emph{disagreement radius} \D, with the geometry frozen
-on CODE-15 \emph{before any outcome was read}. The radius \D\ was null on its single
-pre-registered confirmatory mortality test (hazard ratio \num{1.01} per SD, 95\% CI
-\numrange{0.98}{1.04}, $p=\num{0.48}$)---the honest negative that motivates a signed analysis.
-A randomized \Ikr\ blocker (dofetilide) displaced the ST-T repolarization clock
-($+\num{4.2}$~SD$\cdot$h, false-discovery-rate $p=\num{0.002}$), defining a covariance-scaled
-signed \emph{direction} \wikr---the coordinate the unsigned radius discards. It was confirmed by
-a second \Ikr\ blocker (quinidine, $+\num{0.83}$) and was specific relative to non-\Ikr\
-comparators; direction-derivation is exploratory (Holm-adjusted permutation $p=\num{0.069}$).
-Frozen and carried into an independent external cohort (Chapman--Shaoxing/Ningbo,
-$n=\num{44550}$, \num{386} QT-extension cases), it added \emph{conditional} information about
-physician-assigned QT-interval extension beyond conventional intervals, \A\ and \D\ (fully
-adjusted odds ratio \num{1.23} per SD, $p=\num{1.9e-4}$; marginally null---a suppression effect).
-The shared axis \A\ was separately mortality-associated and generalized across the body. This
-condensed account presents that result; a \num{53}-page technical manuscript provides the full
-methods, the multiscale atlas (whole-body CT, brain MRI, an \emph{in-silico} genomic screen), and
-every frozen artifact.
+distinct processes into one number. The finding of this work is narrower and sharper than the
+slogan that biological age is ``a direction'': \emph{a phase-resolved ECG-age representation
+contains mechanism-aligned physiological directions that are hidden by its scalar output.} Four
+phase-of-heartbeat age clocks compress into a \emph{shared axis} \A\ and an orthogonal
+\emph{disagreement radius} \D, with the geometry frozen on CODE-15 \emph{before any outcome was
+read}. The unsigned radius \D\ was null on its single pre-registered confirmatory mortality test
+(hazard ratio \num{1.01} per SD, 95\% CI \numrange{0.98}{1.04}, $p=\num{0.48}$)---the honest
+negative that motivates a \emph{signed} analysis. A randomized \Ikr\ blocker (dofetilide)
+displaced the ST-T repolarization clock ($+\num{4.2}$~SD$\cdot$h, false-discovery-rate
+$p=\num{0.002}$), defining a covariance-scaled signed direction \wikr---the coordinate the
+unsigned radius discards. \wikr\ is \emph{one retrospectively derived, outcome-blind direction,
+frozen for external testing}; a second \Ikr\ blocker (quinidine, $+\num{0.83}$) gave within-cohort
+held-mechanism support, and direction-derivation is reported as exploratory (Holm-adjusted
+permutation $p=\num{0.069}$). Carried unchanged into an independent external cohort
+(Chapman--Shaoxing/Ningbo, $n=\num{44550}$, \num{386} QT-extension cases), it added
+\emph{conditional} information about physician-assigned QT-interval extension beyond conventional
+intervals, \A\ and \D\ (fully adjusted odds ratio \num{1.23} per SD, $p=\num{1.9e-4}$; marginally
+null---a suppression effect). The shared axis \A\ was separately mortality-associated; its
+underlying whole-ECG clock reconstructed on the geographically distinct cohort at $r=\num{0.646}$
+with chronological age. This condensed account presents that result; a \num{54}-page technical
+manuscript provides the full methods, the supporting multiscale atlas and every frozen artifact.
 \end{abstract}
 
 \section{The claim}
@@ -72,11 +103,38 @@ Two people equally ``old for their age'' may be old in physiologically opposite 
 question this work answers is whether that lost direction is real, measurable and
 \emph{transportable}: can a controlled human perturbation reveal a fixed coordinate in an
 age--state space, and does that coordinate carry information in a cohort that never saw the
-perturbation?
+perturbation? The answer is a signed, mechanism-aligned direction recovered from a randomized ion-channel
+blockade and confirmed, frozen, on an external cohort---not a claim that every age gap hides a
+useful vector.
 
-\begin{figure}[t]
+
+
+% ===================== PAGE 2 — GEOMETRY =====================
+\section{The coordinates, and why the sign matters}
+Each patient's four phase-age gaps $\mathbf{z}=(z_P,z_{AV},z_{QRS},z_{STT})$ are split into a
+one-dimensional shared component and a three-dimensional contrast. With the all-ones direction
+$u=(1,1,1,1)$, the shared axis is the projection $\A=u^{\top}\mathbf{z}/\lVert u\rVert$, and the
+contrast vector is $\mathbf{q}=C\mathbf{z}$, where $C$ maps into the subspace orthogonal to $u$
+($Cu=0$, $CC^{\top}=I_3$). The unsigned \emph{disagreement radius} is the covariance-normalized
+length of that contrast,
+\[
+\D=\sqrt{\mathbf{q}^{\top}\Sigma_q^{-1}\mathbf{q}},
+\]
+with $\Sigma_q$ estimated on the frozen healthy calibration cohort. \D\ is a non-negative scalar:
+it keeps the \emph{magnitude} of the disagreement and throws away its \emph{direction}. A signed
+score restores exactly that discarded direction. Given a unit contrast direction $\mathbf{w}$ in
+the whitened space, the patient's signed coordinate is the projection
+\[
+S=\mathbf{w}^{\top}\mathbf{q},\qquad |S|\le\D,
+\]
+so every signed score is bounded by the radius that discarded it. The rest of this account is
+about finding a physiologically meaningful $\mathbf{w}$---not from the data's own variance, but
+from a controlled human perturbation---and showing that the resulting $S$ carries information the
+unsigned \D\ cannot.
+
+\begin{figure}[htbp]
 \centering
-\includegraphics[width=0.96\linewidth]{figs_c2c/fig1_concept.pdf}
+\includegraphics[width=0.72\linewidth]{\figConcept}
 \caption{\textbf{Biological age as a vector, not a scalar.} Four phase-of-heartbeat age clocks
 (P, AV, QRS, ST-T) are standardized against a frozen healthy calibration cohort and read as a
 point in a four-dimensional gap space. Its coordinates are a \emph{shared axis} \A\ (the common
@@ -86,41 +144,21 @@ radius} \D\ (how much the four clocks disagree). The geometry was frozen on CODE
 \label{fig:concept}
 \end{figure}
 
-\section{A shared axis that behaves like aging, and a radius that does not}
 The shared axis \A\ behaves the way a biological-age summary should. In frozen CODE-15
 development it was associated with mortality (hazard ratio \num{1.22} per SD); it generalized to
-whole-body organ-system aging in NHANES ($+\num{1.21}$ per SD, 95\% CI \numrange{1.13}{1.29}) and
-transferred geographically to a Chinese cohort ($r=\num{0.65}$; Fig.~\ref{fig:arobust}).
+whole-body organ-system aging in NHANES ($+\num{1.21}$ per SD, 95\% CI \numrange{1.13}{1.29}).
+On a geographically distinct Chinese cohort (Chapman--Ningbo) the construction reconstructed
+without refitting: the underlying whole-ECG age clock that anchors it transferred at correlation
+$r=\num{0.646}$ with chronological age. (\A\ itself, a residual over age-adapted gaps, correlates
+with age only weakly there, $r=\num{0.26}$; the transfer evidence is that the frozen clocks and
+construction reconstruct on an untrained cohort, not that \A\ is a strong age predictor in it.)
+The shared axis is the part of the decomposition that behaves like a conventional biological-age
+summary---and, as the next sections show, the part that hides a mechanism once its sign is
+restored.
 
-The disagreement radius \D\ was the original hypothesis: that \emph{how} the clocks disagree adds
-prognostic information beyond the shared level. It does not. On its single pre-registered
-confirmatory test---a model-frozen Cox likelihood-ratio test on the locked CODE-15 final-test
-partition---\D\ was null (hazard ratio \num{1.01} per SD, 95\% CI \numrange{0.98}{1.04},
-$p=\num{0.48}$; $n=\num{74715}$, \num{2583}~deaths). It showed no detectable association with
-independent cardiac structure and did not change under acute physiological stress
-(Fig.~\ref{fig:ddissoc}). Reporting that null honestly is what motivates the rest of the paper:
-the \emph{unsigned} radius throws away a sign, and the sign is where the mechanism lives.
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.82\linewidth]{figs_c2c/fig2_A_robust.pdf}
-\caption{\textbf{The shared axis \A\ is consistently associated with aging across cohorts and
-scales.} Development mortality, external geographic transfer, and whole-body organ-system aging
-(NHANES) all point the same way. \A\ is the part of the decomposition that behaves like a
-conventional biological-age summary.}
-\label{fig:arobust}
-\end{figure}
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.82\linewidth]{figs_c2c/fig3_D_dissociated.pdf}
-\caption{\textbf{The unsigned radius \D\ shows no detectable association with structure or
-response to acute stress, and is null on its confirmatory mortality test.} The original radial
-hypothesis fails. The signed coordinate that the radius discards, however, is not empty---it is
-the subject of Fig.~\ref{fig:compass}.}
-\label{fig:ddissoc}
-\end{figure}
-
+% ===================== PAGE 3 — THE PERTURBATION =====================
 \section{A controlled human perturbation reveals a hidden direction}
 The decisive experiment is a randomized-controlled human ion-channel perturbation. In the
 ECG-RDVQ crossover study, a specific \Ikr\ (rapid delayed-rectifier potassium current) blocker,
@@ -136,65 +174,203 @@ defined,
 \[
 \wikr=\Sigma_q^{-1}\mathbf{m}\big/\sqrt{\mathbf{m}^{\top}\Sigma_q^{-1}\mathbf{m}},
 \]
-precisely the coordinate the unsigned radius \D\ discards. Two independent checks make it more
-than a within-study artifact. A \emph{second}, chemically distinct \Ikr\ blocker (quinidine)
-projected positively on the frozen axis ($+\num{0.83}$, 95\% CI \numrange{0.52}{1.20}), a
-held-mechanism confirmation. And the direction was specific: non-\Ikr\ comparators (ranolazine,
-verapamil) had projections whose confidence intervals include zero (Fig.~\ref{fig:compass}b).
-Because two perturbation directions (\Ikr\ and acute ischemia) were screened, the honest
-multiplicity-corrected permutation test on the direction's magnitude is only nominal
-(Holm-adjusted $p=\num{0.069}$); the direction-\emph{derivation} is therefore reported as
-exploratory, and its confirmation comes from the external cohort below.
+precisely the coordinate the unsigned radius \D\ discards. The supporting evidence is layered, and
+its strength is stated plainly. A \emph{second}, chemically distinct \Ikr\ blocker (quinidine)
+projected positively on the frozen axis ($+\num{0.83}$, 95\% CI \numrange{0.52}{1.20}). This is
+\emph{within-cohort, held-mechanism} support---quinidine and dofetilide are arms of the same
+22-person crossover, so it shows the axis reproduces across two \Ikr\ blockers, not that it
+generalizes to a new sample. The multichannel comparators ranolazine and verapamil are
+\emph{active drugs}, not clean negative controls; their projections are weaker with confidence
+intervals spanning zero (Fig.~\ref{fig:compass}b). We therefore make \emph{no formal specificity
+claim}: distinguishing \Ikr\ from non-\Ikr\ drugs would require a pre-registered between-drug
+contrast, which this study does not perform. Because two perturbation directions (\Ikr\ and acute
+ischemia) were screened, the honest multiplicity-corrected permutation test on the direction's
+magnitude is only nominal (Holm-adjusted $p=\num{0.069}$); the direction-\emph{derivation} is
+therefore reported as exploratory, and its confirmation comes from the external cohort in the next
+section.
 
-\begin{figure}[t]
+\begin{figure}[htbp]
 \centering
-\includegraphics[width=0.9\linewidth]{figs_c2c/fig_perturbation_compass.pdf}
+\includegraphics[width=0.80\linewidth]{\figCompass}
 \caption{\textbf{An outcome-blind, signed perturbation direction recovers a mechanism the
 unsigned radius discards, and is frozen for external transport.} \textbf{(a)}~Bootstrap spread of
 the recovered direction in a two-dimensional slice of the three-dimensional whitened contrast
-space: the \Ikr\ axis (blue) is tightly concentrated (bootstrap median $\cos_\Sigma=\num{0.94}$;
-\num{9999} of \num{10000} bootstraps reproduce its sign with no alignment), whereas the
-acute-ischemia axis (orange) is diffuse because ischemia moves the vector along the shared axis
-\A\ rather than within the contrast subspace. \textbf{(b)}~The two \Ikr\ blockers separate from
-zero; non-\Ikr\ comparators do not. \textbf{(c)}~In raw whitened coordinates the signed score is
-bounded by the unsigned radius, $|S_{\text{raw}}|\le\D_{\text{raw}}$: the radius keeps the
-magnitude and discards exactly the sign the perturbation axis recovers.}
+space: the \Ikr\ axis is a stable exploratory direction (bootstrap median $\cos_\Sigma=\num{0.94}$;
+\num{9999} of \num{10000} bootstraps reproduce its sign), whereas the acute-ischemia axis is
+diffuse because ischemia moves the vector along the shared axis \A\ rather than within the
+contrast subspace. \textbf{(b)}~The two \Ikr\ blockers separate from zero; the active multichannel
+comparators do not (no formal specificity contrast is claimed). \textbf{(c)}~In raw whitened
+coordinates the signed score is bounded by the unsigned radius, $|S_{\text{raw}}|\le\D_{\text{raw}}$:
+the radius keeps the magnitude and discards exactly the sign the perturbation axis recovers.}
 \label{fig:compass}
 \end{figure}
 
+% ===================== PAGE 4 — EXTERNAL TRANSPORT (CHAPMAN) =====================
 \section{The direction transports to an external cohort}
 A direction is only useful if it carries information where it was never trained. The frozen \wikr\
 was carried, unchanged, into an independent external cohort (Chapman--Shaoxing and Ningbo,
-$n=\num{44550}$; \num{386} patients with a physician-assigned diagnosis of QT-interval extension
-beyond conventional intervals). Added to a model already containing the shared axis \A, the
-disagreement radius \D\ and the conventional intervals, the signed \Ikr\ score carried
-\emph{conditional} information about that diagnosis (fully adjusted odds ratio \num{1.23} per SD,
-95\% CI \numrange{1.10}{1.36}, $p=\num{1.9e-4}$; Firth-penalized odds ratio \num{1.22},
-$p=\num{1.9e-4}$). The marginal association was null (odds ratio \num{1.00})---a genuine
-suppression effect: the direction speaks only once the shared displacement and the conventional
-intervals are held fixed, which is exactly what a hidden \emph{orthogonal} coordinate should do.
-The per-site estimates agree (Ningbo odds ratio \num{1.20}, $p=\num{0.0019}$, \num{329}~cases;
-Chapman--Shaoxing odds ratio \num{1.44}, labeled underpowered at \num{57}~cases).
+$n=\num{44550}$; \num{386} patients with a physician-assigned diagnosis of QT-interval extension,
+SNOMED 111975006). Added to a model already containing age, sex, heart rate, the conventional
+intervals (QTc, QRS), the shared axis \A\ and the disagreement radius \D, the signed \Ikr\ score
+carried \emph{conditional} information about that diagnosis. The association is a genuine
+suppression effect that emerges only as confounders are held fixed---an adjustment ladder that is
+itself the evidence (Fig.~\ref{fig:chapman}a):
+\begin{center}\small
+\begin{tabular}{lcc}
+\toprule
+Model & Odds ratio per SD (95\% CI) & $p$ \\
+\midrule
+Marginal (unadjusted)            & \num{1.00}                       & \num{0.996} \\
+$+$ age, sex                     & \num{1.09}                       & \num{0.090} \\
+$+$ conventional intervals       & \num{1.15}                       & \num{0.0073} \\
+Fully adjusted ($+\A,+\D$)       & \num{1.23} (\numrange{1.10}{1.36}) & \num{1.9e-4} \\
+\bottomrule
+\end{tabular}
+\end{center}
+The marginal association is null (odds ratio \num{1.00})---the direction speaks only once the
+shared displacement and the conventional intervals are held fixed, which is exactly what a hidden
+\emph{orthogonal} coordinate should do. The two sites agree in direction (Ningbo odds ratio
+\num{1.20}, $p=\num{0.0019}$, \num{329}~cases, a confirmatory-strength replication;
+Chapman--Shaoxing odds ratio \num{1.44}, $p=\num{0.018}$, \num{57}~cases, underpowered;
+Fig.~\ref{fig:chapman}b).
 
-\section{Why this is the result, and what the rest of the paper is}
+\paragraph{Limitation --- rhythm-context dependence.} The QT-extension phenotype is not
+independent of coarse rhythm categories, and the signed-score association depends on which are
+included (Fig.~\ref{fig:chapman}c). Excluding atrial flutter/fibrillation, the effect holds (odds
+ratio \num{1.18}, $p=\num{0.014}$, \num{227}~cases); excluding sinus bradycardia alone it
+attenuates to borderline (odds ratio \num{1.13}, $p=\num{0.096}$, \num{245}~cases); and
+\emph{excluding both} it is null (odds ratio \num{0.93}, $p=\num{0.48}$, \num{86}~cases). Because
+the confirmatory-strength signal is not pre-registered as rhythm-stratified, the AV-flutter and
+bradycardia subgroups are reported here as \emph{post-hoc}: they show the transported direction is
+entangled with rhythm context and is best read as a conditional, hypothesis-generating signal
+rather than a rhythm-independent one. This dependence is disclosed as a limitation, not framed as a
+mechanistic result.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.96\linewidth]{\figChapman}
+\caption{\textbf{The frozen \Ikr\ direction transports to Chapman--Shaoxing/Ningbo as conditional
+information, with an honest rhythm-context limitation.} \textbf{(a)}~Adjustment ladder: the odds
+ratio for QT-extension per SD of the signed score rises from a null margin to a fully adjusted
+odds ratio of \num{1.23} ($p=\num{1.9e-4}$) as age/sex, conventional intervals and the shared
+coordinates are added---a suppression effect. \textbf{(b)}~Per-site replication: Ningbo confirms
+(\num{329}~cases); Chapman--Shaoxing agrees in direction but is underpowered (\num{57}~cases).
+\textbf{(c)}~Rhythm-exclusion sensitivity: the association survives excluding atrial
+flutter/fibrillation, weakens excluding sinus bradycardia, and is null excluding both
+(\num{86}~cases)---a disclosed limitation that keeps the claim conditional.}
+\label{fig:chapman}
+\end{figure}
+
+% ===================== PAGE 5 — THE NULL RADIUS + ISCHEMIA =====================
+\section{Why the signed direction, and not the unsigned radius}
+The disagreement radius \D\ was the original hypothesis: that \emph{how} the clocks disagree adds
+prognostic information beyond the shared level. It does not. On its single pre-registered
+confirmatory test---a model-frozen Cox likelihood-ratio test on the locked CODE-15 final-test
+partition---\D\ was null (hazard ratio \num{1.01} per SD, 95\% CI \numrange{0.98}{1.04},
+$p=\num{0.48}$; $n=\num{74715}$, \num{2583}~deaths). It showed no detectable association with
+independent cardiac structure and did not change under acute physiological stress.
+Reporting that null honestly is what motivates the signed analysis: the
+\emph{unsigned} radius throws away a sign, and the sign is where the mechanism lives.
+
+The contrast with the perturbation result is the point. The unsigned radius is a variance-defined
+magnitude, blind to \emph{which way} the clocks disagree; on its own confirmatory test it carries
+no mortality information. The signed coordinate \wikr, defined from a controlled \Ikr\ blockade
+rather than from variance, recovers a direction inside the very subspace the radius summarizes---and
+that direction, frozen, is what transports. The second screened perturbation, acute ischemia, fits
+the same picture in reverse: it moves the vector along the shared axis \A\ ($+\num{3.8}$~years
+whole-ECG apparent age) rather than along a stable signed contrast, which is why it fails the
+direction gate and is reported as diffuse rather than as a second recovered coordinate.
+
+
+
+% ===================== PAGE 6 — MULTISCALE ATLAS + REPRODUCIBILITY =====================
+\section{The supporting multiscale atlas, and the frozen record}
+The electrical perturbation above is the finding. The full manuscript surrounds it with a
+deliberately \emph{supporting} multiscale atlas: the same shared-axis/disagreement decomposition
+read at other biological scales, as a visually rich companion rather than independent confirmation
+of the electrical result. A whole-body CT age clock over \num{1227} examinations localizes aging
+anatomically and identifies the skeleton as a structural bridge organ (Fig.~\ref{fig:atlas},
+Fig.~\ref{fig:skeleton}); a brain-imaging arm rebuilds an image-derived disagreement coordinate
+from \num{220} real T1 volumes and finds it elevated in older brains
+(Fig.~\ref{fig:lemonanat}); and an \emph{in-silico} genomic screen of Human Accelerated Regions
+extends the skeletal layer into deep time. These arms are exploratory and are labeled as such;
+they illustrate that the coordinate view recurs across scales without asserting that any one of
+them re-proves the perturbation direction.
+
+
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.62\linewidth]{\figArobust}
+\caption{\textbf{The shared axis \A\ is consistently associated with aging across cohorts and
+scales.} Development mortality, geographic reconstruction of the underlying whole-ECG clock, and
+whole-body organ-system aging (NHANES) all point the same way. \A\ is the part of the
+decomposition that behaves like a conventional biological-age summary.}
+\label{fig:arobust}
+\end{figure}
+
+\medskip
+\noindent\textbf{\large What the result is.}\enspace
 The claim is narrow and falsifiable: a controlled human perturbation of a single ion current
 defines a fixed, covariance-scaled direction in an ECG age--state space; that direction is the
 signed coordinate an unsigned age-gap radius discards; and, frozen, it transports to an
 independent cohort as conditional information about a clinically assigned repolarization
-phenotype. The honest negative (\D\ is null on its confirmatory test) and the honest hedge
+phenotype. The honest negative (\D\ is null on its confirmatory test), the honest hedge
 (direction-derivation is exploratory under multiplicity; the external cohort provides the
-confirmation) are part of the result, not footnotes to it.
+confirmation) and the honest limitation (the transported association is rhythm-context dependent)
+are part of the result, not footnotes to it.
 
-The full \num{53}-page manuscript carries the complete methods, the frozen-geometry protocol and
-firewall, the acute-ischemia analysis (which moves \A, not a stable signed contrast, and explains
-why ischemia fails the direction gate), and a deliberately \emph{supporting} multiscale
-atlas---whole-body CT, brain MRI and an \emph{in-silico} genomic screen of Human Accelerated
-Regions---that illustrates the same shared-axis/disagreement decomposition at other scales
-without claiming to confirm the electrical result. Those arms are the visually rich companion
-atlas; the perturbation direction above is the finding.
+\begin{tcolorbox}[colback=black!3,colframe=black!45,arc=1.5pt,boxrule=0.5pt,left=8pt,right=8pt,top=6pt,bottom=6pt]
+\begin{minipage}{0.78\linewidth}
+\small
+\textbf{Frozen record and code.} Every headline quantity is drawn from a versioned,
+content-hashed artifact; the geometry, the \Ikr\ scorer and the protocol lock were frozen before
+the outcomes reported here were read. Source cohorts are open where licensing permits (CODE-15,
+SaMi-Trop, PhysioNet ecg-arrhythmia, NHANES, LEMON); access-controlled arms (EchoNext, AABC)
+contributed only aggregate results. Full methods, the claim-to-artifact ledger and the
+\num{54}-page technical manuscript are in the repository.
+\end{minipage}\hfill
+\begin{minipage}{0.19\linewidth}
+\centering
+\includegraphics[width=\linewidth]{\figQR}\\[2pt]
+{\scriptsize\ttfamily jim4226/\\ClaudeScienceHackathon\_2026}
+\end{minipage}
+\end{tcolorbox}
 
 \begin{center}\itshape
-Aging is not one number. It is a state space---and physiology moves through it in directions.
+A scalar age gap answers ``how old.'' A controlled perturbation, frozen and transported, begins to
+answer ``old in which direction.''
 \end{center}
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}{0.60\linewidth}\centering
+\includegraphics[width=\linewidth]{\figAtlas}
+\caption{Whole-body CT: shared-axis / disagreement structure across organ systems.}
+\label{fig:atlas}
+\end{subfigure}\hfill
+\begin{subfigure}{0.33\linewidth}\centering
+\includegraphics[width=\linewidth]{\figSkeleton}
+\caption{Where the skeleton ages (CT organ clock).}
+\label{fig:skeleton}
+\end{subfigure}\\[4pt]
+\begin{subfigure}{0.62\linewidth}\centering
+\includegraphics[width=\linewidth]{\figLemonAnat}
+\caption{Deep segmentation on two real LEMON T1 volumes: young (sub-010003, \num{28}~y) vs older
+(sub-010104, \num{77}~y).}
+\label{fig:lemonanat}
+\end{subfigure}
+\caption{\textbf{The supporting multiscale atlas.} The same shared-axis/disagreement decomposition
+read at other biological scales. \textbf{(a,b)}~A whole-body CT age clock over \num{1227}
+examinations localizes age-informative structure to the cardiovascular system and the weight-bearing
+skeleton---the structural bridge to the deep-time genomic arm. \textbf{(c)}~A brain-imaging arm
+rebuilds an image-derived disagreement coordinate from \num{220} real T1 volumes: the older brain
+shows enlarged ventricles (ventricle--brain ratio \num{0.045} versus \num{0.009}), widened sulci and
+thinned cortex, and across all \num{220} subjects the image-derived disagreement radius is elevated
+in the older group ($D=\num{0.52}$ versus \num{0.34}, Cohen's $d=\num{0.84}$, Mann--Whitney
+$p=\num{4.3e-8}$; the prospective gait-decline test was a pre-registered null). All three arms are
+exploratory and supporting; none is an independent confirmation of the electrical finding.}
+\label{fig:multiscale}
+\end{figure}
 
 \end{document}

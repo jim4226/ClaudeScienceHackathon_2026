@@ -21,20 +21,34 @@ predictors in healthy people, read out the bias-corrected age-gap, and ask what 
 localizes to and what it predicts.* That recipe reproduces across two measurement
 modalities and two populations.
 
-> **Manuscripts.** This arm has two papers in [`paper/`](paper/):
-> [`clocks_to_coordinates.pdf`](paper/clocks_to_coordinates.pdf) is the **current
-> account** — it reframes the four subsystem clocks as a *shared aging axis A* and an
-> orthogonal *disagreement radius D*, reports the pre-registered CODE-15 mortality test
-> for D (null, HR 1.01/SD), and adds a controlled-perturbation result: a randomized IKr
-> blocker (dofetilide) displaces the ST–T repolarization clock, defining a signed
-> direction the unsigned radius discards. The clocks transfer to an independent external
-> cohort (Chapman–Shaoxing/Ningbo, n = 44,595; see
-> [`results/act1_ecg/external_validation/`](results/act1_ecg/external_validation/)), where
-> the frozen geometry adds conditional information about physician-assigned QT-interval
-> extension. [`manuscript.pdf`](paper/manuscript.pdf) is the original
-> disease-localization write-up whose numbers the `src/`, `figures/`, and `results/`
-> tables below directly reproduce. Read `clocks_to_coordinates` for the current science;
-> read `manuscript` for the fully-reproducible ladder + specificity results.
+> **Manuscripts.** This arm ships three papers in [`paper/`](paper/), reflecting how the
+> science evolved:
+>
+> 1. [`from_clocks_to_coordinates_full.pdf`](paper/from_clocks_to_coordinates_full.pdf)
+>    (54 pp) — the **current, complete technical account**. It reframes the four subsystem
+>    clocks as a *shared aging axis A* and an orthogonal *disagreement radius D*, reports
+>    the pre-registered CODE-15 mortality test for D (null, HR 1.01/SD), and builds the
+>    central result on a controlled human perturbation: a randomized IKr blocker
+>    (dofetilide) displaces the ST–T repolarization clock, defining a signed direction the
+>    unsigned radius discards, which then transports to an independent external cohort
+>    (Chapman–Shaoxing/Ningbo) as conditional information about physician-assigned
+>    QT-interval extension. A supporting **multiscale atlas** (whole-body CT skeleton, real
+>    brain MRI from 220 LEMON T1 volumes, and an in-silico genomic screen) shows the same
+>    decomposition recurring across scales.
+> 2. [`clocks_to_coordinates.pdf`](paper/clocks_to_coordinates.pdf) (6 pp) — a **condensed
+>    judge-cut** of the same result: perturbation discovery first, the external-transport
+>    (Chapman) figure promoted to a full panel, and the multiscale atlas closing the
+>    account. Every number is lifted verbatim from the full manuscript; nothing new is
+>    asserted.
+> 3. [`manuscript.pdf`](paper/manuscript.pdf) — the **original disease-localization
+>    write-up** whose numbers the `src/`, `figures/`, and `results/` tables below directly
+>    reproduce.
+>
+> Read `from_clocks_to_coordinates_full` (or the 6-page `clocks_to_coordinates`) for the
+> current science; read `manuscript` for the fully-reproducible ladder + specificity
+> results. The external clock-transfer metrics are in
+> [`results/act1_ecg/external_validation/`](results/act1_ecg/external_validation/)
+> (Chapman age-transfer table, n = 44,595).
 
 ## The two acts
 
@@ -90,8 +104,11 @@ electrical-body-clock/
 │       └── robustness/     # cross-validated C-index folds, leave-one-system-out D
 ├── figures/                # publication figures (PNG) — Fig 1–7
 ├── demo/                   # interactive patient-fingerprint demo
-├── paper/                  # clocks_to_coordinates.{tex,pdf} (current) + manuscript.{tex,pdf,docx}
-│                           #   + references.bib; figs_c2c/ holds current-paper figures
+├── paper/                  # from_clocks_to_coordinates_full.{tex,pdf} (54 pp, current)
+│                           #   + clocks_to_coordinates.{tex,pdf} (6 pp judge-cut)
+│                           #   + manuscript.{tex,pdf,docx} (original reproducible paper)
+│                           #   figs_full/ = full-manuscript figures, figs_c2c/ = judge-cut,
+│                           #   figs/ = original paper; references_c2c.bib + references.bib
 └── data/                   # download scripts ONLY (no data redistributed)
 ```
 
@@ -113,9 +130,12 @@ python src/analysis/analyze_clocks.py          # specificity matrix + controls
 # 3. Act II — NHANES organ clocks + mortality
 python src/nhanes/nhanes_organ_clocks.py       # 6 organ clocks, Cox, C-index ladder
 
-# 4. Figures + paper
+# 4. Figures + papers
 python src/figures/make_figures.py             # regenerate Fig 1-7 from results/
-cd paper && tectonic manuscript.tex            # compile the PDF
+cd paper
+tectonic manuscript.tex                        # original reproducible paper
+tectonic from_clocks_to_coordinates_full.tex   # current 54-page technical account
+tectonic clocks_to_coordinates.tex             # 6-page judge-cut
 ```
 
 Every figure and table in the paper regenerates from the released prediction tables in

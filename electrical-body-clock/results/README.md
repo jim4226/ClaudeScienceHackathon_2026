@@ -29,14 +29,34 @@ without re-training.
 | `nhanes_leave_one_system_out.csv` | Leave-one-organ-system-out hazard ratios for the disagreement score D - the D->mortality signal survives dropping any single organ clock (max design-t p = 0.0032, dropping Cardiovascular). |
 | `nhanes_robustness_addons.json` | Machine-readable summary of the leave-one-out analysis with the correct design-df p-values and interpretation. |
 
+## `act1_ecg/perturbation/` — controlled-perturbation signed direction (current paper)
+| file | contents |
+|---|---|
+| `PERTURBATION_TRANSPORT_LOCK.json` | Frozen protocol lock for the signed IKr direction: the covariance-scaled `w_IKr` vector, the stability gate (bootstrap median cos_Σ, sign-stability, multiplicity-corrected permutation p), and the outcome-blind derivation provenance. Drives the compass figure. |
+| `perturbation_direction_gate.csv` | Per-direction gate results (IKr passes as a stable exploratory direction; acute ischemia is diffuse and fails the gate). |
+| `shuffled_control_comparison.csv` | Sign-flipped / random-direction negative controls (diagnostic only; cannot redefine the direction or gate the conclusion). |
+| `perturbation_direction_verifier.py` | Standalone verifier that re-checks the frozen direction against the gate constants. |
+| `perturbation_transport_methods_results.md` | Methods + results narrative for the perturbation-transport arm. |
+| `beyond_the_clock_results.md` | Summary of the full "beyond the clock" evidence chain (derivation → quinidine confirmation → external QT-extension transport). |
+
 ## `act1_ecg/external_validation/` - external cohort transfer (current paper)
 | file | contents |
 |---|---|
 | `chapman_age_transfer.csv` | Chapman-Shaoxing/Ningbo (n = 44,595) clock-transfer metrics: raw and frozen-CODE-15-adapter-applied R2/MAE/calibration per clock, split by sex. Supports the external-validation claim in `clocks_to_coordinates`. |
+| `chapman_phenotype_test.{json,csv}` | Chapman-Shaoxing/Ningbo QT-interval-extension phenotype test (SNOMED 111975006; n = 44,550, 386 cases). The frozen signed IKr direction added conditional information beyond age/sex, conventional intervals, A and D: adjustment ladder from marginal null (OR 1.00) to fully adjusted OR 1.23 (p = 1.9e-4); per-site replication (Ningbo confirms, Chapman-Shaoxing underpowered); and the rhythm-context sensitivity (null when excluding both atrial flutter/fibrillation and sinus bradycardia, 86 cases) reported as a limitation. Drives the Chapman transport figure. |
+
+## `brain_imaging/` — image-derived disagreement (LEMON, supporting multiscale atlas)
+| file | contents |
+|---|---|
+| `lemon_imaging_feature_table.csv` | 220 real LEMON T1 (MP2RAGE) volumes processed end-to-end via ANTsPyNet into four independent structural-aging views (deep brain-age, GM fraction, ventricle–brain ratio, brain-tissue fraction), the per-view cohort z-scores, and the image-derived disagreement radius `D_std`. Open LEMON derived data (ODbL); aggregate imaging-derived features keyed by public subject ID + age bin. |
+| `lemon_disagreement_result.json` | Primary result + controls: older > young image-derived disagreement (D 0.34 → 0.52, Cohen's d = 0.84, Mann–Whitney p = 4.3e-8), surviving permutation, leave-one-view-out, extremity-adjusted OLS, and a within-older step (not gradient). Backs the brain-MRI panel of the multiscale atlas. |
 
 > These tables report the **A/D (shared-axis / disagreement) framing** of the current
 > manuscript. The `act1_ecg/` and `act2_nhanes/` tables above them report the original
-> subsystem-clock and organ-gap analyses; both sets are released.
+> subsystem-clock and organ-gap analyses; both sets are released. The `perturbation/`,
+> `external_validation/chapman_phenotype_test.*`, and `brain_imaging/` tables back the
+> controlled-perturbation result and the supporting multiscale atlas in
+> `from_clocks_to_coordinates_full` and `clocks_to_coordinates`.
 
 Re-running `src/nhanes/nhanes_organ_clocks.py` regenerates the Act II tables
 plus `organ_gaps.parquet`, `surv.parquet`, `clock_stats.json`, and `ladder.json`

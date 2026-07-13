@@ -1,0 +1,11 @@
+direction,criterion,threshold,value,passed
+IKr,pipeline_yield,>=0.70,1.0,True
+IKr,median_cos_sigma,>=0.80,0.94112,True
+IKr,cos_lo95,>0,0.6347,True
+IKr,sign_stable_frac,>=0.90,0.9999,True
+IKr,perm_p,<0.05,0.0326,True
+ischemia,pipeline_yield,>=0.70,1.0,True
+ischemia,median_cos_sigma,>=0.80,0.63372,False
+ischemia,cos_lo95,>0,-0.84418,False
+ischemia,sign_stable_frac,>=0.90,0.791,False
+ischemia,perm_p,<0.05,0.83512,False
