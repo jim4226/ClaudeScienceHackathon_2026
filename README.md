@@ -1,59 +1,72 @@
 # Built with Claude: Life Sciences — 2026
 
-## Substrate-Resolved Biology — one method, two systems
+## From Clocks to Coordinates — biological age is a direction, not a number
 
-**Author:** Jaron Mar · University of Miami
+**Author:** Jaron Mohammed · University of Miami
 
-This repository is a single hackathon research program built around one
-computational-biology method, applied to two very different systems. Biology
-routinely compresses a complex system into a single aggregate score — one
-"ECG-age" for the whole heart, one undifferentiated set of "human accelerated
-regions" assayed in a single cell type. That compression is convenient, but it
-hides *where* a signal actually comes from, and it makes a real biological
-effect hard to separate from a confound. The goal here is the opposite: take
-the monolithic signal apart into the distinct biological substrates that
-generate it, model each one on its own, and then show the resolution is both
-real and useful.
+This repository is a single research program built around one idea: **the
+"biological age" a model reads off a physiological signal is better represented
+as a direction in a state space than as a single number.** Biology routinely
+compresses a complex system into one aggregate score — one "ECG-age" for the
+whole heart, one organ-age gap, one undifferentiated set of "human accelerated
+regions" assayed in a single cell type. That scalar is convenient, but it hides
+*where* the signal comes from and throws away the part of it that carries
+mechanism.
 
-Applied to the **aging heart**, the method decomposes a single ECG "age" into
-four separate subsystem clocks — atria, conduction axis, ventricle, and
-repolarization — and shows the resulting fingerprint localizes disease to its
-correct electrical substrate, while the same organ-age-gap idea, carried to a
-national cohort, predicts all-cause mortality. Applied to the **evolving
-genome**, the same recipe produces the first in-silico skeletal variant-effect
-screen of human accelerated regions: it resolves their regulatory effect to
-bone- and cartilage-relevant cell contexts — a lineage every prior HAR reporter
-assay skipped — separates the majority that are evolutionary noise from the
-genuinely skeletal-regulatory minority, and validates itself by blindly
-re-discovering a known human skeletal enhancer. **The novelty is the method** —
-substrate resolution plus blind-control validation — shown to hold across two
-organ systems, two data modalities, and two populations; each arm also lands a
-concrete first in its own field.
+The method decomposes an aggregate age signal into a **shared aging axis A**
+(how old the system looks overall), an orthogonal **disagreement radius D** (how
+much its subsystems disagree with each other), and — when a controlled
+perturbation is available — a **signed direction S** that the unsigned radius
+discards. The anchor result is electrical: four subsystem ECG clocks resolved
+into A/D geometry, where the radius is *null* on a pre-registered mortality test
+but the discarded signed direction, recovered from a randomized ion-channel
+blockade, transports to an external clinical cohort. The same shared-axis-versus-
+disagreement *question* is then posed across other biological scales — a
+whole-body CT skeleton, 220 real brain-MRI volumes, six blood-panel organ-system
+clocks, and an in-silico genomic screen of human accelerated regions — as a
+supporting multiscale atlas, and a movement boundary test marks exactly where
+the "everything is an age clock" reading breaks down.
+
+**One study, one geometry, read across scales** — with a live demo that runs the
+frozen electrical clocks on any 12-lead ECG.
 
 ---
 
 ## The method
 
-The field routinely collapses a biological system into a single aggregate
-number — one "ECG-age" for the whole heart, one monolithic set of "human
-accelerated regions" assayed in a single cell type. This program does the
-opposite. In each arm:
-
-1. **Decompose** the monolithic signal into the biologically distinct
-   substrates that actually generate it.
-2. **Predict** each substrate independently with a purpose-built
-   sequence/signal model.
-3. **Localize** — ask what each substrate's signal maps onto (a disease, a
-   tissue, an outcome), with the aggregate view as the baseline it must beat.
-4. **Validate** that the resolution is real, not artifact, with a *blind
-   positive control* plus explicit negative / confound controls.
-
-The claim in both arms is a **recipe, not a single model** — and it reproduces
-across two organ systems, two data modalities, and two populations.
+1. **Decompose** an aggregate age signal into the biologically distinct
+   subsystems that generate it (ECG phases; organ-system panels; tissue/lineage
+   contexts).
+2. **Re-express** the subsystem gaps as a geometry: a shared aging axis **A**, an
+   orthogonal disagreement radius **D**, and — where a controlled perturbation
+   exists — a signed mechanism direction **S** (with |S| ≤ D by construction).
+3. **Test** each coordinate against outcomes with the aggregate view as the
+   baseline it must beat, freezing the geometry before any outcome is read.
+4. **Validate** with a pre-registered outcome firewall, blind positive controls,
+   and explicit negative / confound controls — and report the honest negatives
+   (a null radius, a failed boundary test) as first-class results.
 
 ---
 
-## Arm I — the aging heart · [`electrical-body-clock/`](electrical-body-clock/)
+## Live demo · [`electrical-body-clock/demo/hf_space/`](electrical-body-clock/demo/hf_space/)
+
+A deployable Gradio app (Hugging Face Space layout) runs the five *frozen*
+subsystem phase-age clocks on CPU and reads out the A/D geometry live:
+
+- **Live inference** — synthesize a physiologically-plausible 12-lead ECG (no
+  patient data) or upload a WFDB / 12-column-CSV record; the app returns the
+  subsystem age-gap fingerprint, the median beat with the four subsystem windows
+  highlighted, and the record's position in the A–D plane.
+- **Result explorer** — the frozen result figures: the perturbation compass,
+  external Chapman transport, the multiscale organ atlas, brain-MRI disagreement,
+  and the MotionVector structure–function boundary test.
+
+Model weights and every standardization constant are frozen from the manuscript;
+nothing is refit at runtime. `pip install -r requirements.txt && python app.py`.
+
+---
+
+## Arm I — the electrical anchor · [`electrical-body-clock/`](electrical-body-clock/)
 
 *A phase-resolved ECG-age representation hides mechanism-aligned physiological
 directions behind its scalar output — and a controlled human perturbation
@@ -84,19 +97,24 @@ recovers one of them.*
   confound, mask-shuffle leakage); an independent median-beat pipeline
   reproduces the ladder within noise.
 
-Ships all source (`src/`), released result tables (`results/`), figures, a
-self-contained interactive demo (`demo/`), and three papers in `paper/`: the
-current 54-page technical account (`from_clocks_to_coordinates_full`), its
-6-page judge-cut (`clocks_to_coordinates`), and the original reproducible
-disease-localization write-up (`manuscript`). MIT.
+Ships all source (`src/`), released result tables (`results/` — including the
+external Chapman transport, NHANES organ-atlas robustness, brain-imaging
+disagreement, and the `motionvector/` structure–function boundary test), figures,
+the live demo (`demo/`), and three papers in `paper/`: the current 55-page
+technical account (`from_clocks_to_coordinates_full`), its 6-page judge-cut
+(`clocks_to_coordinates`), and the original reproducible disease-localization
+write-up (`manuscript`). MIT.
 
 ---
 
-## Arm II — the evolving genome · [`skeletome/`](skeletome/)
+## Arm II — the genomic scale · [`skeletome/`](skeletome/)
 
-*The first in-silico skeletal variant-effect screen of Human Accelerated
-Regions (HARs) and HAQERs — a virtual skeletal MPRA benchmarked against a real
-one.*
+*The same substrate-resolution logic, one scale down: the first in-silico
+skeletal variant-effect screen of Human Accelerated Regions (HARs) and HAQERs —
+a virtual skeletal MPRA benchmarked against a real one. It is the deep-time,
+sequence-level companion to the electrical anchor: resolve a monolithic signal
+into the lineage that actually generates it, then validate the resolution
+blind.*
 
 - **Decompose:** resolve HAR and HAQER regulatory effects to *skeletal* cell
   contexts — the lineage every prior HAR reporter assay (all neural) skipped —
@@ -119,9 +137,10 @@ to continue the work in Claude Science.
 
 ## Built with Claude
 
-Both arms were built with Claude as the scientific collaborator, not glue code:
-designing the decomposition, writing the evaluation and control harnesses,
-red-teaming its own positive controls, and drafting the honest write-up.
+This study was built with Claude as the scientific collaborator, not glue code:
+designing the A/D geometry, writing the evaluation and control harnesses,
+red-teaming its own positive controls, standing up the live demo, and drafting
+the honest write-up — including the negatives.
 
 ---
 

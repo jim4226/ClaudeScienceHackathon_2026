@@ -1,0 +1,13 @@
+{
+  "shared_axis": [
+    0.7071,
+    0.7071
+  ],
+  "ortho_axis_reserve": "signed so +reserve=movement younger than skeleton",
+  "struct_gap_mean": 1.096856979671778,
+  "struct_gap_sd": 7.539041096034571,
+  "loco_gap_mean": -0.9180798988581435,
+  "loco_gap_sd": 7.025733377591465,
+  "struct_loco_corr": 0.06586355472677911,
+  "n": 2891
+}

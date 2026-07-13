@@ -1,0 +1,75 @@
+{
+  "cohort": "NHANES 2005-06 (only cycle with same-person whole-body DXA + 7-day accelerometry)",
+  "n_analysis": 2891,
+  "n_dxa_int_loco_int_pfq": 2891,
+  "age_range": "20-69 median 44",
+  "clocks": {
+    "structural_DXA": {
+      "oof_r2": 0.459,
+      "r_pred_age": 0.677,
+      "sd_gap_y": 7.5,
+      "note": "decent age predictor from bone/lean"
+    },
+    "locomotor_accel": {
+      "oof_r2": 0.168,
+      "r_pred_age": 0.41,
+      "sd_gap_y": 7.0,
+      "note": "WEAK age predictor; counterintuitive sign (more steps -> predicted OLDER in 20-69 range; age~steps r=0.04)"
+    }
+  },
+  "reserve": {
+    "definition": "calibration-orthogonal contrast (locomotor gap component orthogonal to shared axis on healthy calib set; NOT globally orthogonal, r=-0.15 with shared axis on full sample)",
+    "struct_loco_gap_corr": 0.066,
+    "note": "gap estimates WEAKLY CORRELATED (r=0.066) \u2014 not 'age independently'"
+  },
+  "PRIMARY": {
+    "test": "reserve -> any lower-body physical limitation, beyond age+sex+BMI+shared axis",
+    "OR": 1.1027,
+    "CI": [
+      0.9926,
+      1.225
+    ],
+    "LRT_p": 0.06987,
+    "verdict": "NULL (p>0.05; direction non-protective)",
+    "prevalence": 0.131,
+    "n_limited": 378,
+    "OR_unit": "per +1 reserve-contrast unit (sample SD 1.13); OR/SD=1.117 \u2014 NOT reported per SD"
+  },
+  "SECONDARY_load_bearing": {
+    "lb_gap_vs_steps_r": -0.067,
+    "ctl_gap_vs_steps_r": -0.01,
+    "verdict": "directionally supported (load-bearing tracks locomotion more than control) but BOTH weak"
+  },
+  "SECONDARY_structural": {
+    "struct_gap_to_function_OR": 1.137,
+    "LRT_p": 0.0188,
+    "verdict": "SIGNIFICANT - DXA structural clock carries function signal",
+    "label": "EXPLORATORY (post-hoc, NOT prespecified)"
+  },
+  "SANITY_raw_activity": {
+    "steps_to_function_OR_per1000": 0.815,
+    "LRT_p": 1.86e-33,
+    "verdict": "massively significant - data & outcome sound; the RESERVE construct fails, not the data",
+    "label": "EXPLORATORY (post-hoc, NOT prespecified)"
+  },
+  "honest_conclusion": "MotionVector primary is NULL. The raw ingredients work (structure->function p=0.019; activity->function p=2e-33), but the locomotor-reserve RESIDUAL adds no clean orthogonal signal because the accelerometry age-clock is weak (R2=0.17) with a counterintuitive age mapping in the 20-69 DXA cohort. Reported as a prespecified null, consistent with project discipline. Does NOT alter the HeartVector A-vs-D headline or the held CODE reveal.",
+  "implemented_locomotor_features": [
+    "steps_per_day",
+    "mvpa_min",
+    "light_min",
+    "sed_min",
+    "mean_intensity",
+    "peak1min",
+    "steps_cv",
+    "mvpa_cv",
+    "sed_frac",
+    "active_frac"
+  ],
+  "NOT_computed_despite_lock": [
+    "cadence distribution",
+    "walking bouts count/duration",
+    "transition-probability fragmentation",
+    "cosinor circadian amplitude"
+  ],
+  "deviation": "Implemented locomotor feature subset; 4 locked feature families not computed; NOT added post-hoc to avoid outcome-informed selection (primary now unblinded)"
+}

@@ -3,7 +3,7 @@
 **Subsystem-resolved ECG aging clocks localize disease to its electrical substrate,
 and the same organ-resolved principle predicts mortality.**
 
-Jaron Mar · University of Miami · 2026
+Jaron Mohammed · University of Miami · 2026
 
 ---
 
@@ -25,7 +25,7 @@ modalities and two populations.
 > science evolved:
 >
 > 1. [`from_clocks_to_coordinates_full.pdf`](paper/from_clocks_to_coordinates_full.pdf)
->    (54 pp) — the **current, complete technical account**. It reframes the four subsystem
+>    (55 pp) — the **current, complete technical account**. It reframes the four subsystem
 >    clocks as a *shared aging axis A* and an orthogonal *disagreement radius D*, reports
 >    the pre-registered CODE-15 mortality test for D (null, HR 1.01/SD), and builds the
 >    central result on a controlled human perturbation: a randomized IKr blocker
@@ -103,8 +103,8 @@ electrical-body-clock/
 │   └── act2_nhanes/        # Cox HRs, C-index ladder, smoking attribution
 │       └── robustness/     # cross-validated C-index folds, leave-one-system-out D
 ├── figures/                # publication figures (PNG) — Fig 1–7
-├── demo/                   # interactive patient-fingerprint demo
-├── paper/                  # from_clocks_to_coordinates_full.{tex,pdf} (54 pp, current)
+├── demo/                   # static fingerprint demo + hf_space/ (deployable live-inference app)
+├── paper/                  # from_clocks_to_coordinates_full.{tex,pdf} (55 pp, current)
 │                           #   + clocks_to_coordinates.{tex,pdf} (6 pp judge-cut)
 │                           #   + manuscript.{tex,pdf,docx} (original reproducible paper)
 │                           #   figs_full/ = full-manuscript figures, figs_c2c/ = judge-cut,
@@ -134,12 +134,27 @@ python src/nhanes/nhanes_organ_clocks.py       # 6 organ clocks, Cox, C-index la
 python src/figures/make_figures.py             # regenerate Fig 1-7 from results/
 cd paper
 tectonic manuscript.tex                        # original reproducible paper
-tectonic from_clocks_to_coordinates_full.tex   # current 54-page technical account
+tectonic from_clocks_to_coordinates_full.tex   # current 55-page technical account
 tectonic clocks_to_coordinates.tex             # 6-page judge-cut
 ```
 
 Every figure and table in the paper regenerates from the released prediction tables in
 `results/`, so the headline numbers can be checked without re-training.
+
+## Live demo
+
+[`demo/hf_space/`](demo/hf_space/) is a deployable Gradio app (Hugging Face Space
+layout) that runs the five *frozen* subsystem phase-age clocks on CPU and reads out
+the A/D geometry live — synthesize or upload a 12-lead ECG and see the subsystem
+age-gap fingerprint, the windowed median beat, and the record's A–D position, plus a
+result explorer over the frozen figures. Model weights and standardization constants
+ship inside the folder; nothing is refit at runtime.
+
+```bash
+cd demo/hf_space
+pip install -r requirements.txt
+python app.py                                  # or push the folder to a Hugging Face Space
+```
 
 ## Data availability
 

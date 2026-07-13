@@ -1,0 +1,70 @@
+{
+  "protocol": "MotionVector \u2014 structure-function discordance / locomotor reserve",
+  "version": "1.0",
+  "frozen_at_utc": "2026-07-11T19:00:00Z",
+  "author": "OPERON (HeartVector project)",
+  "rationale": "Completes the aging hierarchy (ms phase clocks -> min perturbations -> 7-day movement -> years structural aging). Mirrors HeartVector A/D: a shared structure-function aging axis plus an orthogonal locomotor-reserve residual. This lock is written BEFORE any outcome (physical-function score OR mortality) is read.",
+  "data_sources": {
+    "cohort": "NHANES 2005-2006 (cycle D) \u2014 the ONLY cycle with BOTH whole-body DXA and minute-level accelerometry",
+    "DXA": "DXX_D.XPT (whole-body, 5 multiply-imputed replicates/person; ages 8-69 only) + DXXAG_D.XPT (android/gynoid)",
+    "accelerometry": "PAXRAW_D.ZIP (minute-level intensity counts + step flag, up to 10,080 min/person over 7 days), 449MB",
+    "physical_function": "PFQ_D.XPT (self-reported walking/stairs/chair-rise/stooping/standing difficulty) \u2014 PRIMARY OUTCOME (soft, self-report; stated as limitation)",
+    "body_measures": "BMX_D.XPT (BMI), DEMO_D.XPT (age, sex, survey design SDMVPSU/SDMVSTRA/WTMEC2YR)",
+    "mortality": "NHANES public-use linked mortality (through 2019) \u2014 SECONDARY, quarantined until reserve is frozen",
+    "verified_overlap": {
+      "DXA_unique_SEQN": 6893,
+      "DXA_int_BodyVector": 3682,
+      "DXA_int_BV_int_PFQ": 3682,
+      "note": "accelerometry valid-day filter will subset further; expected analysis n ~2500-3500"
+    }
+  },
+  "clock_1_structural_age": {
+    "target": "chronological age (RIDAGEYR)",
+    "method": "cross-fitted (5-fold) ElasticNetCV, trained on OUTCOME-BLIND healthy calibration subset only; age-bias-corrected residual = structural age-gap; mirrors BodyVector construction exactly",
+    "predictors": [
+      "femoral/total-femur region BMD proxies via DXA regional BMD (legs, pelvis, spine, arms, ribs, head)",
+      "regional BMC and lean mass",
+      "L1-L4 / trunk BMD",
+      "trochanter/intertrochanter where available"
+    ],
+    "imputation_handling": "average the 5 DXA multiply-imputed replicates per SEQN (or Rubin's rules); frozen choice = mean of replicates"
+  },
+  "clock_2_locomotor_age": {
+    "target": "chronological age (RIDAGEYR)",
+    "method": "identical cross-fitted ElasticNetCV pipeline, outcome-blind healthy calibration",
+    "predictors": [
+      "mean daily steps",
+      "active minutes (MVPA)",
+      "sedentary minutes",
+      "cadence distribution summary",
+      "sustained walking-bout count/duration",
+      "activity fragmentation (transition prob)",
+      "day-to-day variability",
+      "circadian activity amplitude (cosinor)"
+    ],
+    "valid_day_rule": ">=4 valid days (>=10 wear-hours/day, PAXCAL==1 & PAXSTAT==1); frozen BEFORE feature computation"
+  },
+  "reserve_definition": {
+    "PLAN_PROPOSED": "R = structural_age_gap / locomotor_age_gap (RATIO)",
+    "FROZEN_CHOICE": "locomotor_reserve = residual of locomotor_age_gap after regressing out the SHARED structure-function aging axis (orthogonal residual, NOT a ratio)",
+    "rationale_for_change": "A ratio is unstable near zero denominator and sign-flips; every other HeartVector/BodyVector construct uses an orthogonal residual / Mahalanobis. Same interpretation (movement younger/older than skeleton predicts), stable statistics, on-brand.",
+    "shared_axis": "first principal axis of standardized [structural_gap, locomotor_gap] on the healthy calibration set (2D analog of u0=ones/sqrt(2)); reserve = component orthogonal to it",
+    "sign_convention": "positive reserve = movement YOUNGER than skeletal substrate predicts (preserved function); negative = movement older (functional vulnerability)"
+  },
+  "prespecified_tests": {
+    "PRIMARY": "Does locomotor_reserve explain a frozen lower-body physical-function score beyond age + sex + BMI + shared structure-function age? (ordinal/logistic on PFQ-derived lower-body limitation; LRT, alpha=0.05 two-sided; success = p<0.05 AND reserve coefficient in hypothesized direction)",
+    "SECONDARY_mortality": "reserve -> all-cause mortality beyond age+sex+shared-axis (survey-weighted Cox); reported as secondary, event count expected LOW (younger DXA cohort)",
+    "LOAD_BEARING_CONTRAST": "prespecified: do load-bearing regions (legs, pelvis, femur, lumbar spine) show steeper structural age-gradient than control regions (arms, ribs), and does the load-bearing structural gap track objective locomotion better than the control-region gap? (paired comparison of region-specific age-gap vs accelerometry correlation)"
+  },
+  "honesty_constraints": [
+    "Primary outcome (PFQ) is SELF-REPORTED physical function \u2014 stated as a limitation; accelerometry is the PREDICTOR not the outcome.",
+    "Cohort is ages 8-69 (DXA exclusion of 70+), skews young (median 41) -> few deaths -> mortality is secondary and underpowered.",
+    "n ~2500-3500 after valid-day filter -> smaller than CODE/EchoNext; this is a FUNCTIONAL-LAYER completion, NOT a new headline.",
+    "DXA and CT are independent modalities/cohorts: phrase any CT convergence as 'cross-modal convergence', never causal.",
+    "'structure-function discordance', NOT 'bone deterioration caused movement changes'.",
+    "This track does NOT touch the held CODE confirmatory reveal and does not alter the A-vs-D dissociation headline."
+  ],
+  "firewall": "Physical-function and mortality outcomes are NOT read until clock_1, clock_2, and reserve are computed and frozen. Prespecification hashed below.",
+  "does_not_gate": "Independent of CODE confirmatory reveal (still user-gated) and of all EchoNext/Chapman/perturbation results.",
+  "self_sha256": "91b80634ea7c02dc4827684af1e4452b1fd937a78e7474277e3b2ca070d30360"
+}

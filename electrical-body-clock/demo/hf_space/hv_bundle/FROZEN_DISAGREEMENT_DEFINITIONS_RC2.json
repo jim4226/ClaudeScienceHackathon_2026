@@ -1,0 +1,443 @@
+{
+  "schema": "FROZEN_DISAGREEMENT_DEFINITIONS_RC2",
+  "phase_order": [
+    "P",
+    "AV",
+    "QRS",
+    "STT"
+  ],
+  "sex_coding": "1=female, 0=male",
+  "adapt_coef": {
+    "global": [
+      0.013986300360111927,
+      -0.4849644459353851,
+      27.519949348432487
+    ],
+    "P": [
+      0.00176452998880532,
+      0.464888058434666,
+      14.664198610814791
+    ],
+    "AV": [
+      0.00537070098011491,
+      0.01743444217200673,
+      26.404504370683874
+    ],
+    "QRS": [
+      0.006967273556530198,
+      0.23668736929124445,
+      9.711343862916356
+    ],
+    "STT": [
+      0.010586114280653936,
+      -0.2936077788431724,
+      23.379725860207156
+    ]
+  },
+  "calibration_functions": {
+    "P": {
+      "beta_mean": [
+        46.96361259950713,
+        1.8450797659756688,
+        -0.11228417812736757,
+        -0.08271655024815072,
+        -0.11046298994680212
+      ],
+      "beta_logvar": [
+        3.774957636860091,
+        -0.1592879419944631,
+        0.009894141550343294,
+        0.11826890251577564,
+        0.02650525807132114
+      ],
+      "min_sigma": 0.25
+    },
+    "AV": {
+      "beta_mean": [
+        46.00461569970891,
+        0.8486758811574554,
+        0.04547792189337874,
+        0.13305779836393383,
+        -0.1684576658579936
+      ],
+      "beta_logvar": [
+        3.151683831598907,
+        -0.10055172911335944,
+        0.0010025774078741556,
+        -0.037507554073572105,
+        -0.05382121123687019
+      ],
+      "min_sigma": 0.25
+    },
+    "QRS": {
+      "beta_mean": [
+        46.573359334061905,
+        3.449471474618126,
+        -0.14321559051239596,
+        1.8050188906844038,
+        -0.4473946777450297
+      ],
+      "beta_logvar": [
+        4.161473840507214,
+        -0.10264507050384031,
+        0.010985228586828252,
+        -0.09531241636209421,
+        -0.044939328344336886
+      ],
+      "min_sigma": 0.25
+    },
+    "STT": {
+      "beta_mean": [
+        45.942056304419246,
+        2.2187044032469343,
+        -0.08906080900568902,
+        1.6467106813401196,
+        -0.4017352517781864
+      ],
+      "beta_logvar": [
+        3.7998293022391723,
+        -0.11599262709990646,
+        0.016861979685400083,
+        -0.021643734267151972,
+        0.03826461977940464
+      ],
+      "min_sigma": 0.25
+    }
+  },
+  "scores": {
+    "D4": {
+      "phases": [
+        "P",
+        "AV",
+        "QRS",
+        "STT"
+      ],
+      "z_definition": "z_k = (adapted_k - m_k(age,sex)) / sigma_k(age,sex); m_k = X\u00b7beta_mean, sigma_k = exp(0.5\u00b7X\u00b7beta_logvar) floored at 0.25; X=[1,(age-50)/10,((age-50)/10)^2,sex,sex\u00b7(age-50)/10]; sex 1=female",
+      "contrast_C": [
+        [
+          0.5,
+          0.5,
+          -0.5,
+          -0.5
+        ],
+        [
+          0.0,
+          0.0,
+          0.7071067811865475,
+          -0.7071067811865475
+        ],
+        [
+          0.7071067811865475,
+          -0.7071067811865475,
+          0.0,
+          0.0
+        ]
+      ],
+      "q_definition": "q = C \u00b7 z  (z restricted to this score's phases, in phase_order)",
+      "mu_q": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "mu_q_convention": "uncentered Mahalanobis (mu_q=0), matches frozen development compute_D; verified reproduces dev.D_raw to <1e-4",
+      "Sigma_q": [
+        [
+          0.7977678781339239,
+          -0.0837953885216977,
+          -0.0053212353245024446
+        ],
+        [
+          -0.0837953885216977,
+          0.7046799361408662,
+          -0.027282412546645374
+        ],
+        [
+          -0.0053212353245024446,
+          -0.027282412546645374,
+          0.5740291687376051
+        ]
+      ],
+      "Sigma_q_inv": [
+        [
+          1.2695583453738546,
+          0.1517013858664631,
+          0.01897882390016118
+        ],
+        [
+          0.15170138586646312,
+          1.4398270485092735,
+          0.06983825298400922
+        ],
+        [
+          0.018978823900161177,
+          0.06983825298400924,
+          1.7455669526710578
+        ]
+      ],
+      "ledoit_wolf_shrinkage": 0.017678797444079422,
+      "covariance_condition_number": 1.4970752449314029,
+      "D_formula": "D = sqrt( (q - mu_q)^T \u00b7 Sigma_q_inv \u00b7 (q - mu_q) )",
+      "D_std_center": 1.568794495165468,
+      "D_std_scale": 0.7578395499380183,
+      "D_std_source": "calibration partition D_raw (ddof=0)",
+      "per_1SD_meaning": "HR per +1 SD of D_std == +0.757840 units of raw D",
+      "CCt_eq_I": true,
+      "Cu_eq_0": true
+    },
+    "D3_dropP": {
+      "phases": [
+        "AV",
+        "QRS",
+        "STT"
+      ],
+      "z_definition": "z_k = (adapted_k - m_k(age,sex)) / sigma_k(age,sex); m_k = X\u00b7beta_mean, sigma_k = exp(0.5\u00b7X\u00b7beta_logvar) floored at 0.25; X=[1,(age-50)/10,((age-50)/10)^2,sex,sex\u00b7(age-50)/10]; sex 1=female",
+      "contrast_C": [
+        [
+          0.8164965809277261,
+          -0.4082482904638631,
+          -0.4082482904638631
+        ],
+        [
+          0.0,
+          0.7071067811865475,
+          -0.7071067811865475
+        ]
+      ],
+      "q_definition": "q = C \u00b7 z  (z restricted to this score's phases, in phase_order)",
+      "mu_q": [
+        0.0,
+        0.0
+      ],
+      "mu_q_convention": "uncentered Mahalanobis (mu_q=0), matches frozen development compute_D; verified reproduces dev.D_raw to <1e-4",
+      "Sigma_q": [
+        [
+          0.7280534369043934,
+          -0.05003074326029765
+        ],
+        [
+          -0.05003074326029765,
+          0.7057057777677423
+        ]
+      ],
+      "Sigma_q_inv": [
+        [
+          1.380249816433481,
+          0.09785228685456987
+        ],
+        [
+          0.09785228685456987,
+          1.4239583326350196
+        ]
+      ],
+      "ledoit_wolf_shrinkage": 0.0668515532355009,
+      "covariance_condition_number": 1.1540327046496544,
+      "D_formula": "D = sqrt( (q - mu_q)^T \u00b7 Sigma_q_inv \u00b7 (q - mu_q) )",
+      "D_std_center": 1.232235264236084,
+      "D_std_scale": 0.708892295098326,
+      "D_std_source": "calibration partition D_raw (ddof=0)",
+      "per_1SD_meaning": "HR per +1 SD of D_std == +0.708892 units of raw D",
+      "CCt_eq_I": true,
+      "Cu_eq_0": true
+    },
+    "D3_noAV": {
+      "phases": [
+        "P",
+        "QRS",
+        "STT"
+      ],
+      "z_definition": "z_k = (adapted_k - m_k(age,sex)) / sigma_k(age,sex); m_k = X\u00b7beta_mean, sigma_k = exp(0.5\u00b7X\u00b7beta_logvar) floored at 0.25; X=[1,(age-50)/10,((age-50)/10)^2,sex,sex\u00b7(age-50)/10]; sex 1=female",
+      "contrast_C": [
+        [
+          0.8164965809277261,
+          -0.4082482904638631,
+          -0.4082482904638631
+        ],
+        [
+          0.0,
+          0.7071067811865475,
+          -0.7071067811865475
+        ]
+      ],
+      "q_definition": "q = C \u00b7 z  (z restricted to this score's phases, in phase_order)",
+      "mu_q": [
+        0.0,
+        0.0
+      ],
+      "mu_q_convention": "uncentered Mahalanobis (mu_q=0), matches frozen development compute_D; verified reproduces dev.D_raw to <1e-4",
+      "Sigma_q": [
+        [
+          0.7184463970900158,
+          -0.08327496685007554
+        ],
+        [
+          -0.08327496685007554,
+          0.7050984217953381
+        ]
+      ],
+      "Sigma_q_inv": [
+        [
+          1.4112109379958804,
+          0.1666697023386359
+        ],
+        [
+          0.1666697023386359,
+          1.4379260860570335
+        ]
+      ],
+      "ledoit_wolf_shrinkage": 0.02812625013669857,
+      "covariance_condition_number": 1.2659596691878805,
+      "D_formula": "D = sqrt( (q - mu_q)^T \u00b7 Sigma_q_inv \u00b7 (q - mu_q) )",
+      "D_std_center": 1.232149550651685,
+      "D_std_scale": 0.7148407404763796,
+      "D_std_source": "calibration partition D_raw (ddof=0)",
+      "per_1SD_meaning": "HR per +1 SD of D_std == +0.714841 units of raw D",
+      "CCt_eq_I": true,
+      "Cu_eq_0": true
+    }
+  },
+  "A_definitions": {
+    "A4": {
+      "phases": [
+        "P",
+        "AV",
+        "QRS",
+        "STT"
+      ],
+      "direction": "ones(4)/2",
+      "center": 9.634460499675206e-05,
+      "scale": 1.465352823545115,
+      "source": "calibration (ddof=0)",
+      "used_in": [
+        "M1",
+        "M2",
+        "M3 (as A_std)"
+      ]
+    },
+    "A3_noAV": {
+      "phases": [
+        "P",
+        "QRS",
+        "STT"
+      ],
+      "direction": "ones(3)/sqrt(3)",
+      "center": 0.00011065247708702238,
+      "scale": 1.3295169539443594,
+      "source": "calibration (ddof=0)",
+      "used_in": [
+        "M2_noAV sensitivity (as A_std_noAV)"
+      ]
+    },
+    "A3_dropP": {
+      "phases": [
+        "AV",
+        "QRS",
+        "STT"
+      ],
+      "direction": "ones(3)/sqrt(3)",
+      "center": 9.585118720019839e-05,
+      "scale": 1.3480047359681124,
+      "source": "calibration (ddof=0)",
+      "used_in": [
+        "M2_dropP sensitivity"
+      ]
+    },
+    "A_four_phase_for_primary": "A_std (4-phase A4) is used in the PRIMARY M1/M2/M3. Each 3-phase sensitivity uses its OWN matching 3-phase A (A3_noAV / A3_dropP), NOT the 4-phase A.",
+    "DEVIATION_NOTE": "In the original development scores, A_std_noAV was standardized on the DEVELOPMENT partition (center 0.3746, scale 1.3932). RC1 standardizes ALL A/D scores from the outcome-blind CALIBRATION partition for consistency (A3_noAV center 0.000111, scale 1.329517). This changes ONLY the noAV sensitivity's A standardization; the primary D4/M2 is unaffected; the mortality association is refit fresh at reveal so no frozen coefficient is invalidated."
+  },
+  "cox_models": {
+    "M0": [
+      "age",
+      "sex"
+    ],
+    "M1": [
+      "age",
+      "sex",
+      "A_std",
+      "nn_predicted_age"
+    ],
+    "M2": [
+      "age",
+      "sex",
+      "A_std",
+      "nn_predicted_age",
+      "D_std"
+    ],
+    "M3": [
+      "age",
+      "sex",
+      "A_std",
+      "nn_predicted_age",
+      "D_std",
+      "1dAVb",
+      "RBBB",
+      "LBBB",
+      "SB",
+      "ST",
+      "AF"
+    ],
+    "M4": [
+      "age",
+      "sex",
+      "z_P",
+      "z_AV",
+      "z_QRS",
+      "z_STT",
+      "D_std"
+    ],
+    "M5": "M2 with D_std as restricted cubic spline (3 knots at 10/50/90th pct of D_std on CALIBRATION partition)",
+    "M2_noAV": [
+      "age",
+      "sex",
+      "A_std_noAV",
+      "nn_predicted_age",
+      "D_std_noAV"
+    ],
+    "M2_dropP": [
+      "age",
+      "sex",
+      "A_std_dropP",
+      "nn_predicted_age",
+      "D_std_dropP"
+    ],
+    "primary_estimand": "HR per +1 SD of D_std in M2; LRT M2 vs M1 (1 df); alpha=0.05 two-sided; success = p<0.05 AND HR>1",
+    "nn_predicted_age": "published Lima et al. CODE-15 age-clock prediction (comparator), from exams.csv"
+  },
+  "missing_data_behavior": {
+    "rule": "complete-case on the model's covariates + (event,timey). A record with ANY NaN across its required phase predictions is dropped (prespecified \u00a710 complete-case).",
+    "qc": "analysis restricted to qc_ok index exams (frozen analysis population).",
+    "one_exam_per_patient": "salted-hash tie-break, first per patient (see verifier)."
+  },
+  "outcome_free_R2_D4_given_M1": {
+    "calibration": 0.018436777857756104,
+    "development": 0.008711068457865179,
+    "interpretation": "D4 is nearly orthogonal to M1 covariates (R2~0.009-0.018), so R2=0 in the power calc is a mild optimistic upper bound, not exact."
+  },
+  "provenance": {
+    "record_selection_and_verifier": "verify_disagreement_definitions.py (this bundle)",
+    "salt": "heartvector_option4_code15_record_selection_v1",
+    "n_calibration": 9887,
+    "n_healthy": 9338,
+    "source_artifacts": {
+      "heartvector_calibration_frozen.json": "09fa1849-3e39-40f9-88f4-cf3daeb28659",
+      "outcome_free_features.parquet": "f6bc8cff-a570-43c4-b8b5-8b72c501f8b0",
+      "survival_index_manifest.parquet": "afda5427-c9a1-464e-9740-e552e8a31286",
+      "dev_scores_outcome_free.parquet": "ed51db18-4e14-4546-9347-cc843c681ede"
+    }
+  },
+  "canonicalization": {
+    "step1": "Load the JSON file.",
+    "step2": "Drop every top-level key beginning with underscore (the _content_self_sha256 field itself and any _-prefixed metadata).",
+    "step3": "Serialize the remaining object with json.dumps(obj, sort_keys=True) \u2014 Python default separators (', ', ': '), ensure_ascii=True, UTF-8 encode.",
+    "step4": "sha256 of those UTF-8 bytes = content_self_sha256.",
+    "raw_file_sha256": "sha256 of the file's raw bytes on disk (indent=2 pretty-printed, UTF-8), as written.",
+    "note": "content_self is invariant to pretty-print/whitespace/key-order; raw_file pins the exact bytes."
+  },
+  "analysis_N": {
+    "eligible_pool_full_primary": 75063,
+    "complete_case_fit_N_full_primary": 74715,
+    "rule": "Fitted denominator = qc_ok index exams with ALL FOUR phase predictions present (complete-case per \u00a710). The eligible pool 75,063 is the age_adaptation followup_valid patient count and MUST NOT be used as the fitted denominator.",
+    "OOS_predictor_robustness_pool": 40065,
+    "note": "OOS complete-case N is computed at reveal on the same rule; expect <=40,065."
+  },
+  "_content_self_sha256": "0f6ef5d148e6482281f85a14151f9ce4f7c26058ac93840d5afb532e7c633170"
+}

@@ -1,4 +1,4 @@
-% Author normalized to 'Jaron Mar' for repo consistency (CITATION.cff/LICENSE).
+% Author: Jaron Mohammed.
 % Figure paths rewritten from Claude Science artifact markers to local figs_c2c/.
 % JUDGE CUT (6 pp) — condensed companion to from_clocks_to_coordinates_full.pdf (54 pp).
 \documentclass[10pt]{article}
@@ -24,7 +24,7 @@
 \usepackage[hidelinks]{hyperref}
 \hypersetup{
   pdftitle={From Clocks to Coordinates (judge cut)},
-  pdfauthor={Jaron Mar}
+  pdfauthor={Jaron Mohammed}
 }
 \usepackage[numbers,sort&compress]{natbib}
 \usepackage{caption}
@@ -61,7 +61,7 @@
 \title{\textbf{From Clocks to Coordinates:}\\
 \textbf{Controlled Human Perturbations Reveal Hidden Directions in ECG Biological Age}\\[4pt]
 \large\normalfont A condensed account of the central result}
-\author[1]{Jaron Mar}
+\author[1]{Jaron Mohammed}
 \affil[1]{University of Miami \quad \texttt{jim4226@miami.edu}}
 \date{}
 
@@ -103,8 +103,8 @@ Two people equally ``old for their age'' may be old in physiologically opposite 
 question this work answers is whether that lost direction is real, measurable and
 \emph{transportable}: can a controlled human perturbation reveal a fixed coordinate in an
 age--state space, and does that coordinate carry information in a cohort that never saw the
-perturbation? The answer is a signed, mechanism-aligned direction recovered from a randomized ion-channel
-blockade and confirmed, frozen, on an external cohort---not a claim that every age gap hides a
+perturbation? The answer is a signed, IKr-aligned perturbation direction derived from a randomized ion-channel
+blockade and tested unchanged, frozen, on an external cohort---not a claim that every age gap hides a
 useful vector.
 
 
@@ -186,14 +186,14 @@ claim}: distinguishing \Ikr\ from non-\Ikr\ drugs would require a pre-registered
 contrast, which this study does not perform. Because two perturbation directions (\Ikr\ and acute
 ischemia) were screened, the honest multiplicity-corrected permutation test on the direction's
 magnitude is only nominal (Holm-adjusted $p=\num{0.069}$); the direction-\emph{derivation} is
-therefore reported as exploratory, and its confirmation comes from the external cohort in the next
-section.
+therefore reported as exploratory, and its conditional phenotype support comes from the external
+cohort in the next section.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.80\linewidth]{\figCompass}
-\caption{\textbf{An outcome-blind, signed perturbation direction recovers a mechanism the
-unsigned radius discards, and is frozen for external transport.} \textbf{(a)}~Bootstrap spread of
+\caption{\textbf{An outcome-blind, signed perturbation direction captures an IKr-aligned
+perturbation direction the unsigned radius discards, and is frozen for external transport.} \textbf{(a)}~Bootstrap spread of
 the recovered direction in a two-dimensional slice of the three-dimensional whitened contrast
 space: the \Ikr\ axis is a stable exploratory direction (bootstrap median $\cos_\Sigma=\num{0.94}$;
 \num{9999} of \num{10000} bootstraps reproduce its sign), whereas the acute-ischemia axis is
@@ -227,10 +227,11 @@ Fully adjusted ($+\A,+\D$)       & \num{1.23} (\numrange{1.10}{1.36}) & \num{1.9
 \bottomrule
 \end{tabular}
 \end{center}
-The marginal association is null (odds ratio \num{1.00})---the direction speaks only once the
-shared displacement and the conventional intervals are held fixed, which is exactly what a hidden
-\emph{orthogonal} coordinate should do. The two sites agree in direction (Ningbo odds ratio
-\num{1.20}, $p=\num{0.0019}$, \num{329}~cases, a confirmatory-strength replication;
+The marginal association is null (odds ratio \num{1.00}); the estimate increased only after
+conditioning on conventional intervals, \A\ and \D---a model-dependent pattern consistent with
+statistical suppression. This adjustment dependence is not implied by geometric orthogonality.
+The two sites agree in direction (Ningbo odds ratio
+\num{1.20}, $p=\num{0.0019}$, \num{329}~cases, a positive larger-site estimate;
 Chapman--Shaoxing odds ratio \num{1.44}, $p=\num{0.018}$, \num{57}~cases, underpowered;
 Fig.~\ref{fig:chapman}b).
 
@@ -240,7 +241,7 @@ included (Fig.~\ref{fig:chapman}c). Excluding atrial flutter/fibrillation, the e
 ratio \num{1.18}, $p=\num{0.014}$, \num{227}~cases); excluding sinus bradycardia alone it
 attenuates to borderline (odds ratio \num{1.13}, $p=\num{0.096}$, \num{245}~cases); and
 \emph{excluding both} it is null (odds ratio \num{0.93}, $p=\num{0.48}$, \num{86}~cases). Because
-the confirmatory-strength signal is not pre-registered as rhythm-stratified, the AV-flutter and
+the transported association is not pre-registered as rhythm-stratified, the AV-flutter and
 bradycardia subgroups are reported here as \emph{post-hoc}: they show the transported direction is
 entangled with rhythm context and is best read as a conditional, hypothesis-generating signal
 rather than a rhythm-independent one. This dependence is disclosed as a limitation, not framed as a
@@ -253,8 +254,10 @@ mechanistic result.
 information, with an honest rhythm-context limitation.} \textbf{(a)}~Adjustment ladder: the odds
 ratio for QT-extension per SD of the signed score rises from a null margin to a fully adjusted
 odds ratio of \num{1.23} ($p=\num{1.9e-4}$) as age/sex, conventional intervals and the shared
-coordinates are added---a suppression effect. \textbf{(b)}~Per-site replication: Ningbo confirms
-(\num{329}~cases); Chapman--Shaoxing agrees in direction but is underpowered (\num{57}~cases).
+coordinates are added---a suppression effect. \textbf{(b)}~Site-stratified external estimates:
+the larger Ningbo site (\num{329}~cases), part of the combined primary cohort rather than an
+independent replication, drives the pooled estimate; Chapman--Shaoxing agrees in direction but is
+underpowered (\num{57}~cases).
 \textbf{(c)}~Rhythm-exclusion sensitivity: the association survives excluding atrial
 flutter/fibrillation, weakens excluding sinus bradycardia, and is null excluding both
 (\num{86}~cases)---a disclosed limitation that keeps the claim conditional.}

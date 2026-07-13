@@ -1,0 +1,5 @@
+# The demo Space ships its five frozen clock checkpoints (1.3 MB each) as
+# deployable weights — un-ignore them despite the repo-wide *.pt rule that
+# blocks large training checkpoints.
+!*.pt
+!*/best.pt

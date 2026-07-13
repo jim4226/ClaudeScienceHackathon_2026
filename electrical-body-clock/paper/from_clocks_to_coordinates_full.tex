@@ -1,4 +1,4 @@
-% Author normalized to 'Jaron Mar' for repo consistency (CITATION.cff/LICENSE).
+% Author: Jaron Mohammed.
 % Figure paths rewritten from Claude Science artifact markers to local figs_full/.
 % Full 54-page technical manuscript; the 6-page judge cut is clocks_to_coordinates.tex.
 \documentclass[11pt]{article}
@@ -28,7 +28,7 @@
 \usepackage[hidelinks]{hyperref}
 \hypersetup{
   pdftitle={From Clocks to Coordinates: Controlled Human Perturbations Reveal Hidden Directions in ECG Biological Age},
-  pdfauthor={Jaron Mar},
+  pdfauthor={Jaron Mohammed},
   pdfsubject={Biological aging; multi-clock decomposition; electrocardiography},
   pdfkeywords={biological age, shared axis, disagreement radius, ECG age, NHANES, cross-scale}
 }
@@ -62,7 +62,7 @@
 \title{\textbf{From Clocks to Coordinates: Controlled Human Perturbations Reveal
 Hidden Directions in ECG Biological Age}}
 
-\author[1,*]{Jaron Mar}
+\author[1,*]{Jaron Mohammed}
 \affil[1]{University of Miami, Miami, FL, USA}
 \affil[*]{Correspondence: jim4226@miami.edu}
 \date{\today}
@@ -97,9 +97,10 @@ mortality-associated (development hazard ratio \num{1.22} per SD) and generalize
 organ-system aging (NHANES, $+\num{1.21}$ per SD); the underlying whole-ECG clock additionally
 reconstructed on a geographically distinct cohort ($r=\num{0.646}$ with chronological age),
 whereas \A\ itself, a residual over age-adapted gaps, correlates with age only weakly there
-($r=\num{0.26}$). The same decomposition was applied as a supporting multiscale atlas across
-whole-body CT, brain MRI and an \emph{in-silico} genomic screen. Biological age is not one clock
-but a direction in a state space.
+($r=\num{0.26}$). The same shared-axis-versus-disagreement \emph{question} was then posed, as a
+supporting multiscale atlas, across whole-body CT, brain MRI and an \emph{in-silico} genomic
+screen---each with its own scale-appropriate decomposition rather than the electrical
+(\A/\D/\S) geometry itself. Biological age is not one clock but a direction in a state space.
 \end{abstract}
 
 \section{Introduction}
@@ -285,9 +286,9 @@ the covariance-normalized \emph{magnitude} of the phase-gap contrast vector: the
 radius discards the \emph{direction} of a coherent one-phase displacement and retains only
 its magnitude, so a physiologically-directed shift of a single phase clock need not register
 as increased disagreement.
-Third, in STAFF~III, acute ischemia did not change \D\ (inflation minus baseline
-$+\num{0.14}$~SD, 95\% CI $[-\num{0.30},\num{0.57}]$, $p=\num{0.54}$; recovery
-statistically equivalent to baseline by a two one-sided test at $\pm 1$~SD). The
+Third, in STAFF~III, acute ischemia produced no detectable change in \D\ (inflation minus baseline
+$+\num{0.14}$~SD, 95\% CI $[-\num{0.30},\num{0.57}]$, $p=\num{0.54}$; recovery within the
+prespecified $\pm 1$~SD equivalence margin by a two one-sided test). The
 disagreement radius was also reproducible under repeated measurement on placebo within the
 short ECGRDVQ crossover window (intraclass correlation, absolute agreement, $\num{0.83}$;
 95\% CI \numrange{0.78}{0.87}), so within that controlled design the nulls are not
@@ -448,8 +449,9 @@ $\cos_\Sigma=\num{0.63}$ with an interval spanning zero; sign stable in only
 \SI{79}{\percent} of bootstraps; permutation $p=\num{0.84}$): ischemia displaces the
 phase-age vector coherently along the shared axis \A\ (\S\ref{sec:staff}), leaving no
 stable contrast-subspace direction to freeze. Per the frozen protocol no substitute
-direction was constructed, so the transportable ``atlas'' contains a single pre-registered
-perturbation direction ($k=1$). The signed score was then standardized (mean $\mu$, SD $\sigma$) on the frozen healthy
+direction was constructed, so the transportable ``atlas'' contains a single
+retrospectively derived, exploratory perturbation direction ($k=1$), frozen before
+the external transport test but not itself a pre-registered hypothesis. The signed score was then standardized (mean $\mu$, SD $\sigma$) on the frozen healthy
 calibration cohort---the larger $n=\num{9887}$ cohort on which \D\ is also standardized, not the
 smaller $n=\num{9338}$ subset used to estimate $\Sigma_q$ ($\mu=\num{0.008}$,
 $\sigma=\num{1.01}$, $n=\num{9887}$).
@@ -466,11 +468,12 @@ $p=\num{0.996}$), it strengthens monotonically as conventional context is added
 (age/sex OR \num{1.09}, $p=\num{0.09}$; $+$intervals OR \num{1.15}, $p=\num{0.007}$), and in
 the fully adjusted model it is clearly non-null (OR \num{1.23} per SD, 95\% CI
 \numrange{1.10}{1.36}, likelihood-ratio $p=\num{1.9e-4}$; identical under a Firth
-penalized fit). In other words the frozen $I_{\text{Kr}}$ direction adds information about
+penalized fit; Fig.~\ref{fig:chapman}). In other words the frozen $I_{\text{Kr}}$ direction adds information about
 physician-assigned QT extension \emph{beyond} conventional intervals, the shared displacement
 \A\ and the radial disagreement \D---it is a shape coordinate unmasked by adjustment, not a
-marginally separable one. The effect confirmed independently in the larger Ningbo site
-(\num{329} cases, OR \num{1.20}, $p=\num{0.002}$); Chapman--Shaoxing pointed the same way but
+marginally separable one. The pooled association was driven primarily by the larger Ningbo site
+(\num{329} cases, OR \num{1.20}, $p=\num{0.002}$), which is part of the combined primary cohort and
+so is a site-stratified estimate, not an independent replication; Chapman--Shaoxing pointed the same way but
 is underpowered (\num{57} cases, OR \num{1.44}, 95\% CI \numrange{1.06}{1.97}, reported without
 a pass/fail verdict). It was not, however, independent of rhythm context: it held when atrial
 flutter/fibrillation were excluded ($p=\num{0.014}$) but attenuated to null when both flutter
@@ -520,9 +523,9 @@ suspected of merely re-reading. After adjusting for age and sex, each predicted 
 was only weakly correlated with its matched standard interval (partial Spearman $\rho$,
 CODE-15 calibration set, $n=\num{74715}$): P-clock versus P-duration $\rho=-\num{0.11}$,
 AV-clock versus PR-interval $\rho=-\num{0.13}$, ST-T-clock versus QTc $\rho=+\num{0.08}$,
-and only the QRS-clock read its interval appreciably ($\rho=+\num{0.20}$). The AV clock---the
-strongest mortality channel---is if anything \emph{weakly negatively} related to the PR
-interval, so its prognostic signal is not a re-badging of classical PR prolongation
+and only the QRS-clock read its interval appreciably ($\rho=+\num{0.20}$). The AV clock---which
+carried the largest development-split mortality coefficient---is if anything \emph{weakly negatively} related to the PR
+interval, so what it contributes is not a re-badging of classical PR prolongation
 (Supplementary~Fig.~\ref{fig:s9}b).
 
 Second, the frozen geometry reconstructs on an untrained external cohort. Applying the
@@ -556,13 +559,13 @@ $\num{0.32}$, AV $\num{0.31}$). A Mahalanobis radius over a mixture of signal an
 channels compounds measurement error, so this is a mechanistic complement to the null: \D\
 is not only uninformative for mortality, it is the noisiest coordinate defined. The AV
 gap carried a large development-split coefficient despite only moderate reproducibility
-($\mathrm{ICC}=\num{0.31}$), which is consistent with a genuine signal rather than a
+($\mathrm{ICC}=\num{0.31}$), which is consistent with a reproducible within-patient measurement rather than a
 reliability artifact, though the external identifiable test did not support it. CODE-15 lacks per-exam acquisition dates, so this quantifies
 within-patient measurement stability, not calendar drift of the coordinate; longitudinal
 trajectory modeling of \A\ requires dated repeat exams and is left to future work
 (Supplementary~Fig.~\ref{fig:s9}d).
 
-\subsection{The same decomposition works across the body}
+\subsection{The same multiscale question extends across the body}
 \label{sec:crossscale}
 
 If the shared-axis/disagreement-radius decomposition captures something general about
@@ -810,9 +813,10 @@ Each substitution was scored with Borzoi, an open sequence-to-coverage model
 \citep{linder2025borzoi}, by contrasting the derived (human) against the ancestral allele across
 \num{16} skeletal-lineage accessibility tracks --- predicted chromatin accessibility in osteoblast,
 mesenchymal-stem-cell, embryonic arm- and leg-bone, limb and skeletal-muscle contexts --- and
-\num{81} neural comparator tracks. The reported score is the skeletal minus neural accessibility
-delta, so that pleiotropic changes registering in both lineages cancel and only effects specific to
-the skeletal readouts are retained. Across the substitution catalogue the score spans
+\num{81} neural comparator tracks. The reported score is a raw predicted-coverage contrast---the
+skeletal minus neural accessibility delta---intended to emphasize skeletal-lineage-specific
+effects over changes shared by both lineages; it is a descriptive contrast, not a formal
+correction that guarantees pleiotropic effects cancel. Across the substitution catalogue the score spans
 \numrange{-2.45}{4.69} (skeletal-loss to skeletal-gain), a heavy-tailed distribution centred near
 zero (Fig.~\ref{fig:skeletome}A).
 
@@ -1222,10 +1226,10 @@ physician-assigned QT-interval-extension label (SNOMED~111975006; \num{386} case
 scoring. The pre-registered inference is a one-degree-of-freedom likelihood-ratio test for the
 standardized $I_{\text{Kr}}$ score in a logistic model of QT extension adjusting for age, sex,
 heart rate, QTc, QRS, whole-ECG age, \A\ and \D, with a marginal-to-fully-adjusted ladder reported
-in full because the effect is conditional (suppression). Prespecified robustness comprised a Firth
+in full because the effect is conditional (suppression). Secondary, post-hoc robustness analyses comprised a Firth
 penalized fit, atrial-flutter/fibrillation and sinus-bradycardia exclusion sensitivities,
 per-site (Ningbo, Chapman--Shaoxing) estimates, and a bootstrap comparison of incremental
-information against QTc, \A\ and \D. A reliable-QT subgroup (QTc \SIrange{350}{600}{\milli\second},
+information against QTc, \A\ and \D; these were not part of a timestamped pre-result lock. A reliable-QT subgroup (QTc \SIrange{350}{600}{\milli\second},
 heart rate \SIrange{40}{120}{\text{bpm}}) is a \emph{post-hoc} robustness check and labelled as
 such. The label is imperfect---\SI{42}{\percent} of raw cases have QTc below \SI{350}{\milli\second}
 in rhythms (flutter, bradycardia) where automated QT delineation is unreliable---so the QT-label
@@ -1581,9 +1585,10 @@ ENCFF973KXU), embryonic arm- and leg-bone (ENCFF430CNF, ENCFF869XYK, ENCFF573KUK
 embryonic limb (ENCFF850IPE, ENCFF540ITV) and mesenchymal stem cell (ENCFF594UFP, ENCFF867YFT);
 the neural comparator set is the model's DNase/ATAC tracks annotated neural, neuron, brain, cortex,
 astrocyte, forebrain or hindbrain. Track labels denote the literal Borzoi readout; no cell type is
-inferred beyond the track's own annotation. The skeletal-specific effect is the mean skeletal delta
-minus the mean neural delta, so shared pleiotropic effects cancel and only skeletal-specific
-accessibility changes are scored. Tracks were combined on the model's native predicted-coverage
+inferred beyond the track's own annotation. The skeletal-specific effect is a raw
+predicted-coverage contrast---the mean skeletal delta minus the mean neural delta---which
+emphasizes skeletal-lineage-specific changes over those shared by both lineages, without
+being a formal correction that guarantees pleiotropic effects cancel. Tracks were combined on the model's native predicted-coverage
 scale without any per-track normalisation (no standardisation, quantile or log transform) before the
 skeletal-minus-neural contrast; because the skeletal and neural sets differ in track count and in
 baseline predicted signal, this contrast is a difference of raw group-mean coverage deltas and is
@@ -1646,6 +1651,7 @@ are illustrative of anatomy, not of any individual participant's scan.
 \newcommand{\figDdissoc}{figs_full/fig3_D_dissociated.pdf}
 \newcommand{\figStaff}{figs_full/fig4_staff.pdf}
 \newcommand{\figCompass}{figs_full/fig_perturbation_compass.pdf}
+\newcommand{\figChapman}{figs_full/fig_chapman_transport.pdf}
 \newcommand{\figAtlas}{figs_full/fig5_atlas.pdf}
 \newcommand{\figLemon}{figs_full/fig1_disagreement_headline.pdf}
 \newcommand{\figLemonAnatomy}{figs_full/fig3_segmentation_overlays.png}
@@ -1756,6 +1762,25 @@ coordinate. The frozen axis was carried into an independent external cohort
 QT-interval extension beyond conventional intervals, \A\ and \D\ (fully adjusted odds ratio
 \num{1.23} per SD, $p=\num{1.9e-4}$; \S\ref{sec:transport}).}
 \label{fig:compass}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{\figChapman}
+\caption{\textbf{External-cohort transport of the frozen $I_{\text{Kr}}$ direction
+(Chapman--Shaoxing/Ningbo, $n=\num{44550}$, \num{386} QT-extension cases).}
+\textbf{(a)}~Adjustment-dependent association: the standardized $I_{\text{Kr}}$ score is
+marginally null (OR \num{1.00}, $p=\num{0.996}$) and the odds ratio grows only as age, sex,
+conventional intervals, \A\ and \D\ are added, reaching a fully adjusted OR \num{1.23} per SD
+($p=\num{1.9e-4}$)---the model-dependent pattern of a suppressed coordinate.
+\textbf{(b)}~Site-stratified external estimates; gray marks the site with fewer than \num{100}
+cases and lines show \SI{95}{\percent} CIs. The pooled association is driven primarily by the
+larger Ningbo site, which is part of the combined primary cohort rather than an independent
+replication. \textbf{(c)}~Post-hoc rhythm-exclusion sensitivities: the estimate holds when
+atrial flutter/fibrillation are excluded but attenuates to null when both flutter and sinus
+bradycardia are removed (\num{86} cases), a limitation reported in full. Blue marks the frozen
+primary estimate; post-hoc exclusions are shown in a neutral color.}
+\label{fig:chapman}
 \end{figure}
 
 \begin{figure}[t]
