@@ -1,0 +1,6 @@
+# These example ECGs are real PTB-XL records redistributed under CC-BY 4.0
+# (see ATTRIBUTION.md) — deliberately shipped with the demo. Un-ignore them
+# despite the repo-wide *.dat / *.hea rules that block raw PhysioNet waveforms
+# under their data-use agreements.
+!*.hea
+!*.dat
