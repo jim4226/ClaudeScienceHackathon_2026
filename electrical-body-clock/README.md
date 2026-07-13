@@ -27,8 +27,11 @@ modalities and two populations.
 > orthogonal *disagreement radius D*, reports the pre-registered CODE-15 mortality test
 > for D (null, HR 1.01/SD), and adds a controlled-perturbation result: a randomized IKr
 > blocker (dofetilide) displaces the ST–T repolarization clock, defining a signed
-> direction the unsigned radius discards, with external replication in Chapman–Shaoxing/
-> Ningbo (n = 44,550). [`manuscript.pdf`](paper/manuscript.pdf) is the original
+> direction the unsigned radius discards. The clocks transfer to an independent external
+> cohort (Chapman–Shaoxing/Ningbo, n = 44,595; see
+> [`results/act1_ecg/external_validation/`](results/act1_ecg/external_validation/)), where
+> the frozen geometry adds conditional information about physician-assigned QT-interval
+> extension. [`manuscript.pdf`](paper/manuscript.pdf) is the original
 > disease-localization write-up whose numbers the `src/`, `figures/`, and `results/`
 > tables below directly reproduce. Read `clocks_to_coordinates` for the current science;
 > read `manuscript` for the fully-reproducible ladder + specificity results.
