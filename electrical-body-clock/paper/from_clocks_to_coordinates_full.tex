@@ -1,6 +1,6 @@
 % Author: Jaron Mohammed.
 % Figure paths rewritten from Claude Science artifact markers to local figs_full/.
-% Full 55-page technical manuscript; the 6-page judge cut is clocks_to_coordinates.tex.
+% Full 56-page technical manuscript; the 6-page judge cut is clocks_to_coordinates.tex.
 \documentclass[11pt]{article}
 
 % ==================================================================
@@ -37,6 +37,19 @@
 \captionsetup{font=small,labelfont=bf}
 \sisetup{detect-weight=true,detect-family=true}
 
+% Relaxed float placement: let figures fill more of a page and reduce
+% half-empty text pages / float-only pages (default LaTeX is very conservative).
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.7}
+\renewcommand{\textfraction}{0.08}
+\renewcommand{\floatpagefraction}{0.75}
+\setcounter{topnumber}{3}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{5}
+% Let short pages end naturally instead of stretching vertical space into
+% large mid-page gaps; keeps section-boundary pages from looking half-empty.
+\raggedbottom
+
 \newcommand{\D}{\ensuremath{D}}
 \newcommand{\A}{\ensuremath{A}}
 \newcommand{\Sq}{\ensuremath{\Sigma_q}}
@@ -64,7 +77,7 @@ representation contains mechanism-aligned physiological \emph{directions} hidden
 scalar output. Four phase-of-heartbeat age clocks (P, AV, QRS, ST-T)
 compress into a \emph{shared axis} \A\ and an orthogonal \emph{disagreement radius} \D, with the
 geometry frozen on CODE-15 \emph{before any outcome was read}. The radius \D\ was null on its
-single pre-registered confirmatory mortality test (hazard ratio \num{1.01} per SD, 95\% CI
+single prespecified confirmatory mortality test (hazard ratio \num{1.01} per SD, 95\% CI
 \numrange{0.98}{1.04}, $p=\num{0.48}$; $n=\num{74715}$, \num{2583} deaths)---the honest negative
 that motivates a signed analysis. A randomized $I_{\text{Kr}}$ blocker (dofetilide) displaced the
 ST-T repolarization clock ($+\num{4.2}$~SD$\cdot$h, false-discovery-rate $p=\num{0.002}$),
@@ -83,10 +96,12 @@ mortality-associated (development hazard ratio \num{1.22} per SD) and generalize
 organ-system aging (NHANES, $+\num{1.21}$ per SD); the underlying whole-ECG clock additionally
 reconstructed on a geographically distinct cohort ($r=\num{0.646}$ with chronological age),
 whereas \A\ itself, a residual over age-adapted gaps, correlates with age only weakly there
-($r=\num{0.26}$). The same shared-axis-versus-disagreement \emph{question} was then posed, as a
-supporting multiscale atlas, across whole-body CT, brain MRI and an \emph{in-silico} genomic
-screen---each with its own scale-appropriate decomposition rather than the electrical
-(\A/\D/\S) geometry itself. Biological age is not one clock but a direction in a state space.
+($r=\num{0.26}$). Supporting analyses posed related coordinate-based questions at other
+biological scales---whole-body CT and brain MRI---using scale-appropriate representations rather
+than the electrical (\A/\D/\S) geometry itself; a separate exploratory evolutionary-genomics
+screen scored \num{1955} substitutions from the \num{312}-element Zoonomia HAR catalogue and found
+no matched enrichment near skeletal GWAS loci ($p=\num{0.24}$), yielding hypotheses rather than
+validated regulatory findings. Biological age is not one clock but a direction in a state space.
 \end{abstract}
 
 \section{Introduction}
@@ -96,14 +111,14 @@ better read as a \emph{direction} in a state space: a controlled human perturbat
 ion channel displaces the heartbeat's electrical age along a specific, reproducible axis that a
 scalar age---and even an unsigned measure of subsystem disagreement---discards. That perturbation
 discovery, developed in full for the electrical heartbeat, is the paper's contribution; the
-whole-body and deep-time analyses that follow are a supporting multiscale atlas, applying the same
-decomposition at other scales to show it is not an idiosyncrasy of the electrocardiogram, not
-independent confirmation of the electrical result. Within a single lifetime, physiological
-subsystems age at different rates, and the \emph{pattern} of that disagreement---not only its
-average---may carry information; the electrical analysis makes this concrete and testable, and the
-structural (whole-body CT) and genomic (human-accelerated DNA) scales, with the skeleton as a
-literal bridge organ between the within-lifetime and deep-time views, illustrate the same
-shared-axis/disagreement decomposition under one methodological stance: rigorous, outcome-blind,
+whole-body and deep-time analyses that follow are a supporting multiscale atlas, posing related
+coordinate-based questions at other scales to show the stance is not an idiosyncrasy of the
+electrocardiogram, not independent confirmation of the electrical result. Within a single lifetime,
+physiological subsystems age at different rates, and the \emph{pattern} of that disagreement---not
+only its average---may carry information; the electrical analysis makes this concrete and testable,
+and the structural (whole-body CT) and genomic (human-accelerated DNA) scales, with the skeleton as
+a literal bridge organ between the within-lifetime and deep-time views, use scale-appropriate
+shared-axis/disagreement representations under one methodological stance: rigorous, outcome-blind,
 open-data analysis, with no causal chain forced between scales. The electrical analysis occupies
 the remainder of this introduction; the atlas scales follow in Parts~II and~III.
 
@@ -152,7 +167,7 @@ read}, (iii) to ask, across multiple cohorts and physiological perturbations,
 whether the shared axis and the disagreement radius carry \emph{dissociable}
 information, and (iv) to recover the \emph{signed} coordinate the unsigned radius discards
 as a covariance-scaled direction learned outcome-blind from a controlled ion-channel
-perturbation, gated for stability and frozen for a pre-registered external test. That
+perturbation, gated for stability and frozen for a prespecified external test. That
 recovered perturbation \emph{direction}---the coordinate the unsigned radius discards, frozen
 and shown to transport to an external clinical phenotype---not any single clock, atlas or score,
 is the contribution.
@@ -168,10 +183,10 @@ confirmed structural disease) \citep{echonext,poterucha2025}; a QT-prolonging dr
 \citep{staff,martinez2017} as within-person physiological perturbations; the Chapman--Ningbo
 cohort (geographic transfer) \citep{chapman}; and, at a different biological scale
 entirely, NHANES organ-system aging linked to mortality \citep{nhanes}. The single
-pre-registered confirmatory mortality test for the disagreement radius was executed once
+prespecified confirmatory mortality test for the disagreement radius was executed once
 on the locked CODE-15 final-test partition. The shared axis proved robust across
 all of these settings; that the electrical disagreement radius showed no detectable
-association with structure or acute stress across three pre-registered tests \emph{and} was null on the confirmatory
+association with structure or acute stress across three prespecified tests \emph{and} was null on the confirmatory
 mortality test; and that a mixed model on the locked split assigns larger coefficients to
 specific phase gaps (AV conduction and ST-T repolarization) than to their disagreement---a
 hypothesis an external identifiable test did not support. Biological age is not one clock but a
@@ -218,7 +233,7 @@ a ``discordant'' heart in which one phase contrast dominates has a large $\D$
 
 The shared axis was associated with aging and its outcomes in every setting
 examined (Fig.~\ref{fig:Arobust}); these associations were consistent across development,
-secondary and transfer analyses, but \A\ was not itself the single pre-registered
+secondary and transfer analyses, but \A\ was not itself the single prespecified
 confirmatory endpoint (\D\ was), so its incremental contribution was not adjudicated on a
 locked split and the models below do not isolate \A's independent effect. On the locked CODE-15 development partition
 ($n=\num{61905}$, \num{2292} deaths, median follow-up \num{3.6}~years), \A\ carried
@@ -249,9 +264,9 @@ construction additionally reconstructed on a geographically distinct cohort.
 \subsection{The disagreement radius \texorpdfstring{\D}{D} shows no detectable association with structure or response to acute stress}
 \label{sec:dissociation}
 
-The hypothesis had been pre-registered that the disagreement radius would respond to
+The hypothesis had been prespecified that the disagreement radius would respond to
 physiological stress and to structural disease---that stress or remodeling would drive
-the phase clocks apart. In three independent pre-registered tests the radius showed no
+the phase clocks apart. In three independent prespecified tests the radius showed no
 detectable association with either, and the nulls are reported in full (Fig.~\ref{fig:Ddissoc}).
 
 First, in EchoNext, the frozen four-phase disagreement score \D\ carried no
@@ -293,7 +308,7 @@ and the drug-challenge and imaging arms had no prespecified equivalence margin, 
 is the absence of a detectable effect, not proof of exact invariance. As
 \S\ref{sec:staff} shows, acute ischemia is in fact a coherent shift \emph{along} the
 shared axis---which is precisely why the orthogonal disagreement radius does not move.
-The single pre-registered confirmatory mortality test, reported in
+The single prespecified confirmatory mortality test, reported in
 \S\ref{sec:mortality}, was null in the same way: on the locked CODE-15 final split the
 electrical disagreement radius carried no mortality information beyond age, sex, \A\
 and a whole-ECG age clock ($\text{HR}=\num{1.01}$ per SD, $p=\num{0.48}$). The
@@ -301,7 +316,7 @@ electrical disagreement composite thus shows no detectable association on every
 confirmatory-grade endpoint the study defined---structure, acute stress and
 mortality---and its interest is precisely that consistency: it isolates what \emph{is}
 informative (the shared axis, and specific phase gaps) by cleanly marking what is not.
-A pre-registered secondary sensitivity score that excluded the atrial (P) phase showed
+A prespecified secondary sensitivity score that excluded the atrial (P) phase showed
 a small association with structural disease (odds ratio \num{1.05} per SD, 95\% CI
 \numrange{1.02}{1.09}, $p=\num{0.0021}$, Holm-adjusted $\approx\num{0.006}$) but no
 improvement in discrimination (change in AUC $+\num{0.0004}$, confidence interval
@@ -322,7 +337,7 @@ the model, never confirmatory---already attenuated when the four phase gaps were
 modeled individually ($p=\num{0.26}$), hinting that the signal was concentrated in
 specific phases rather than in ``disagreement'' as such.
 
-The single pre-registered confirmatory test resolved that question. Executed once, on
+The single prespecified confirmatory test resolved that question. Executed once, on
 the untouched final-test partition, behind the outcome firewall (Methods), the primary
 M2-vs-M1 Cox likelihood-ratio test for \D\ was \textbf{null}: hazard ratio \num{1.010}
 per SD (95\% CI \numrange{0.983}{1.039}), likelihood-ratio $\chi^2=\num{0.50}$,
@@ -437,7 +452,7 @@ phase-age vector coherently along the shared axis \A\ (\S\ref{sec:staff}), leavi
 stable contrast-subspace direction to freeze. Per the frozen protocol no substitute
 direction was constructed, so the transportable ``atlas'' contains a single
 retrospectively derived, exploratory perturbation direction ($k=1$), frozen before
-the external transport test but not itself a pre-registered hypothesis. The signed score was then standardized (mean $\mu$, SD $\sigma$) on the frozen healthy
+the external transport test but not itself a prespecified hypothesis. The signed score was then standardized (mean $\mu$, SD $\sigma$) on the frozen healthy
 calibration cohort---the larger $n=\num{9887}$ cohort on which \D\ is also standardized, not the
 smaller $n=\num{9338}$ subset used to estimate $\Sigma_q$ ($\mu=\num{0.008}$,
 $\sigma=\num{1.01}$, $n=\num{9887}$).
@@ -445,7 +460,7 @@ $\sigma=\num{1.01}$, $n=\num{9887}$).
 The frozen axis was then carried, unchanged, into an independent external cohort with a
 clinical phenotype: the combined Chapman--Shaoxing and Ningbo 12-lead databases
 ($n=\num{44550}$ with usable records; \num{386} carrying the physician-assigned
-QT-interval-extension label, SNOMED~111975006). The pre-registered test was a
+QT-interval-extension label, SNOMED~111975006). The prespecified test was a
 one-degree-of-freedom likelihood-ratio comparison for the standardized $I_{\text{Kr}}$ score
 in a logistic model of QT extension adjusting for age, sex, heart rate, QTc, QRS, whole-ECG
 age, \A\ and \D. The result is a \emph{conditional} (suppression) effect, and the adjustment
@@ -466,7 +481,7 @@ flutter/fibrillation were excluded ($p=\num{0.014}$) but attenuated to null when
 and sinus bradycardia were removed ($p=\num{0.48}$, \num{86} cases), a limitation reported in
 full. A reliable-QT subgroup filter (QTc \SIrange{350}{600}{\milli\second}, heart rate
 \SIrange{40}{120}{\text{bpm}}) is a post-hoc robustness check, labelled as such and not
-pre-registered. The frozen score is not claimed to be \emph{stronger} than QTc, \A\ or \D:
+prespecified. The frozen score is not claimed to be \emph{stronger} than QTc, \A\ or \D:
 its incremental information is real (bootstrap incremental likelihood-ratio CI excludes zero)
 but is not statistically distinguishable from those scalars. The defensible claim is narrow
 and external: a direction frozen from a randomized drug perturbation carries conditional
@@ -498,7 +513,7 @@ change in the disagreement radius, exactly as the geometry predicts.
 
 \subsection{The electrical construct is internally valid, externally transferable and differs in reproducibility}
 \label{sec:robust}
-The analyses in this subsection were computed \emph{after} the single pre-registered
+The analyses in this subsection were computed \emph{after} the single prespecified
 confirmatory test and are reported as post-hoc; each is either a re-presentation of the
 already-locked mortality numbers or a no-outcome computation on frozen scores, so none
 re-opens the confirmatory endpoint. All ran through the frozen scoring pipeline with no
@@ -529,7 +544,7 @@ of the age-structure geometry only, not an external mortality replication
 (Supplementary~Fig.~\ref{fig:s9}c).
 
 Third, the equal-weight shared axis is close to the direction the data would have chosen.
-The pre-registered axis uses fixed weights $u=\tfrac12(1,1,1,1)$; a data-driven first
+The prespecified axis uses fixed weights $u=\tfrac12(1,1,1,1)$; a data-driven first
 principal component of the four calibration z-scores (development split, $n=\num{61905}$;
 $\num{51.5}\%$ of variance) has weights $(\num{0.45},\num{0.51},\num{0.51},\num{0.53})$---cosine
 similarity $\num{0.998}$ with the fixed axis, and per-exam scores correlating at
@@ -567,11 +582,14 @@ the body disagreement radius $\D_{\text{body}}$ added mortality information beyo
 (hazard ratio \num{1.21} per SD, 95\% CI \numrange{1.108}{1.328}, $p=\num{3.1e-5}$;
 cross-validated concordance improvement $+\num{0.0041}$, 95\% CI
 \numrange{0.0029}{0.0054}).\footnote{The $\D_{\text{body}}$ interval
-\numrange{1.108}{1.328} is the design-based survey Cox estimate (\texttt{svycoxph},
-combined-cycle MEC weights, robust standard errors, design degrees of freedom~47),
-which is the appropriate model for the NHANES Linked Mortality File and matches the
-canonical released Cox table; a naïve non-survey Cox model yields a narrower nominal
-interval that is not used here.} The concordance ladder rose from \num{0.8147} (age and
+\numrange{1.108}{1.328} is read directly from the fitted design-based survey Cox
+model (\texttt{svycoxph}, combined-cycle MEC weights, robust standard errors, design
+degrees of freedom~47; $n=\num{14362}$, \num{1739} deaths, \num{93} clusters), which
+is the appropriate model for the NHANES Linked Mortality File. Hazard ratio, robust
+standard error, interval and $p$ are taken verbatim from the released canonical model
+table (\texttt{results/act2\_nhanes/nhanes\_canonical\_cox\_table.csv}), not reconstructed
+in prose; a naïve non-survey Cox model yields a narrower nominal interval that is not
+used here.} The concordance ladder rose from \num{0.8147} (age and
 sex) to \num{0.8288} (adding $\A_{\text{body}}$) to \num{0.8329} (adding
 $\D_{\text{body}}$). The disagreement signal was robust to leaving out any single
 organ system (all six design-based $p<\num{0.05}$). This NHANES analysis is reported as
@@ -593,7 +611,7 @@ The cross-scale picture raises a sharper question than ``does the decomposition
 transfer?'': \emph{where} is a disagreement coordinate informative, and for which
 outcome? To probe this prospectively, the identical shared-axis/disagreement
 construction was applied to a third scale---brain imaging---with a motor outcome and a fully
-pre-registered, hash-locked, outcome-blind protocol (Methods). In the Aging Brain Cohort
+prespecified, hash-locked, outcome-blind protocol (Methods). In the Aging Brain Cohort
 (AABC / HCP-Aging Release~2; \num{1396} adults, \num{2878} visits, controlled access),
 four independent brain-age clocks were trained on distinct imaging views---cortical
 \emph{structure}, \emph{myelin} (T1w/T2w), \emph{perfusion} (arterial spin labeling) and
@@ -604,7 +622,7 @@ pre-specified $r\ge\num{0.20}$ gate, and the shared axis and disagreement radius
 nearly uncorrelated ($r=-\num{0.03}$), as expected from their construction on orthogonal
 subspaces (Figs.~\ref{fig:s5}--\ref{fig:s8}).
 
-The pre-registered primary test---whether baseline brain-channel disagreement predicts
+The prespecified primary test---whether baseline brain-channel disagreement predicts
 subsequent annualized decline in 4-metre gait speed, beyond the shared axis, baseline
 gait, age, sex, education, site, height and BMI---was \textbf{null}: $\beta_D=-\num{0.021}$
 per SD (95\% CI $[-\num{0.051},+\num{0.009}]$, $p=\num{0.17}$; $n=\num{295}$ longitudinal
@@ -621,7 +639,7 @@ brain-imaging scale: how much the imaging views \emph{disagree} did not forecast
 decline in this cohort. Alongside the
 electrical (mortality, null) and organ-system (mortality, secondary positive) arms, this
 makes the point directly---a disagreement coordinate is informative in some scale--outcome
-pairings and not others, and which is an empirical question to be settled by pre-registered
+pairings and not others, and which is an empirical question to be settled by prespecified
 tests, not assumed.
 
 That prospective null concerns whether disagreement \emph{forecasts an outcome}; a separate,
@@ -629,7 +647,7 @@ prior question is whether the disagreement coordinate is a genuine property of t
 all, rather than an artifact of how imaging-derived tables are assembled. To answer it, the
 coordinate was rebuilt from raw voxels in a fully independent pipeline: all \num{220}
 T1-weighted scans of the open-access LEMON cohort (\num{151} younger, 20--35~y; \num{69}
-older, 55--80~y) were processed end-to-end into four \emph{independent} image-derived
+older, 55--80~y) were processed end-to-end into four \emph{complementary} T1-derived
 estimates of structural brain age---a deep brain-age regression, gray-matter fraction, the
 ventricle--brain ratio and the brain-tissue fraction (Methods)---and $\D$ was defined, exactly
 as elsewhere, as each brain's internal inconsistency across those four oriented, cohort-standardized
@@ -658,8 +676,9 @@ plainly evident on the segmented volumes themselves (Fig.~\ref{fig:lemonanat}).
 \label{sec:partii}
 
 Parts~II and~III are a supporting multiscale atlas: a visually rich companion to the electrical
-result that illustrates the same shared-axis/disagreement decomposition at other biological scales,
-\emph{not} independent confirmation of the electrical perturbation finding. This structural scale
+result that poses related coordinate-based questions at other biological scales using
+scale-appropriate representations, \emph{not} independent confirmation of the electrical
+perturbation finding. This structural scale
 turns from the heartbeat to the whole body imaged in cross-section. Unlike Part~I, it makes no
 shared-axis/disagreement-radius decomposition: it is a single volume-based age clock read by
 per-structure importance, included because it localizes aging anatomically and because its skeletal
@@ -689,10 +708,10 @@ most age-informative on volume alone (MAE \num{9.71}~years, $R^2=\num{0.288}$;
 $R^2=\num{0.111}$; \num{63} structures) and digestive (MAE \num{11.20}~years,
 $R^2=\num{0.107}$; \num{9} structures) systems, consistent with CT age
 predictors that draw heavily on large-vessel and body-composition change
-\citep{pickhardt2020automated,kerber2023deeplearning}. To the author's
-knowledge, this is the first CT structural age clock to couple a single
-whole-body volume model with per-structure permutation importance across the
-full TotalSegmentator label set.
+\citep{pickhardt2020automated,kerber2023deeplearning}. This CT structural age
+clock couples a single whole-body volume model with per-structure permutation
+importance across the full TotalSegmentator label set, an approach the author is
+not aware of having been reported previously.
 
 \subsection{The aorta dominates the clock by importance, not by correlation}
 
@@ -772,7 +791,7 @@ mind.
 
 
 \clearpage
-\section{Part~III --- A supporting genomic atlas: an \textit{in-silico} skeletal screen of Human Accelerated Regions}
+\section{Part~III --- Supporting evolutionary-genomics screen: predicted skeletal-lineage effects in the Zoonomia HAR catalogue}
 \label{sec:partiii}
 
 This genomic scale of the supporting atlas reads the body across the deepest timescale in this
@@ -792,89 +811,85 @@ Regions (HARs) are conserved sequences that acquired an excess of substitutions 
 lineage after divergence from chimpanzee, and they are strongly enriched for gene-regulatory
 function. Functional dissection of HARs has to date concentrated on neural contexts; the
 skeleton --- the literal bridge organ of this manuscript --- has not been screened at the level
-of individual HAR substitutions. SKELETOME addresses that gap. The \num{312} HARs of the
-Zoonomia call set \citep{keough2023hars} contribute \num{1955} human-specific substitutions
-(mean \num{6.27} per HAR, maximum \num{38}), each scored for a predicted \emph{skeletal-specific}
-regulatory effect. This is a variant-effect \emph{screen} --- model-predicted chromatin-accessibility
-changes --- and not a massively parallel reporter assay: no transcription is measured here, and
-the candidates below are prioritised hypotheses awaiting experimental validation.
+of individual HAR substitutions. As a supporting evolutionary-genomics analysis, all
+\num{1955} human-specific substitutions represented in the \num{312}-element Zoonomia HAR
+catalogue \citep{keough2023hars} (mean \num{6.27} per HAR, maximum \num{38}) were scored using a
+sequence-to-coverage model. The analysis asks whether model-predicted regulatory effects can
+prioritise skeletal-lineage hypotheses. It is not an aging clock, an experimental regulatory
+assay, or independent confirmation of the ECG result; the candidates below are prioritised
+hypotheses awaiting experimental validation.
 
-\paragraph{A skeletal-specific accessibility score.}
-Each substitution was scored with Borzoi, an open sequence-to-coverage model
-\citep{linder2025borzoi}, by contrasting the derived (human) against the ancestral allele across
-\num{16} skeletal-lineage accessibility tracks --- predicted chromatin accessibility in osteoblast,
-mesenchymal-stem-cell, embryonic arm- and leg-bone, limb and skeletal-muscle contexts --- and
-\num{81} neural comparator tracks. The reported score is a raw predicted-coverage contrast---the
-skeletal minus neural accessibility delta---intended to emphasize skeletal-lineage-specific
-effects over changes shared by both lineages; it is a descriptive contrast, not a formal
-correction that guarantees pleiotropic effects cancel. Across the substitution catalogue the score spans
-\numrange{-2.45}{4.69} (skeletal-loss to skeletal-gain), a heavy-tailed distribution centred near
-zero (Fig.~\ref{fig:skeletome}A).
+\paragraph{A descriptive skeletal-minus-neural coverage contrast.}
+For each substitution, Borzoi-predicted \citep{linder2025borzoi} reference-to-alternate coverage
+changes were aggregated across a prespecified set of \num{16} skeletal-lineage accessibility
+tracks --- predicted chromatin accessibility in osteoblast, mesenchymal-stem-cell, embryonic arm-
+and leg-bone, limb and skeletal-muscle contexts --- and \num{81} neural accessibility tracks.
+Their difference, termed the skeletal-minus-neural predicted-coverage contrast, is a
+\emph{descriptive model output}. It does not establish tissue specificity, enhancer activity, or
+causal regulatory function, and is not a measured accessibility effect, a demonstrated
+skeletal-regulatory effect, a validated functional variant, or a biological discovery. Across the
+substitution catalogue the contrast spans \numrange{-2.45}{4.69} (predicted skeletal-loss to
+skeletal-gain), a heavy-tailed distribution centred near zero (Fig.~\ref{fig:skeletome}A).
 
-\paragraph{Evolutionary constraint and a gBGC discriminator.}
+\paragraph{Evolutionary constraint and a gBGC-susceptibility flag.}
 Two filters separate candidate regulatory substitutions from the confounded majority. First,
 per-base constraint from the Zoonomia \num{241}-way mammalian alignment \citep{christmas2023zoonomia}:
 \num{1208} substitutions (\SI{61.8}{\percent}) fall at positions with phyloP${}>\num{2.27}$, and
-\num{1463} (\SI{74.8}{\percent}) at phyloP${}>\num{1.6}$. Second, and treated as a first-class arm
-rather than a caveat, a GC-biased gene conversion (gBGC) discriminator \citep{duret2009gbgc}. Because
-gBGC over-transmits strong (G/C) over weak (A/T) alleles in recombination hotspots, weak-to-strong
-substitutions can mimic the substitution excess that defines a HAR without any positive selection.
+\num{1463} (\SI{74.8}{\percent}) at phyloP${}>\num{1.6}$. Second, a GC-biased gene conversion
+(gBGC) susceptibility flag \citep{duret2009gbgc}. Because gBGC over-transmits strong (G/C) over
+weak (A/T) alleles in recombination hotspots, weak-to-strong substitutions can mimic the
+substitution excess that defines a HAR without any positive selection. Because allelic direction
+alone cannot establish that gBGC occurred, weak-to-strong substitutions were treated as
+gBGC-susceptible rather than classified as artifacts; recombination context and direct
+evolutionary evidence would be needed to attribute any individual substitution to gBGC.
 Classifying every substitution by allelic direction gives weak-to-strong \num{936}
 (\SI{48}{\percent}), strong-to-weak \num{688} (\SI{35}{\percent}) and neutral \num{331}
-(\SI{17}{\percent}) (Fig.~\ref{fig:skeletome}B); weak-to-strong changes in hotspots are flagged as
-likely gBGC artefacts rather than selection. Requiring both constraint and a non-artefactual
-gBGC class leaves \num{722} candidate skeletal-regulatory substitutions.
+(\SI{17}{\percent}) (Fig.~\ref{fig:skeletome}B). Requiring both constraint and a substitution not
+flagged by the allelic-direction rule leaves \num{722} candidate skeletal-regulatory
+substitutions.
 
-\paragraph{Crossing skeletal candidates with osteoarthritis and bone-density genetics.}
+\paragraph{The central genomic result: no enrichment near skeletal GWAS loci.}
 The \num{722} candidates were intersected with GWAS credible-set variants for two skeletal
 phenotypes --- osteoarthritis (OA; \num{936} variants) and bone mineral density (BMD; \num{903}
-variants). Ten HARs lie within \num{25}~kb of an OA or BMD
-locus, and all ten are also scoring candidates, yielding \num{10} priority HARs that are both
-predicted skeletal-regulatory and genetically proximal to skeletal disease. This proximity is not,
-however, an enrichment: a matched permutation null (\num{50000} draws, per-HAR skeletal-specificity
-taken as the maximum absolute skeletal-minus-neural score over each region's candidate substitutions,
-matched on candidate-substitution count) placed the ten proximal HARs' mean score (\num{0.220}) only
-marginally above the matched-null expectation (\num{0.179}), with a permutation $p=\num{0.24}$ (and
-$p=\num{0.26}$--\num{0.28} for region-length-matched and unmatched nulls); the ten proximal HARs are
-therefore not significantly more skeletal-specific than size- and substitution-matched non-proximal
-HARs. No HAR substitution coincides exactly with a credible-set variant (\num{0} exact-base overlaps).
-The relationship is thus regulatory-neighbourhood proximity, consistent with chance under the matched
-null, not an enriched or variant-level overlap, and is reported as such.
+variants). The strongest inferential result of this arm is not the candidate list; it is a null.
+Ten HARs were located within \num{25}~kb of an OA or BMD credible-set variant, but none overlapped
+at the exact base (\num{0} exact-base overlaps). Their predicted skeletal-lineage contrasts were
+not enriched relative to matched HARs: a matched permutation null (\num{50000} draws, per-HAR
+skeletal-specificity taken as the maximum absolute skeletal-minus-neural score over each region's
+candidate substitutions, matched on candidate-substitution count) placed the ten proximal HARs'
+mean score (\num{0.220}) only marginally above the matched-null expectation (\num{0.179}), with a
+permutation $p=\num{0.24}$ (and $p=\num{0.26}$--\num{0.28} for region-length-matched and unmatched
+nulls). The screen therefore generated ranked hypotheses without demonstrating disease-locus
+enrichment.
 
-\paragraph{A blind GDF5 filter control.}
+\paragraph{A blind GDF5 filter-logic control.}
 Before any score was computed, three substitutions at the \textit{GDF5} growth-and-arthritis locus
 were frozen as a blind control with pre-specified pass/reject calls on the constraint-and-gBGC
-filters. The two constrained, strong-to-weak variants (GROW1 enhancer rs4911178 and the
-\textit{GDF5} \num{5}$'$UTR rs143384) were retained as candidates and the unconstrained,
-gBGC-favoured promoter variant rs6060369 was rejected, exactly as pre-specified
-(Fig.~\ref{fig:skeletome}A). The frozen expectation was the filter outcome (pass versus reject),
-not a signed Borzoi effect direction: what was recovered is the discriminator's pass/reject
-behaviour, not a prespecified sign of the predicted regulatory change. The GROW1 enhancer variant rs4911178 (chr20, phyloP
-\num{7.04}, strong-to-weak) and the \textit{GDF5} \num{5}$'$UTR variant rs143384 (phyloP \num{4.96},
-strong-to-weak) both clear constraint and the gBGC filter and are retained as candidates, whereas
-the \textit{GDF5} promoter variant rs6060369 (phyloP \num{-0.07}, weak-to-strong) is correctly
-rejected --- unconstrained and gBGC-favoured. The two surviving variants are strong-to-weak and
-highly constrained, exactly the signature expected for the derived alleles shown to be under ancient
-selection at this locus \citep{capellini2017gdf5}; recovering the frozen pass/reject calls, while
-discarding the neighbouring promoter change, supports the discriminator's behaviour on a locus of
-known skeletal function. No signed Borzoi effect direction was pre-specified or tested for these
-controls; the frozen quantity is the constraint-and-gBGC filter outcome only.
+filters. The GDF5 substitutions were prespecified as filter-logic controls: the two constrained,
+strong-to-weak variants (GROW1 enhancer rs4911178, chr20, phyloP \num{7.04}; \textit{GDF5}
+\num{5}$'$UTR rs143384, phyloP \num{4.96}) passed, while the unconstrained, gBGC-favoured promoter
+variant rs6060369 (phyloP \num{-0.07}, weak-to-strong) failed, exactly as prespecified
+(Fig.~\ref{fig:skeletome}A). The two surviving variants are strong-to-weak and highly constrained,
+the signature expected for the derived alleles shown to be under ancient selection at this locus
+\citep{capellini2017gdf5}. No signed Borzoi effect was prespecified, and these controls do not
+validate the magnitude or direction of the predicted accessibility contrast --- indeed one
+retained control has a near-zero skeletal-minus-neural score. The frozen quantity is the
+constraint-and-gBGC filter outcome only.
 
-\paragraph{A non-causal translational coda.}
-Ranking skeletal genes by a genetic-score $\times$ tractability composite surfaces targets with
-approved bone therapeutics --- \textit{TNFSF11} (denosumab) and \textit{SOST} (romosozumab) lead the
-skeletal ranking --- alongside \textit{GDF5}, the blind-control locus, as a genetically supported but
-not-yet-drugged candidate. This coda is forward-looking and explicitly non-causal: it links a
-deep-time regulatory screen to present-day druggability, and makes no claim that HAR substitutions
-cause any age-related skeletal phenotype.
+\paragraph{Future experimental prioritisation.}
+Separately, and several inferential steps removed from the HAR screen itself, a genetic-score
+$\times$ tractability composite over skeletal genes is provided in the supplement as a
+forward-looking prioritisation aid; it is not part of the HAR result and is not claimed to
+rediscover drug targets. It makes no claim that HAR substitutions cause any age-related skeletal
+phenotype.
 
-To the author's knowledge this is the first \textit{in-silico} variant-effect screen to score the
-complete HAR substitution catalogue for skeletal-lineage regulatory effect; the concentration of
-prior HAR functional work on neural contexts is empirically the case, leaving the skeletal question
-open until now.
+To the author's knowledge, this analysis applies one prespecified scoring workflow to all
+human-specific substitutions represented in the selected \num{312}-element Zoonomia HAR catalogue;
+the concentration of prior HAR functional work on neural contexts, leaving the skeletal question
+comparatively unexamined, is empirically the case.
 
 
-\newcommand{\figskeletome}{figs_full/fig_skeletome_results.png}
+\newcommand{\figskeletome}{figs_full/fig_skeletome_results.pdf}
 % ============================================================
 % PART III --- SKELETOME : figure caption(s)
 % Fragment for \input into the unified master (graphicx, siunitx preloaded).
@@ -894,12 +909,12 @@ the load-bearing finding: even one organ's age resolves into dissociable coordin
 axis that is robust, transferable and mortality-associated, and an orthogonal disagreement radius
 that shows no detectable association on any confirmatory endpoint, yet whose discarded \emph{sign}
 is a usable, mechanism-anchored perturbation direction that transports to an external clinical
-phenotype. The atlas scales illustrate the same decomposition rather than confirm it: the
-structural scale shows that whole-body age localizes anatomically---dominated by the aorta on
-importance, separating pathology organ by organ, and concentrating skeletal aging in the
-weight-bearing bones---and the genomic scale shows that the fastest-changing regions of the human
-genome can be screened for skeletal-regulatory effect and prioritized against skeletal-disease
-genetics, with a blind control whose pre-specified pass/reject filter calls were recovered.
+phenotype. The supporting analyses do not instantiate one identical geometry or establish a causal
+chain across scales. NHANES tests blood-biomarker system coordination, CT localises age-related
+morphology, brain imaging tests disagreement across derived views, movement probes a
+structure--function boundary, and the genomic screen prioritises predicted evolutionary regulatory
+hypotheses --- reporting a null enrichment near skeletal disease loci. Their contribution is to
+map where coordinate-based descriptions appear informative, null, or technically limited.
 
 The unification is deliberately \emph{thematic and methodological, not causal}. The skeleton is a
 bridge \emph{organ}---Part~II measures how bone ages within a lifetime, Part~III probes how
@@ -907,11 +922,8 @@ skeletal regulatory DNA evolved across species---but no claim is made, and none 
 the Human Accelerated Region substitutions of Part~III cause the bone-aging pattern of Part~II.
 These analyses use different cohorts, different species-scales and different readouts; the value is
 in the shared analytic stance applied honestly across all three, not in a path fitted between them.
-A single forward-looking, non-causal observation connects the structural and genomic arms: ranking
-skeletal genes by a genetic-score-by-tractability composite surfaces loci with approved bone
-therapeutics (\textit{TNFSF11}, targeted by denosumab; \textit{SOST}, by romosozumab) alongside
-\textit{GDF5}, the blind-control locus---a hypothesis-generating bridge to translation, not an
-inference of mechanism.
+A forward-looking, non-causal target-prioritisation aid connecting the structural and genomic arms
+is provided in the supplement; it is hypothesis-generating only and infers no mechanism.
 
 Finally, the boundary between what was reachable and what was not is itself a result. Three
 modalities of open data---hundreds of thousands of ECGs, more than a thousand whole-body CTs, and
@@ -936,9 +948,9 @@ tracks echocardiographically confirmed structural disease, rises under acute isc
 transfers across geography, and behaves the same way when the subsystems are organs
 rather than heartbeat phases. The electrical disagreement radius \D\ is a different kind
 of coordinate, and it is defined by what it is \emph{not} associated with: across
-pre-registered tests it showed no detectable association with structural disease, no
+prespecified tests it showed no detectable association with structural disease, no
 detectable change under two distinct acute physiological stressors, and---on the single
-pre-registered confirmatory test---no association with mortality beyond the shared axis
+prespecified confirmatory test---no association with mortality beyond the shared axis
 and a whole-ECG age clock. The study was built around that one confirmatory
 test, and it returned an informative null whose confidence interval excludes even the
 development-grade effect that motivated it.
@@ -981,7 +993,7 @@ outcome had been inspected in earlier work, and it is not a rescue of the electr
 confirmatory null. But it does suggest that ``disagreement'' is not one thing---a
 covariance-normalized residual among slow organ-system clocks may behave differently
 from one among fast electrical-phase clocks---and that where a disagreement coordinate is
-informative is itself an empirical question, to be settled by pre-registered tests rather
+informative is itself an empirical question, to be settled by prespecified tests rather
 than assumed. A prospective brain-imaging arm makes the same point in the opposite
 direction: applying the identical geometry to four imaging views of brain aging
 (structure, myelin, perfusion, function) and a longitudinal gait outcome, under a
@@ -990,8 +1002,8 @@ disagreement did not forecast motor decline, even though the underlying brain-ag
 were strong and a synthetic fixture confirmed the analysis code recovers a planted effect
 (a sanity check, not a power calibration on this modest holdout). Whether that coordinate is
 real, separately from whether it predicts, was confirmed by rebuilding it from raw voxels in
-an entirely independent cohort and pipeline: across 220 LEMON structural scans, four
-independent image-derived aging views agree in younger brains but diverge in older ones
+an entirely separate cohort and pipeline: across 220 LEMON structural scans, four
+complementary T1-derived aging views agree in younger brains but diverge in older ones
 ($d=\num{0.84}$), so the disagreement coordinate is visible in the anatomy itself and is not
 an artifact of table assembly.
 Three scales, then, give three answers to the same structural question: a disagreement
@@ -1015,7 +1027,7 @@ hypothesis-generating, used only to freeze the model, and did not survive on the
 final split. The residual electrical mortality signal is carried by the individual AV and
 ST-T phase gaps, reported as a phase-selective, externally testable hypothesis
 rather than as a validated predictor. A symmetric caveat applies to the shared axis: \A\
-is the headline coordinate, but it was not itself the single pre-registered confirmatory
+is the headline coordinate, but it was not itself the single prespecified confirmatory
 endpoint---the locked reveal was designed to test \D. The evidence that \A\ is robust is
 therefore assembled from development-split, secondary and external analyses (CODE-15
 development, EchoNext, secondary STAFF, previously outcome-exposed NHANES, and the Chapman
@@ -1023,7 +1035,7 @@ age-transfer), not from a dedicated locked \A-test. The one locked final-split q
 that bears on \A\ is that the reference model containing age, sex, \A\ and the whole-ECG
 clock reaches a Harrell concordance of \num{0.807} on the untouched CODE-15 final partition,
 against which adding \D\ produced no improvement; a dedicated confirmatory test of \A's
-incremental value is left to future pre-registered work. Second, the CODE-15 development and final-test
+incremental value is left to future prespecified work. Second, the CODE-15 development and final-test
 partitions are non-overlapping splits of one cohort, so the confirmatory test is an
 internal one; the NHANES organ-system arm is an independent analog at a different scale,
 but its mortality outcome had been inspected in earlier work and its (secondary,
@@ -1031,7 +1043,7 @@ non-confirmatory) disagreement--mortality association is reported as such, not a
 replication of an electrical finding that itself did not confirm. Third, the atrial (P)
 clock separates structural disease least of the four phases (Cohen's $d=\num{0.17}$ versus
 $\num{0.47}$ for AV and ST-T) and dilutes the four-phase disagreement score; a
-pre-registered P-excluded sensitivity score showed a small structural association that was
+prespecified P-excluded sensitivity score showed a small structural association that was
 not promoted. Fourth, the ``aging'' displacement seen under acute ischemia is an
 apparent shift of an age-trained readout over minutes, not literal biological aging, and
 no mechanistic claim is made beyond the geometry. Finally, the shared-axis/orthogonal-residual
@@ -1039,7 +1051,7 @@ architecture is itself established in other domains \citep{disco2025,cohen2013};
 is its application to independently trained per-phase clocks under an outcome-blind freeze
 and the demonstration of dissociation, not the decomposition idea in the abstract.
 
-Whether the same decomposition extends to slower, non-electrical scales is an open
+Whether a related coordinate-based description extends to slower, non-electrical scales is an open
 question only begun to be probed here. In a limited pilot, an analogous
 structure--function construction was applied in NHANES 2005--2006 (whole-body DXA versus seven-day
 accelerometry, $n=\num{2891}$; Supplementary~S4), asking whether a ``locomotor reserve''
@@ -1064,7 +1076,7 @@ rather than established effects, as is the phase-selective structural signal
 (concentrated in the same AV and ST-T phases). The cross-scale contrast---an
 electrical disagreement radius that is null for mortality while an organ-system one is
 not---motivates testing the decomposition in other multi-clock settings (proteomic,
-imaging, or multi-organ panels) with pre-registered endpoints, to map \emph{where} a
+imaging, or multi-organ panels) with prespecified endpoints, to map \emph{where} a
 disagreement coordinate is informative rather than assuming it always is. Biological age,
 on this evidence, is not one clock; it is at least two coordinates, and they mean
 different things.
@@ -1214,7 +1226,7 @@ STRIP pipeline that produced the calibration $\Sigma_q$ (extraction QC pass rate
 $n=\num{44550}$ with usable records), so the score is in-metric; scorer faithfulness against the
 frozen definition was verified exactly ($z$-difference \num{0}). The endpoint was the
 physician-assigned QT-interval-extension label (SNOMED~111975006; \num{386} cases), fixed before
-scoring. The pre-registered inference is a one-degree-of-freedom likelihood-ratio test for the
+scoring. The prespecified inference is a one-degree-of-freedom likelihood-ratio test for the
 standardized $I_{\text{Kr}}$ score in a logistic model of QT extension adjusting for age, sex,
 heart rate, QTc, QRS, whole-ECG age, \A\ and \D, with a marginal-to-fully-adjusted ladder reported
 in full because the effect is conditional (suppression). Secondary, post-hoc robustness analyses comprised a Firth
@@ -1227,6 +1239,12 @@ in rhythms (flutter, bradycardia) where automated QT delineation is unreliable--
 analysis is reported as an external association test, not a gold-standard validation.
 
 \subsection{Outcome-blind protocol and firewall}
+Throughout, ``prespecified'' denotes an analysis whose hypothesis, model and success
+criterion were fixed in a protocol file, committed with a content hash, and frozen
+before any label or outcome data were accessed; the scoring pipeline was likewise
+hash-locked before the reveal. This is a content-hash-locked, outcome-blind commitment
+enforced by the firewall below --- \emph{not} a public, timestamped registration in an
+external registry, and it is described as such rather than as formal preregistration.
 The CODE-15 cohort (\num{233770} patients, \num{345779} exams; 12-lead, \SI{400}{\hertz})
 was split by a salted patient hash \emph{before} partitioning, yielding disjoint
 age-adaptation, calibration, survival-development and final-test partitions; patients
@@ -1235,7 +1253,7 @@ outcomes were held in physically separate storage volumes from the score-constru
 data, and the final-test outcome was read exactly once, at the single authorized
 confirmatory reveal (below). The development survival analysis set comprised
 \num{61905} patients and \num{2292} deaths (median follow-up \num{3.6}~years). The single
-pre-registered confirmatory test---a primary M2-vs-M1 Cox likelihood-ratio test for \D\
+prespecified confirmatory test---a primary M2-vs-M1 Cox likelihood-ratio test for \D\
 on the locked final-test partition---was then executed once on that partition
 ($n=\num{74715}$ complete cases, \num{2583} deaths).
 
@@ -1248,7 +1266,7 @@ h_i(t)=h_0(t)\exp\bigl\{\beta_a a_i+\beta_s s_i+\beta_A \A_{\text{std},i}+\beta_
 \end{equation}
 where $a_i$ is chronological age, $s_i$ sex, $G_i$ the published whole-ECG age comparator
 \citep{lima2021}, and $\A_{\text{std}}$, $\D_{\text{std}}$ the frozen shared axis and
-disagreement radius. The pre-registered test isolates the incremental value of \D\ by
+disagreement radius. The prespecified test isolates the incremental value of \D\ by
 comparing the nested models
 \begin{equation}
 M_1:\beta_D=0,\qquad M_2=M_1+\beta_D \D_{\text{std}},
@@ -1277,7 +1295,7 @@ four predicted phase ages to fall in $[0,120]$~years and complete model covariat
 follow-up time ${>}0$, retaining \num{1439} of \num{1609} records (\num{170} excluded, the
 AV clock failing to transfer to Chagas ECGs with predictions spanning $-171$ to
 $+518$~years). The mortality time origin was the index ECG with administrative censoring as
-released; \num{85} deaths accrued over a median \num{2.1}~years. The pre-registered primary
+released; \num{85} deaths accrued over a median \num{2.1}~years. The prespecified primary
 was a three-degree-of-freedom partial likelihood-ratio test of the signed contrasts
 $q_1,q_2,q_3$ added to a base model $\text{age}+\text{sex}+\text{whole-ECG gap}+\A$ (Cox
 proportional hazards, Efron ties); \D\ entered only a separate sensitivity model, and two
@@ -1289,7 +1307,7 @@ hazards were checked by scaled Schoenfeld residuals. \textbf{EchoNext} (Elias \&
 team's private repository, not fetched from a public server) \citep{echonext,poterucha2025} provided
 the structural-disease test: a logistic model for
 echocardiographically confirmed structural heart disease adjusted for age, sex, heart
-rate and standard intervals, with the frozen \D\ as the pre-registered term (final split
+rate and standard intervals, with the frozen \D\ as the prespecified term (final split
 $n=\num{9687}$, \num{3794} events). Dev-to-final agreement within this single cohort is
 described as internal reproduction, not replication. \textbf{ECGRDVQ} \citep{ecgrdvq,johannesen2014}
 provided a pharmacological specificity control. For participant $i$ on arm $d$, the
@@ -1468,7 +1486,7 @@ and \num{69} older, 55--80~y by the released 5-year age bins) were processed end
 volumes were streamed one at a time through the sandbox to durable storage and deleted locally,
 keeping a single-file on-disk footprint; five subjects absent at the ses-01 mirror path
 (HTTP~404) were excluded, and all \num{220} archived subjects completed the pipeline. Four
-\emph{independent} image-derived estimates of structural brain age were computed per subject
+\emph{complementary} T1-derived estimates of structural brain age were computed per subject
 with the ANTsX ecosystem \citep{tustison2021antsx}: a deep brain-age regression
 \citep{bashyam2020deepbrainnet}; gray-matter fraction from a six-tissue \texttt{deep\_atropos}
 segmentation; the ventricle--brain ratio from a DKT parcellation; and the brain-tissue fraction
@@ -1476,7 +1494,10 @@ segmentation; the ventricle--brain ratio from a DKT parcellation; and the brain-
 older-appearing and $z$-scored across the cohort, and the disagreement coordinate was defined,
 exactly as in the electrical and organ-system arms, as the standard deviation across a subject's
 four oriented $z$-scores---a mean-invariant measure of internal inconsistency between the clocks,
-not distance from the cohort center. Because the deep brain-age clock was trained on conventional
+not distance from the cohort center. The four views are complementary rather than statistically
+independent: all are derived from the same T1-weighted acquisition and are therefore correlated,
+so their disagreement measures within-modality inconsistency across analysis views, not agreement
+between independently acquired measurements. Because the deep brain-age clock was trained on conventional
 T1w and LEMON is MP2RAGE, absolute brain-age carries a domain-shift bias (rank Pearson
 $r=\num{0.95}$ against binned age but a compressed slope near \num{0.79} with a positive offset);
 the primary test was therefore pre-specified on the bias-invariant younger-versus-older
@@ -1489,7 +1510,7 @@ that removes uniform old-appearance before testing group membership, and a withi
 age-gradient test. Age bin midpoints were used as an age proxy for the continuous checks only;
 the primary contrast is binary and unaffected by binning. This analysis is a cross-sectional
 construct-validity demonstration on open data and is deliberately distinct from---and not a
-substitute for---the pre-registered prospective AABC gait test above.
+substitute for---the prespecified prospective AABC gait test above.
 
 \subsection{CT structural age clock}
 
@@ -1562,47 +1583,69 @@ additional \textit{GDF5}-locus substitutions were carried as blind controls with
 pass/reject calls on the constraint-and-gBGC filter (not a frozen predicted effect direction;
 \num{1958} scored in total).
 
-\paragraph{Skeletal-specific accessibility scoring.}
+\paragraph{Skeletal-minus-neural coverage scoring (exact configuration).}
 Each substitution was scored with Borzoi \citep{linder2025borzoi}, an open (MIT-licensed)
-sequence-to-coverage model, using the public PyTorch port (\texttt{borzoi\_pytorch}) with the
-pretrained \texttt{johahi/borzoi-replicate-0} weights and no model retraining. Each variant was
-centred in a \num{524288}-bp hg38 window; the derived and ancestral alleles were run through the
-model and the predicted-accessibility difference (derived minus ancestral) was summed over the
-\num{32} central output bins ($\pm\SI{512}{bp}$) per track. The \num{16} skeletal-lineage tracks are
-ENCODE DNase-seq experiments in osteoblast (ENCFF300IKA), bone-marrow stromal cell (ENCFF747REW),
-skeletal-muscle myoblast, myotube and skeletal-muscle-cell (ENCFF549TYD, ENCFF684FJC, ENCFF627SBE),
-villous-mesenchyme fibroblast (ENCFF652HJH), embryonic fore-/hind-limb muscle (ENCFF016KEV,
-ENCFF973KXU), embryonic arm- and leg-bone (ENCFF430CNF, ENCFF869XYK, ENCFF573KUK, ENCFF658GXI),
-embryonic limb (ENCFF850IPE, ENCFF540ITV) and mesenchymal stem cell (ENCFF594UFP, ENCFF867YFT);
-the neural comparator set is the model's DNase/ATAC tracks annotated neural, neuron, brain, cortex,
-astrocyte, forebrain or hindbrain. Track labels denote the literal Borzoi readout; no cell type is
-inferred beyond the track's own annotation. The skeletal-specific effect is a raw
-predicted-coverage contrast---the mean skeletal delta minus the mean neural delta---which
-emphasizes skeletal-lineage-specific changes over those shared by both lineages, without
-being a formal correction that guarantees pleiotropic effects cancel. Tracks were combined on the model's native predicted-coverage
-scale without any per-track normalisation (no standardisation, quantile or log transform) before the
-skeletal-minus-neural contrast; because the skeletal and neural sets differ in track count and in
-baseline predicted signal, this contrast is a difference of raw group-mean coverage deltas and is
-not a variance-standardised effect size.
+sequence-to-coverage model, using the public PyTorch port \texttt{borzoi\_pytorch} and the
+pretrained weights \texttt{johahi/borzoi-replicate-0} loaded via
+\texttt{Borzoi.from\_pretrained}, with no model retraining or fine-tuning. A \emph{single}
+replicate was used; predictions were \emph{not} ensembled across Borzoi replicates and were
+\emph{not} averaged over the forward and reverse-complement strands. Reference sequence was hg38
+(UCSC \texttt{hg38.fa}, faidx-indexed); the exact reference file and its checksum are recorded in
+the released run manifest, and the substitution manifest (\texttt{manifest.tsv}) fixes every
+\texttt{har\_id}, \texttt{chrom}, \texttt{pos\_hg38}, \texttt{ref} and \texttt{alt}. Each variant
+was centred in a \num{524288}-bp window; the derived and ancestral alleles were passed through the
+model, and for each track the predicted-coverage difference (derived minus ancestral) was
+summed over the \num{32} output bins spanning $\pm\SI{512}{bp}$ around the variant (central bin
+$\text{OUT\_BINS}/2=3072$, flank $\pm16$ bins of \SI{32}{bp}). Per-track summed deltas were then
+averaged \emph{across} the tracks within each group (skeletal, neural). The \num{16}
+skeletal-lineage tracks --- ENCODE DNase-seq experiments, given with their Borzoi output-head
+indices in \texttt{results/skeletome\_borzoi\_track\_indices.csv} --- are osteoblast (index~1319,
+ENCFF300IKA), bone-marrow stromal cell (1334, ENCFF747REW), skeletal-muscle myoblast, myotube and
+skeletal-muscle cell (1392/1393/1423), villous-mesenchyme fibroblast (1395), embryonic fore-/hind-limb
+muscle (1523/1634), embryonic arm- and leg-bone (1578/1654/1667/1940), embryonic limb (1709/1852)
+and mesenchymal stem cell (1809/1854). The \num{81} neural comparator tracks are the model's
+DNase/ATAC output heads whose annotations match neural, neuron, brain, cortex, astrocyte, forebrain
+or hindbrain (immune-lineage heads such as CD34, pDC, GMP and megakaryocyte excluded); the full
+index list is released alongside the score tables. Track labels denote the literal Borzoi readout;
+no cell type is inferred beyond the track's own annotation. The reported skeletal-minus-neural
+contrast is the mean skeletal-track delta minus the mean neural-track delta, computed on the model's
+native predicted-coverage scale with no per-track normalisation (no standardisation, quantile or log
+transform). Because the skeletal and neural sets differ in track count and baseline predicted signal,
+this is a difference of raw group-mean coverage deltas, not a variance-standardised effect size, and
+is treated throughout as a descriptive model output rather than a measured or validated effect.
 
-\paragraph{Constraint and gBGC filters.}
+\paragraph{Constraint and gBGC-susceptibility filters.}
 Per-base evolutionary constraint was taken from the Zoonomia \num{241}-way Cactus mammalian alignment
 phyloP track \citep{christmas2023zoonomia}, with a substitution deemed constrained at
 phyloP${}>\num{2.27}$ (a second, permissive threshold of \num{1.6} is also reported). Each
 substitution was assigned a GC-biased gene conversion class \citep{duret2009gbgc} from its allelic
 direction --- weak-to-strong (A/T${}\rightarrow{}$G/C), strong-to-weak (G/C${}\rightarrow{}$A/T) or
-neutral --- and weak-to-strong changes in recombination hotspots were flagged as candidate gBGC
-artefacts. Candidate skeletal-regulatory substitutions were those passing both the constraint
-threshold and the non-artefactual gBGC criterion (\num{722} of \num{1955}).
+neutral. Because allelic direction alone cannot establish that gBGC occurred at a given site,
+weak-to-strong substitutions were flagged as \emph{gBGC-susceptible} rather than classified as
+artifacts; attributing any individual substitution to gBGC would require recombination-rate context
+and direct evolutionary evidence not used here. Candidate skeletal-regulatory substitutions were
+those passing both the constraint threshold and not carrying the gBGC-susceptible flag
+(\num{722} of \num{1955}).
 
-\paragraph{GWAS crossing and target ranking.}
+\paragraph{GWAS crossing, the enrichment null, and ranking.}
 Candidate HARs were intersected with osteoarthritis and bone-mineral-density credible-set variants
-(\num{936} OA and \num{903} BMD credible-set positions) using a \num{25}~kb proximity
-window; exact-base coincidence was recorded separately. Nearby skeletal genes were ranked by a
-genetic-score $\times$ tractability composite for the forward-looking translational coda. The blind
-\textit{GDF5}/GROW1 control --- variant identities, effect directions and pass/reject calls --- was
-frozen prior to scoring and is reported without post-hoc adjustment. All source thresholds, the HAR
-call set, the phyloP track and the alignment build are recorded with the released summary tables.
+(\num{936} OA and \num{903} BMD credible-set positions) using a \num{25}~kb proximity window;
+exact-base coincidence was recorded separately (\num{0} exact overlaps). The central inferential
+test was whether the ten HARs proximal to an OA/BMD locus are more skeletal-specific than matched
+non-proximal HARs. Per-HAR skeletal specificity was the maximum absolute skeletal-minus-neural
+contrast over that HAR's candidate substitutions; a matched permutation null drew, for \num{50000}
+iterations (fixed seed \texttt{SKELETOME\_NPERM} run recorded in the release), sets of HARs matched
+on candidate-substitution count and compared the proximal-set mean (\num{0.220}) with the null mean
+(\num{0.179}), giving $p=\num{0.24}$ (region-length-matched and unmatched nulls give
+$p=\num{0.26}$--\num{0.28}). The permutation script, seed and matching variables are released with
+the score tables. Candidate rankings are \emph{descriptive}: no per-variant $p$-value or
+false-discovery control is computed, and the ranked list is a preliminary screen of prioritised
+hypotheses, not a set of statistically significant findings --- a limitation stated as such. A
+supplementary genetic-score $\times$ tractability composite over nearby skeletal genes is provided
+only as a forward-looking prioritisation aid. The blind \textit{GDF5}/GROW1 filter-logic control
+--- variant identities and pass/reject calls, but no predicted effect direction --- was frozen prior
+to scoring and is reported without post-hoc adjustment. The HAR call set, phyloP track, alignment
+build and all thresholds are recorded with the released summary tables.
 
 \subsection{Post-hoc construct-validity, transfer and reproducibility analyses}
 \label{sec:posthocmethods}
@@ -1626,7 +1669,7 @@ drift.
 
 \subsection{Software and reproducibility}
 All clocks, geometry constants and analysis scripts were frozen as versioned artifacts
-with content hashes; the confirmatory reveal script is hash-locked, and its pre-registered
+with content hashes; the confirmatory reveal script is hash-locked, and its prespecified
 inputs and success criterion were checked by a fresh-context reviewer with no access to the
 outcome labels. Figures were rendered from the frozen result tables. Anatomical renderings in
 Figs.~\ref{fig:concept} and \ref{fig:staff} use CT-segmented cardiac chamber meshes and
@@ -1647,7 +1690,7 @@ are illustrative of anatomy, not of any individual participant's scan.
 \newcommand{\figLemon}{figs_full/fig1_disagreement_headline.pdf}
 \newcommand{\figLemonAnatomy}{figs_full/fig3_segmentation_overlays.png}
 
-\begin{figure}[t]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=\linewidth]{\figConcept}
 \caption{\textbf{Biological age as a vector: two coordinates from four phase clocks.}
@@ -1667,7 +1710,7 @@ outcome-blind. Anatomy in (A) is illustrative, not a study participant's scan.}
 \label{fig:concept}
 \end{figure}
 
-\begin{figure}[t]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=\linewidth]{\figArobust}
 \caption{\textbf{The shared axis \A\ is consistently associated with aging across cohorts
@@ -1694,7 +1737,7 @@ pharmacology and generates phase-gap hypotheses that an external test did not su
 \textbf{(Row~1)} Effect of the composite radius \D\ per SD across endpoints: structural disease is null
 (EchoNext, odds ratio \num{1.00} per SD, $p=\num{0.89}$); the development mortality
 association (hollow, hazard ratio \num{1.05} per SD) is hypothesis-generating and was used
-only to freeze the model; and the single pre-registered confirmatory test on the locked
+only to freeze the model; and the single prespecified confirmatory test on the locked
 CODE-15 final split is null (hazard ratio \num{1.01} per SD, 95\% CI
 \numrange{0.98}{1.04}, $p=\num{0.48}$), its interval excluding the development estimate. A
 whole-body organ-system disagreement radius does carry a secondary, non-confirmatory
@@ -1774,7 +1817,7 @@ primary estimate; post-hoc exclusions are shown in a neutral color.}
 \label{fig:chapman}
 \end{figure}
 
-\begin{figure}[t]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=\linewidth]{\figStaff}
 \caption{\textbf{Acute ischemia is a coherent shift of the shared axis, not a loss of
@@ -1791,12 +1834,13 @@ not literal aging over minutes.}
 \label{fig:staff}
 \end{figure}
 
-\begin{figure}[t]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=\linewidth]{\figAtlas}
-\caption{\textbf{The same decomposition applied to six whole-body organ-system clocks
-(NHANES).} All six systems are defined from standard blood-chemistry and clinical-assay
-panels; there is no skeletal or imaging clock in this mortality model.
+\caption{\textbf{A scale-appropriate shared-axis/disagreement construction applied to six
+whole-body organ-system clocks (NHANES).} All six systems are defined from standard
+blood-chemistry and clinical-assay panels; there is no skeletal or imaging clock in this mortality
+model.
 \textbf{(a)} Per-system mortality hazard ratios (per SD, survey-weighted, age- and
 sex-adjusted): the hepatic and hematologic clocks show the strongest positive mortality
 associations (hazard ratio \num{1.42} and \num{1.36} per SD), the cardiovascular panel runs protective
@@ -1815,12 +1859,12 @@ electrical one.}
 \label{fig:atlas}
 \end{figure}
 
-\begin{figure}[t]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=\linewidth]{\figLemon}
 \caption{\textbf{The disagreement coordinate, rebuilt from raw brain voxels, is
 elevated in older brains (LEMON).} All \num{220} T1-weighted scans of the open-access LEMON
-cohort were processed end-to-end into four \emph{independent} image-derived estimates of
+cohort were processed end-to-end into four \emph{complementary} T1-derived estimates of
 structural brain age. \textbf{(a)} The four views, each oriented so higher $=$ older-appearing
 and cohort-standardized, separate younger (\num{151}, 20--35~y) from older (\num{69}, 55--80~y)
 adults in the anatomically expected direction. \textbf{(b)} The disagreement coordinate $\D$,
@@ -1834,7 +1878,7 @@ gait test, which was null (\S\ref{sec:neuro}).}
 \label{fig:lemon}
 \end{figure}
 
-\begin{figure}[t]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=\linewidth]{\figLemonAnatomy}
 \caption{\textbf{The disagreement is visible in the raw anatomy.} Deep segmentation of two
@@ -1845,7 +1889,7 @@ convolutional Atropos). \emph{Right:} Desikan--Killiany--Tourville cortical parc
 older brain shows the anatomical correlates that drive its higher, more internally
 inconsistent disagreement coordinate: markedly enlarged ventricles (ventricle--brain ratio
 \num{0.045} versus \num{0.009}), widened cortical sulci and thinned gray matter. These are the
-same voxels that the four independent brain-age views read differently in older tissue; no
+same voxels that the four complementary T1-derived views read differently in older tissue; no
 tabular feature was used.}
 \label{fig:lemonanat}
 \end{figure}
@@ -1886,28 +1930,29 @@ tabular feature was used.}
 \end{figure}
 
 % ---- Part III figure (genomic) ----
-\begin{figure}[t]
+\begin{figure}[htbp]
   \centering
   \includegraphics[width=\textwidth]{\figskeletome}
-  \caption[SKELETOME: skeletal variant-effect screen of Human Accelerated Regions]{%
-    \textbf{Witness 3 --- an \textit{in-silico} skeletal variant-effect screen of Human Accelerated
-    Regions with Borzoi.}
-    \textbf{(A)} Distribution of the skeletal-specific effect --- the skeletal minus neural
-    predicted-accessibility delta (derived versus ancestral allele) --- across the \num{1955}
-    human-specific HAR substitutions. The three frozen \textit{GDF5}-locus control variants are
-    marked: the \textit{GDF5} promoter control (rs6060369; rejected --- unconstrained, gBGC-favoured)
-    at negative skeletal effect, and the GROW1 enhancer (rs4911178) and \textit{GDF5} \num{5}$'$UTR
-    (rs143384) controls, both retained candidates, near the centre-to-positive end. Positive values
-    denote predicted skeletal accessibility gain, negative values predicted loss.
-    \textbf{(B)} GC-biased gene conversion (gBGC) discriminator: substitutions classified by allelic
-    direction as weak-to-strong (\SI{48}{\percent}), strong-to-weak (\SI{35}{\percent}) and neutral
-    (\SI{17}{\percent}). Weak-to-strong changes in recombination hotspots are treated as likely gBGC
-    artefacts rather than signatures of selection.
-    \textbf{(C)} Top skeletal-regulatory HAR candidates ranked by magnitude of skeletal-specific
-    effect, labelled by ZOOHAR identifier; bar direction gives the sign of the predicted
-    accessibility change (skeletal gain versus loss).
-    The panel is a model-predicted screen of chromatin-accessibility change, not a measured
-    reporter assay; candidates are prioritised hypotheses for experimental follow-up.}
+  \caption[Exploratory evolutionary-genomics hypothesis screen of Human Accelerated Regions]{%
+    \textbf{Exploratory evolutionary-genomics hypothesis screen of Human Accelerated Regions.}
+    A supporting analysis (evidence level~4); model-predicted hypotheses only, with no experimental
+    regulatory validation and no demonstrated GWAS enrichment.
+    \textbf{(a)} Distribution of the descriptive skeletal-minus-neural predicted-coverage contrast
+    (derived versus ancestral allele) across the \num{1955} human-specific HAR substitutions.
+    Positive values denote a predicted skeletal-lineage coverage gain, negative a predicted loss.
+    The three frozen \textit{GDF5}-locus filter-logic controls are marked: the promoter control
+    (rs6060369) rejected as unconstrained and gBGC-favoured, and the GROW1 enhancer (rs4911178) and
+    \textit{GDF5} \num{5}$'$UTR (rs143384) controls retained; the retained controls validate the
+    pass/reject filter logic only, not the magnitude or sign of the predicted contrast.
+    \textbf{(b)} Filtering flow: the \num{1955} substitutions are reduced to \num{722} candidates by
+    requiring both per-base constraint (phyloP${}>\num{2.27}$; \num{1208} pass) and a substitution
+    not flagged as gBGC-susceptible by the allelic-direction rule (gBGC directions: \SI{48}{\percent}
+    weak-to-strong, \SI{35}{\percent} strong-to-weak, \SI{17}{\percent} neutral).
+    \textbf{(c)} The central inferential result --- a null. The ten HARs within \num{25}~kb of an
+    osteoarthritis or bone-mineral-density credible-set variant (\num{0} exact-base overlaps) are not
+    more skeletal-specific than size- and substitution-matched HARs: observed mean \num{0.220} versus
+    a matched permutation null (\num{50000} draws), $p=\num{0.24}$. Ranked top candidates are
+    descriptive hypotheses and are shown in Supplementary Fig.~\ref{fig:s10}.}
   \label{fig:skeletome}
 \end{figure}
 
@@ -1943,7 +1988,7 @@ The frozen phase clocks, the BodyVector geometry (shared axis and disagreement r
 the outcome-blind firewall, and all analysis and figure code are released under the MIT
 license at \url{https://github.com/jim4226/ClaudeScienceHackathon_2026} (subdirectory
 \texttt{electrical-body-clock/}), as content-hashed, versioned artifacts; the confirmatory
-reveal script is hash-locked, and its pre-registered inputs and success criterion were
+reveal script is hash-locked, and its prespecified inputs and success criterion were
 verified by a fresh-context reviewer with no access to the outcome labels. The frozen
 signed-perturbation direction is released as a protocol lock carrying a canonical
 content hash and SHA-256 digests of the contrast basis, the contrast covariance, the input
@@ -2203,6 +2248,24 @@ $\num{66474}$ patients, $\num{177336}$ exams): the composite disagreement radius
 least reproducible coordinate ($\num{0.18}$), below the shared axis A ($\num{0.41}$) and
 every single-phase gap---a mechanistic complement to the confirmatory null.}
 \label{fig:s9}
+\end{figure}
+
+\subsection*{S10\quad Ranked skeletal-lineage HAR candidates (descriptive)}
+
+The main-text genomic figure (Fig.~\ref{fig:skeletome}) reports the screen's distribution,
+filtering flow and the central GWAS-proximity null. The ranked candidate list below is provided
+for completeness as a set of model-predicted hypotheses for experimental follow-up; the ranking is
+descriptive and no statistical significance is assigned to any individual candidate.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.8\linewidth]{figs_full/fig_s10_candidates.pdf}
+\caption{\textbf{Top-ranked skeletal-lineage HAR candidates from the exploratory genomics screen.}
+The twenty substitutions with the largest predicted skeletal-minus-neural coverage contrast,
+labelled by ZOOHAR identifier; bar direction gives the sign of the predicted change. These are
+descriptive model-predicted hypotheses with no per-variant $p$-values and no experimental
+validation; they are not claimed as regulatory findings.}
+\label{fig:s10}
 \end{figure}
 
 \end{document}
