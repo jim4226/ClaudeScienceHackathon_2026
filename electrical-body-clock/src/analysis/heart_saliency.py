@@ -472,7 +472,7 @@ def load_clock_models(models_dir: str, n_leads: int = 12) -> dict:
             model = cls(n_leads=n_leads)
         except TypeError:
             model = cls()                       # study class may have own sig
-        state = torch.load(path, map_location="cpu")
+        state = torch.load(path, map_location="cpu", weights_only=True)
         state = state.get("state_dict", state) if isinstance(state, dict) else state
         missing, unexpected = model.load_state_dict(state, strict=False)
         if missing or unexpected:

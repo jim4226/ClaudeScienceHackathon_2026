@@ -2,6 +2,8 @@
 
 ## From Clocks to Coordinates — biological age is a direction, not a number
 
+[![CI](https://github.com/jim4226/ClaudeScienceHackathon_2026/actions/workflows/ci.yml/badge.svg)](https://github.com/jim4226/ClaudeScienceHackathon_2026/actions/workflows/ci.yml)
+
 **Author:** Jaron Mohammed · University of Miami
 
 This repository is a single research program built around one idea: **the
@@ -109,29 +111,43 @@ write-up (`manuscript`). MIT.
 
 ## Arm II — the genomic scale · [`skeletome/`](skeletome/)
 
-*The same substrate-resolution logic, one scale down: the first in-silico
-skeletal variant-effect screen of Human Accelerated Regions (HARs) and HAQERs —
-a virtual skeletal MPRA benchmarked against a real one. It is the deep-time,
-sequence-level companion to the electrical anchor: resolve a monolithic signal
-into the lineage that actually generates it, then validate the resolution
-blind.*
+> **Prospective methods prototype; no biological discovery is claimed.** This arm
+> is a *bounded, forward-looking* companion to the electrical anchor, not a
+> validated result. Read it as a screening method and a pre-registered analysis
+> plan — the honest negative it already produces (below) is the point.
 
-- **Decompose:** resolve HAR and HAQER regulatory effects to *skeletal* cell
-  contexts — the lineage every prior HAR reporter assay (all neural) skipped —
-  using AlphaGenome (GPU-free API).
-- **Localize:** predict human-vs-chimp DNase deltas per element; separate the
-  gBGC-confounded majority from the genuinely skeletal-regulatory minority
-  (241-mammal Zoonomia constraint + recombination-rate control); cross the
-  minority with osteoarthritis / BMD / height genetics.
-- **Validate:** benchmark against the real Okamoto/Capellini 2025 skeletal MPRA
-  (GEO GSE298093) and **blind-recover the GDF5/GROW1 skeletal enhancer** as a
-  positive control. The offline benchmark runs exit-0: mock AUROC 0.84
-  in-silico↔MPRA concordance, HAQER 63% vs HAR 33% enrichment, GDF5/GROW1
-  recovered blind at the top 0.9%.
+*The same substrate-resolution logic, one scale down: an in-silico screen that
+scores Human Accelerated Region (HAR) substitutions for a predicted
+skeletal-lineage regulatory effect — the lineage prior HAR functional work
+(concentrated on neural contexts) has skipped.*
 
-Research package + runnable code; see
+- **Decompose:** score each of the 1,955 human-specific substitutions in the 312
+  Zoonomia HARs (Keough 2023) for a skeletal-minus-neural predicted
+  chromatin-accessibility contrast with an open sequence-to-coverage model. This
+  is a variant-effect *screen* (model-predicted accessibility), not a reporter
+  assay — no transcription is measured, and candidates are prioritised hypotheses
+  awaiting experimental validation.
+- **Filter:** two first-class filters separate candidates from the confounded
+  majority — 241-mammal phyloP constraint (61.8% of substitutions at phyloP > 2.27)
+  and a GC-biased gene-conversion (gBGC) discriminator (48% weak→strong, flagged as
+  likely recombination artefacts). Requiring both leaves 722 candidate
+  substitutions; crossing them with osteoarthritis/BMD GWAS credible sets surfaces
+  10 proximal HARs.
+- **Honest negative:** the 10 GWAS-proximal HARs are **not** significantly more
+  skeletal-specific than matched non-proximal HARs (matched permutation null,
+  50,000 draws, p = 0.24), and no substitution overlaps a credible-set variant
+  exactly (0 exact-base overlaps). A **blind GDF5 filter control** — pass/reject
+  calls on the constraint+gBGC filters, frozen before scoring — recovers the two
+  constrained strong→weak GDF5 variants and rejects the gBGC-favoured promoter
+  variant, as pre-specified.
+
+The `code/` benchmark and demo-input scripts run **offline against mock element
+tables** (deterministic, seeded) so the interface can be demonstrated without a
+model API key — those mock benchmark numbers are illustrative and are **not**
+reported as findings here or in the manuscript. See
+[`skeletome/README.md`](skeletome/README.md) and
 [`skeletome/claude_science_package/START_HERE.md`](skeletome/claude_science_package/START_HERE.md)
-to continue the work in Claude Science.
+to run the real pipeline.
 
 ---
 
@@ -146,9 +162,20 @@ the honest write-up — including the negatives.
 
 ## Data policy
 
-This repository ships **code, result tables, figures, and papers only** — no
-participant-level or restricted data. PTB-XL and NHANES (Arm I) and the
-Okamoto/Capellini MPRA, Zoonomia, and GWAS summary statistics (Arm II) are
-redistributed only through their original portals under their own licenses; run
-each arm's `download_*` scripts to fetch them. The root and per-arm
-`.gitignore` files block raw data, model checkpoints, and build artifacts.
+**No raw waveforms, images, identifiable records, or restricted participant-level
+data are redistributed.** Selected *derived* records from openly licensed datasets
+**are** included: pseudonymous, participant-level derived feature/score tables
+keyed by each source's own public accession — the LEMON brain-imaging feature
+table (`sub-0100xx` subject IDs) and the MotionVector NHANES DXA/accelerometry
+score tables (public `SEQN` IDs). These are model-derived summaries of public,
+consented, de-identified research datasets, released under the source licenses;
+no raw signal, image, or genotype is committed.
+
+Everything else is redistributed only through its original portal under its own
+license — PTB-XL and NHANES raw data (Arm I), and the Okamoto/Capellini MPRA,
+Zoonomia alignment, and GWAS summary statistics (Arm II); run each arm's
+`download_*` scripts to fetch them. The root and per-arm `.gitignore` files block
+raw waveforms, images, and model checkpoints.
+
+Every dataset — source, version, license, attribution, and exactly which derived
+files are committed — is mapped in [`DATA_LICENSES.md`](DATA_LICENSES.md).

@@ -1,7 +1,19 @@
 # SKELETOME — START HERE
 ### A portable research package for continuing in Claude Science
 
-This folder is a self-contained, **fact-checked** research package (**v2**). Drop it into Claude Science and keep iterating — the benchmark already runs and the blind positive-control machinery already works.
+> **Status: prospective methods prototype; no biological discovery is claimed.**
+> The `benchmark.py` numbers below (AUROC 0.84, HAQER 63% vs HAR 33%, GDF5 rank)
+> come from a **deterministic MOCK element table** used to exercise the interface
+> offline — they are **illustrative, not findings**, and are not reported in the
+> manuscript. The real, committed results (the substitution catalogue, phyloP
+> constraint, gBGC classes, GWAS proximity, the honest permutation-null negative
+> p = 0.24, and the blind GDF5 filter control) are what the parent study cites.
+> See [`../README.md`](../README.md) for the real-vs-illustrative split.
+
+This folder is a self-contained research package (**v2**). Drop it into Claude
+Science and keep iterating — the interface runs offline on mock inputs, and the
+real pipeline runs once the public reference inputs and a model API key are
+supplied.
 
 > ⚠️ **v2 — read `CHANGELOG.md` first.** The project pivoted (2026-07-07) after a deep-research pass found the **Okamoto/Capellini 2025 skeletal MPRA** (GEO GSE298093): HARs are *not* enriched for skeletal regulatory divergence — **HAQERs are** — and a skeletal MPRA now exists. We turned that into the spine: their 70k-element MPRA is our public **ground-truth benchmark**. `PROJECT_CONTEXT.md` is the v2 source of truth.
 

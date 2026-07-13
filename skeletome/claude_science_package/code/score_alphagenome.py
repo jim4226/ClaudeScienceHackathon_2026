@@ -506,11 +506,20 @@ def main(argv=None):
     ap.add_argument("--out", dest="out_tsv", required=True, help="output canonical TSV")
     ap.add_argument("--full", action="store_true",
                     help="use the real AlphaGenome hosted API (default: offline mock)")
-    ap.add_argument("--api-key", default=os.environ.get("ALPHAGENOME_API_KEY"),
-                    help="AlphaGenome API key (or set ALPHAGENOME_API_KEY)")
+    ap.add_argument("--api-key", default=None,
+                    help="DISCOURAGED: pass the key via the ALPHAGENOME_API_KEY "
+                         "environment variable instead (a CLI key is visible in the "
+                         "process list and shell history).")
     ap.add_argument("--limit", type=int, default=None, help="score only first N rows (debug)")
     args = ap.parse_args(argv)
-    run(args.in_tsv, args.out_tsv, args.full, args.api_key, args.limit)
+    # Prefer the environment variable; only fall back to the CLI flag, with a warning.
+    api_key = os.environ.get("ALPHAGENOME_API_KEY")
+    if not api_key and args.api_key:
+        print("[alphagenome] WARNING: reading API key from --api-key; prefer the "
+              "ALPHAGENOME_API_KEY environment variable (CLI args leak into the "
+              "process list and shell history).", file=sys.stderr)
+        api_key = args.api_key
+    run(args.in_tsv, args.out_tsv, args.full, api_key, args.limit)
 
 
 if __name__ == "__main__":

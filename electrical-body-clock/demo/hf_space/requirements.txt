@@ -1,7 +1,9 @@
-gradio>=6.0
-torch>=2.2
-numpy>=1.26
-scipy>=1.11
-matplotlib>=3.8
-neurokit2>=0.2.10
-wfdb>=4.1
+# Lower bounds (not exact pins) so the Hugging Face Space resolver stays flexible
+# on the free CPU tier. Tested end-to-end with the versions in the trailing comment.
+gradio>=6.0          # tested 6.20.0
+torch>=2.2           # tested 2.13.0 (CPU)
+numpy>=1.26          # tested 2.5.1
+scipy>=1.11          # tested 1.18.0
+matplotlib>=3.8      # tested 3.11.0
+neurokit2>=0.2.10    # tested 0.2.13
+wfdb>=4.1            # tested 4.3.1

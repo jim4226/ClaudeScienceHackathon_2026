@@ -1,0 +1,9 @@
+{
+  "schema": "REVEAL_LOG_populated",
+  "branch": "null",
+  "eligible_pool_N": 75063,
+  "fitted_complete_case_N": 74715,
+  "oos_n": 39744,
+  "integrity_constants_sha256": "5106d2b47173d6fa38aea8a5992435f71cb4d6c7edee91df4361e12b45f1f261",
+  "completed_utc": "2026-07-12T05:07:46.349838+00:00"
+}

@@ -1,0 +1,29 @@
+[
+ {
+  "record": "00420_hr",
+  "ptbxl_ecg_id": 420,
+  "age": 22,
+  "sex": "M",
+  "fs": 500,
+  "leads": 12,
+  "label": "sinus rhythm, normal ECG"
+ },
+ {
+  "record": "00233_hr",
+  "ptbxl_ecg_id": 233,
+  "age": 52,
+  "sex": "M",
+  "fs": 500,
+  "leads": 12,
+  "label": "sinus rhythm, normal ECG"
+ },
+ {
+  "record": "00176_hr",
+  "ptbxl_ecg_id": 176,
+  "age": 77,
+  "sex": "F",
+  "fs": 500,
+  "leads": 12,
+  "label": "sinus rhythm, normal ECG"
+ }
+]

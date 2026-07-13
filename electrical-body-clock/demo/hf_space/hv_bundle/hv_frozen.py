@@ -164,7 +164,7 @@ def load_clocks(models_dir, device="cpu"):
                  os.path.join(models_dir, f"clock_{fb}.pt")]
         p = next((c for c in cands if os.path.exists(c)), None)
         if p is None: raise FileNotFoundError(f"no checkpoint for phase {phase} in {models_dir} (tried {cands})")
-        sd = torch.load(p, map_location=device, weights_only=False)
+        sd = torch.load(p, map_location=device, weights_only=True)
         if isinstance(sd, dict) and "state" in sd: sd = sd["state"]      # tolerate wrapped
         net = Clock1DCNN().to(device)
         miss, unexp = net.load_state_dict(sd, strict=True)               # STRICT — fail loud

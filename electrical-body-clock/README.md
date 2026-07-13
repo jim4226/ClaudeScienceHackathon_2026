@@ -114,32 +114,55 @@ electrical-body-clock/
 
 ## Reproducing the results
 
+**Runs from a fresh clone, no restricted data** (from the repository root):
+
 ```bash
-conda env create -f environment.yml
-conda activate electrical-body-clock
+make verify        # frozen IKr scorer + fixture, ledger files, SHA-256 manifest
+make demo-smoke    # end-to-end test of the live demo (no server launched)
+make paper         # compile all three manuscripts with tectonic
+```
+
+`make verify` re-runs the independent perturbation verifier against the committed
+protocol lock and scorer fixture and checks that every result file named in
+[`CLAIM_TO_ARTIFACT_LEDGER.md`](CLAIM_TO_ARTIFACT_LEDGER.md) is present and matches
+the SHA-256 [`RELEASE_MANIFEST.sha256`](RELEASE_MANIFEST.sha256).
+
+**Full retraining pipeline** (needs the source data fetched and staged — see
+[`../DATA_LICENSES.md`](../DATA_LICENSES.md); the ECG clocks are the *frozen
+median-beat 1D-CNN* pipeline, `train_clocks_medianbeat.py`, which is canonical —
+`train_clock.py` is a superseded full-strip ResNet kept for reference only):
+
+```bash
+conda env create -f environment.yml && conda activate electrical-body-clock
 
 # 1. Fetch data (respects PhysioNet / NHANES data-use agreements)
-python data/download_ptbxl.py          # PTB-XL v1.0.3 -> data/ptbxl/
-python data/download_nhanes.py         # NHANES 2005-2010 + mortality -> data/nhanes/
+python src/extraction/download_ptbxl.py        # PTB-XL v1.0.3
+python data/download_nhanes.py                 # NHANES 2005-2010 + mortality
 
-# 2. Act I — ECG subsystem clocks
-python src/extraction/subsystem_extractor.py   # P/PR/QRS/ST-T windows
-python src/training/train_clocks.py            # 5 clocks (global + 4 subsystems)
+# 2. Act I — ECG subsystem clocks (median-beat pipeline is canonical)
+python src/extraction/subsystem_extractor.py   # P/AV/QRS/ST-T windows + median beats
+python src/training/train_clocks_medianbeat.py # 5 clocks (global + 4 subsystems)
 python src/analysis/analyze_clocks.py          # specificity matrix + controls
 
 # 3. Act II — NHANES organ clocks + mortality
-python src/nhanes/nhanes_organ_clocks.py       # 6 organ clocks, Cox, C-index ladder
+python src/nhanes/build_master.py              # assemble NHANES master table
+python src/nhanes/nhanes_organ_clocks.py       # 6 organ clocks, survey Cox, C-index ladder
 
-# 4. Figures + papers
-python src/figures/make_figures.py             # regenerate Fig 1-7 from results/
-cd paper
-tectonic manuscript.tex                        # original reproducible paper
-tectonic from_clocks_to_coordinates_full.tex   # current 55-page technical account
-tectonic clocks_to_coordinates.tex             # 6-page judge-cut
+# 4. Figures
+python src/figures/make_figures.py             # regenerate figures from results/
 ```
 
-Every figure and table in the paper regenerates from the released prediction tables in
-`results/`, so the headline numbers can be checked without re-training.
+> Training and extraction scripts read their inputs from a local staging directory
+> (`drive_staging/…`); set those paths for your environment before running. The
+> `make` targets above need none of this.
+
+The headline numbers can be checked without re-training: every quantity in the
+paper is mapped to the committed result file it was read from in
+[`CLAIM_TO_ARTIFACT_LEDGER.md`](CLAIM_TO_ARTIFACT_LEDGER.md), and the figures that
+depend only on those released tables regenerate from them. Figures that also need
+raw waveforms or images (which are not redistributed — see
+[`../DATA_LICENSES.md`](../DATA_LICENSES.md)) require first fetching the source data
+through its portal.
 
 ## Live demo
 

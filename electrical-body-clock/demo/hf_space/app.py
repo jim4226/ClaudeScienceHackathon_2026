@@ -30,20 +30,32 @@ BLUE, RED, GREY = "#1f5fa8", "#c0392b", "#9aa0a6"
 
 # ----------------------------------------------------------------------------- plots
 def plot_fingerprint(res, age):
-    """Radar of the four subsystem phase-age GAPS (phase age minus chronological)."""
+    """Signed horizontal bar chart of the four subsystem phase-age GAPS.
+
+    A signed bar chart (not a radar) is used deliberately: radar/polar area
+    encodings distort *signed* quantities (negative gaps wrap toward the centre
+    and read as small-positive), whereas a diverging bar reads sign and magnitude
+    directly against a zero line.
+    """
     subs = ["P", "AV", "QRS", "STT"]
-    gaps = [res["phase_ages"][s] - age for s in subs]
-    ang = np.linspace(0, 2 * np.pi, len(subs), endpoint=False)
-    ang = np.concatenate([ang, ang[:1]]); vals = gaps + gaps[:1]
-    fig, ax = plt.subplots(figsize=(3.6, 3.6), subplot_kw=dict(projection="polar"))
-    lim = max(10, np.max(np.abs(gaps)) * 1.25)
-    ax.plot(ang, vals, color=BLUE, lw=2)
-    ax.fill(ang, vals, color=BLUE, alpha=0.20)
-    ax.plot(np.linspace(0, 2 * np.pi, 200), [0] * 200, color=GREY, lw=0.8, ls="--")
-    ax.set_xticks(ang[:-1]); ax.set_xticklabels([PHASE_LABEL[s] for s in subs], fontsize=8)
-    ax.set_ylim(-lim, lim); ax.set_yticks([-lim/2, 0, lim/2])
-    ax.set_yticklabels([f"{-lim/2:.0f}", "0", f"+{lim/2:.0f}"], fontsize=6)
-    ax.set_title("Subsystem age-gap fingerprint\n(years vs chronological)", fontsize=9, pad=14)
+    gaps = np.array([res["phase_ages"][s] - age for s in subs], float)
+    y = np.arange(len(subs))[::-1]                       # top-to-bottom P,AV,QRS,STT
+    colors = [RED if g > 0 else BLUE for g in gaps]      # older-than-age vs younger
+    fig, ax = plt.subplots(figsize=(4.2, 3.2))
+    ax.barh(y, gaps, color=colors, edgecolor="k", lw=0.6, height=0.62, zorder=3)
+    ax.axvline(0, color="#444", lw=1.0, zorder=2)
+    lim = max(8.0, float(np.max(np.abs(gaps))) * 1.30)
+    ax.set_xlim(-lim, lim)
+    ax.set_yticks(y); ax.set_yticklabels([PHASE_LABEL[s] for s in subs], fontsize=9)
+    for yi, g in zip(y, gaps):
+        ax.text(g + np.sign(g) * lim * 0.03, yi, f"{g:+.1f}",
+                va="center", ha="left" if g >= 0 else "right", fontsize=8,
+                color=RED if g > 0 else BLUE, fontweight="bold")
+    ax.set_xlabel("phase-age gap (years vs chronological)", fontsize=8)
+    ax.set_title("Subsystem age-gap fingerprint\n"
+                 r"$\it{red\ =\ older\ than\ age\ \cdot\ blue\ =\ younger\ than\ age}$",
+                 fontsize=9)
+    for s in ("top", "right"): ax.spines[s].set_visible(False)
     fig.tight_layout()
     return fig
 
@@ -69,20 +81,32 @@ def plot_beat(res):
 
 
 def plot_geometry(res):
-    """Where this record sits in the A (shared axis) vs D (disagreement) plane."""
+    """Where this record sits in the A (shared axis) vs D (disagreement) plane.
+
+    The backdrop is the FROZEN calibration reference frame, not a simulated cloud:
+    A_std and D_std are z-scores against the calibration partition (mean 0, SD 1
+    by construction), so the reference is drawn as labeled 0 / +-1 / +-2 SD guides
+    rather than fabricated points.
+    """
     A, D = res["A_std"], res["D_std"]
-    fig, ax = plt.subplots(figsize=(3.6, 3.4))
-    # reference cloud: standard normal-ish backdrop for context
-    rng = np.random.default_rng(0)
-    ax.scatter(rng.normal(0, 1, 1500), np.abs(rng.normal(0, 1, 1500)) * 0.7,
-               s=4, c=GREY, alpha=0.15, lw=0, zorder=1)
-    ax.axvline(0, color="#ccc", lw=0.8, zorder=1)
-    ax.scatter([A], [D], s=140, c=RED, edgecolor="k", lw=1.0, zorder=4, marker="*")
+    fig, ax = plt.subplots(figsize=(3.8, 3.6))
+    lim = max(3.0, abs(A) + 0.6, abs(D) + 0.6)
+    # concentric SD guides on the standardized frame (real reference, not points)
+    for r in (1, 2, 3):
+        ax.axvline(r, color="#e3e3e3", lw=0.7, zorder=1)
+        ax.axvline(-r, color="#e3e3e3", lw=0.7, zorder=1)
+        ax.axhline(r, color="#e3e3e3", lw=0.7, zorder=1)
+    ax.axvline(0, color="#888", lw=1.0, zorder=2)
+    ax.axhline(0, color="#888", lw=1.0, zorder=2)
+    ax.text(0.02, lim*0.96, "calibration reference: mean 0, SD 1", fontsize=6.5,
+            color=GREY, va="top")
+    ax.scatter([A], [D], s=150, c=RED, edgecolor="k", lw=1.0, zorder=4, marker="*")
     ax.annotate(f"  this ECG\n  A={A:+.2f}, D={D:+.2f}", (A, D), fontsize=8,
                 color=RED, va="center")
-    ax.set_xlabel("A  — shared aging axis (z)", fontsize=8)
-    ax.set_ylabel("D  — cross-subsystem disagreement (z)", fontsize=8)
-    ax.set_title("Position in the age–state plane", fontsize=9)
+    ax.set_xlim(-lim, lim); ax.set_ylim(min(-0.5, D - 0.6), lim)
+    ax.set_xlabel("A  — shared aging axis (SD from reference)", fontsize=8)
+    ax.set_ylabel("D  — cross-subsystem disagreement (SD)", fontsize=8)
+    ax.set_title("Position in the calibration reference frame", fontsize=9)
     for s in ("top", "right"): ax.spines[s].set_visible(False)
     fig.tight_layout()
     return fig
@@ -113,24 +137,55 @@ def _readout(res, age, sex, qa):
 
 
 # --------------------------------------------------------------------------- callbacks
-def run_synth(heart_rate, age, sex_label, stt_shift, qrs_widen, seed):
+SYNTH_WARN = (
+    "> ⚠️ **Interface illustration only.** This trace is synthetic — a rendering "
+    "aid to exercise the controls and plots, **not** a biophysical heart model. "
+    "The clocks are running on out-of-distribution input, so any age below is an "
+    "artefact of the interface, **not a biological measurement**. For real output, "
+    "use the **Real example ECGs** tab or upload a record.\n\n")
+
+
+def run_synth(heart_rate, age, sex_label, stt_shift, seed):
     sex = 1 if sex_label == "female" else 0
-    sig = inf.synth_12lead(heart_rate=heart_rate, seed=int(seed),
-                           stt_shift=stt_shift, qrs_widen=qrs_widen)
+    sig = inf.synth_12lead(heart_rate=heart_rate, seed=int(seed), stt_shift=stt_shift)
     res, qa = inf.score_signal(sig, fs=500, age=age, sex=sex)
     if res is None:
         msg = f"Inference failed at beat extraction: `{qa.get('reason','unknown')}`. Try a different heart rate/seed."
         return msg, None, None, None
-    return (_readout(res, age, sex, qa),
+    return (SYNTH_WARN + _readout(res, age, sex, qa),
             plot_fingerprint(res, age), plot_beat(res), plot_geometry(res))
 
 
-def run_upload(file, age, sex_label):
+def run_example(record_label, age, sex_label):
+    """Score a bundled real PTB-XL example record (CC-BY 4.0, attributed)."""
+    import json
+    exdir = os.path.join(HERE, "examples")
+    manifest = {f"{m['record']} (age {m['age']}, {m['sex']})": m
+                for m in json.load(open(os.path.join(exdir, "examples_manifest.json")))}
+    m = manifest.get(record_label)
+    if m is None:
+        return "Select an example record.", None, None, None
+    # use the record's own age/sex (real metadata), not the sliders
+    age, sex = float(m["age"]), (1 if m["sex"] == "F" else 0)
+    try:
+        sig, fs = inf.parse_uploaded(os.path.join(exdir, m["record"] + ".hea"))
+    except Exception as e:
+        return f"Could not read example: `{e}`", None, None, None
+    res, qa = inf.score_signal(sig, fs=fs, age=age, sex=sex)
+    if res is None:
+        return f"Inference failed: `{qa.get('reason','unknown')}`.", None, None, None
+    head = (f"> **Real PTB-XL record `{m['record']}`** (CC-BY 4.0) — "
+            f"{m['label']}, age {m['age']}, sex {m['sex']}.\n\n")
+    return (head + _readout(res, age, sex, qa),
+            plot_fingerprint(res, age), plot_beat(res), plot_geometry(res))
+
+
+def run_upload(file, age, sex_label, csv_fs):
     if file is None:
-        return "Upload a WFDB `.hea` (with its `.dat`) or a 12-column CSV.", None, None, None
+        return "Upload a WFDB record (`.hea` **and** its `.dat`) or a 12-column CSV.", None, None, None
     sex = 1 if sex_label == "female" else 0
     try:
-        sig, fs = inf.parse_uploaded(file.name)
+        sig, fs = inf.parse_uploaded(file.name, csv_fs=int(csv_fs))
     except Exception as e:
         return f"Could not read file: `{e}`", None, None, None
     res, qa = inf.score_signal(sig, fs=fs, age=age, sex=sex)
@@ -185,37 +240,47 @@ standardization constants are frozen from the manuscript — nothing is refit he
 """
 
 
+def _example_labels():
+    import json
+    exdir = os.path.join(HERE, "examples")
+    return [f"{m['record']} (age {m['age']}, {m['sex']})"
+            for m in json.load(open(os.path.join(exdir, "examples_manifest.json")))]
+
+
 def build():
     with gr.Blocks(title="HeartVector — From Clocks to Coordinates", theme=gr.themes.Soft()) as demo:
         gr.Markdown(INTRO)
         with gr.Tab("Live inference"):
             with gr.Tabs():
-                with gr.Tab("Synthesize an ECG"):
-                    gr.Markdown("Build a physiologically-plausible synthetic 12-lead ECG "
-                                "(no patient data) and score it live on CPU.")
+                # DEFAULT tab: real, licensed example ECGs
+                with gr.Tab("Real example ECGs"):
+                    gr.Markdown("Score a **real 12-lead ECG** bundled from PTB-XL "
+                                "(CC-BY 4.0, attributed in `examples/ATTRIBUTION.md`). "
+                                "Each record uses its own recorded age and sex.")
+                    ex_labels = _example_labels()
                     with gr.Row():
                         with gr.Column(scale=1):
-                            hr = gr.Slider(40, 140, 70, step=1, label="Heart rate (bpm)")
-                            age = gr.Slider(20, 90, 55, step=1, label="Chronological age (y)")
-                            sex = gr.Radio(["male", "female"], value="male", label="Sex")
-                            stt = gr.Slider(0, 1, 0, step=0.05, label="ST-T drift (illustrative)")
-                            qrs = gr.Slider(0, 1, 0, step=0.05, label="QRS widening (illustrative)")
-                            seed = gr.Slider(0, 50, 1, step=1, label="Random seed")
-                            go = gr.Button("Run frozen clocks", variant="primary")
+                            ex_sel = gr.Radio(ex_labels, value=ex_labels[0], label="Example record")
+                            ex_go = gr.Button("Run frozen clocks", variant="primary")
                         with gr.Column(scale=2):
-                            out_md = gr.Markdown()
+                            e_md = gr.Markdown()
                     with gr.Row():
-                        f_fp = gr.Plot(label="Fingerprint")
-                        f_beat = gr.Plot(label="Median beat")
-                        f_geo = gr.Plot(label="A–D geometry")
-                    go.click(run_synth, [hr, age, sex, stt, qrs, seed],
-                             [out_md, f_fp, f_beat, f_geo])
+                        e_fp = gr.Plot(label="Fingerprint")
+                        e_beat = gr.Plot(label="Median beat")
+                        e_geo = gr.Plot(label="A–D geometry")
+                    ex_go.click(run_example, [ex_sel, gr.State(0), gr.State("male")],
+                                [e_md, e_fp, e_beat, e_geo])
+                    demo.load(lambda: run_example(ex_labels[0], 0, "male"),
+                              None, [e_md, e_fp, e_beat, e_geo])
                 with gr.Tab("Upload your own"):
-                    gr.Markdown("Upload a WFDB record (`.hea` with its `.dat`) or a 12-column CSV "
-                                "(canonical lead order I, II, III, aVR, aVL, aVF, V1–V6; samples in rows).")
+                    gr.Markdown("Upload a WFDB record (`.hea` **with** its `.dat`) or a 12-column CSV "
+                                "(canonical lead order I, II, III, aVR, aVL, aVF, V1–V6; samples in "
+                                "rows; millivolts). WFDB leads are reordered from the header; a CSV has "
+                                "no header, so set its sampling rate below.")
                     with gr.Row():
                         with gr.Column(scale=1):
-                            up = gr.File(label="ECG file (.hea / .csv)")
+                            up = gr.File(label="ECG file (.hea + .dat, or .csv)")
+                            u_fs = gr.Number(value=500, label="CSV sampling rate (Hz) — ignored for WFDB", precision=0)
                             u_age = gr.Slider(20, 90, 55, step=1, label="Chronological age (y)")
                             u_sex = gr.Radio(["male", "female"], value="male", label="Sex")
                             u_go = gr.Button("Run frozen clocks", variant="primary")
@@ -225,7 +290,30 @@ def build():
                         u_fp = gr.Plot(label="Fingerprint")
                         u_beat = gr.Plot(label="Median beat")
                         u_geo = gr.Plot(label="A–D geometry")
-                    u_go.click(run_upload, [up, u_age, u_sex], [u_md, u_fp, u_beat, u_geo])
+                    u_go.click(run_upload, [up, u_age, u_sex, u_fs], [u_md, u_fp, u_beat, u_geo])
+                # Synthetic is LAST and clearly labeled as an interface illustration
+                with gr.Tab("Synthetic (interface illustration)"):
+                    gr.Markdown("⚠️ **Interface illustration only — not a biological result.** "
+                                "This builds a synthetic 12-lead trace so the controls and plots can "
+                                "be exercised without a record. The clocks run on out-of-distribution "
+                                "input; the ages shown are interface artefacts. The ST-T drift control "
+                                "perturbs **only** the ST-T segment.")
+                    with gr.Row():
+                        with gr.Column(scale=1):
+                            hr = gr.Slider(40, 140, 70, step=1, label="Heart rate (bpm)")
+                            age = gr.Slider(20, 90, 55, step=1, label="Chronological age (y)")
+                            sex = gr.Radio(["male", "female"], value="male", label="Sex")
+                            stt = gr.Slider(0, 1, 0, step=0.05, label="ST-T drift (ST-T segment only)")
+                            seed = gr.Slider(0, 50, 1, step=1, label="Random seed")
+                            go = gr.Button("Run frozen clocks", variant="primary")
+                        with gr.Column(scale=2):
+                            out_md = gr.Markdown()
+                    with gr.Row():
+                        f_fp = gr.Plot(label="Fingerprint")
+                        f_beat = gr.Plot(label="Median beat")
+                        f_geo = gr.Plot(label="A–D geometry")
+                    go.click(run_synth, [hr, age, sex, stt, seed],
+                             [out_md, f_fp, f_beat, f_geo])
         with gr.Tab("Result explorer"):
             gr.Markdown("The frozen result figures behind *From Clocks to Coordinates*. "
                         "Select a result to view it with its caption.")

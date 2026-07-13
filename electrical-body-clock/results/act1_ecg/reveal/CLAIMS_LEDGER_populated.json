@@ -1,0 +1,199 @@
+{
+  "schema": "CLAIMS_LEDGER_populated",
+  "generated_utc": "2026-07-12T05:07:46.348490+00:00",
+  "selected_branch": "null",
+  "branch_selected_from": "PRIMARY D4 only (sensitivities+OOS do not gate)",
+  "full_primary_75063": {
+    "D4_HR": 1.0103,
+    "D4_CI": [
+      0.9826,
+      1.0387
+    ],
+    "D4_LRT_p": 0.478,
+    "D3_dropP_HR": 1.0178,
+    "D3_dropP_CI": [
+      0.9915,
+      1.0447
+    ],
+    "D3_dropP_LRT_p": 0.2021,
+    "D3_dropP_reduced": "M1_dropP",
+    "D3_noAV_HR": 0.9994,
+    "D3_noAV_CI": [
+      0.9699,
+      1.0298
+    ],
+    "D3_noAV_LRT_p": 0.9685,
+    "D3_noAV_reduced": "M1_noAV",
+    "n_complete_case_fit": 74715,
+    "n_events": 2583,
+    "C_M1": 0.8071,
+    "C_M2": 0.8072,
+    "delta_C": 0.0001,
+    "delta_C_CI": [
+      -0.0,
+      0.0002
+    ],
+    "secondary_models": {
+      "M3_D4_HR": 1.0086,
+      "M3_D4_CI": [
+        0.9813,
+        1.0366
+      ],
+      "M3_D4_p": 0.5401,
+      "M4_phase_z": {
+        "z_P": {
+          "HR": 1.0154,
+          "CI": [
+            0.9711,
+            1.0617
+          ],
+          "p": 0.503
+        },
+        "z_AV": {
+          "HR": 1.2409,
+          "CI": [
+            1.1923,
+            1.2914
+          ],
+          "p": 0.0
+        },
+        "z_QRS": {
+          "HR": 1.0053,
+          "CI": [
+            0.9688,
+            1.0432
+          ],
+          "p": 0.7792
+        },
+        "z_STT": {
+          "HR": 1.1268,
+          "CI": [
+            1.0838,
+            1.1715
+          ],
+          "p": 0.0
+        }
+      },
+      "M5_nonlinearity_LRT_p": 0.0886,
+      "M5_nonlinearity_LRT_chi2": 2.9005
+    },
+    "ph_M2": {
+      "A_std": 6.507204783081928e-05,
+      "D_std": 0.2890388622511263,
+      "age": 0.815179640463235,
+      "nn_predicted_age": 0.6294171475238267,
+      "sex": 0.27043664621272556
+    }
+  },
+  "OOS_predictor_robustness_39744": {
+    "D4_HR": 1.0066,
+    "D4_CI": [
+      0.9757,
+      1.0384
+    ],
+    "D4_LRT_p": 0.6839,
+    "D3_dropP_HR": 1.0127,
+    "D3_dropP_CI": [
+      0.9832,
+      1.0431
+    ],
+    "D3_dropP_LRT_p": 0.4147,
+    "D3_dropP_reduced": "M1_dropP",
+    "D3_noAV_HR": 1.0013,
+    "D3_noAV_CI": [
+      0.9686,
+      1.0352
+    ],
+    "D3_noAV_LRT_p": 0.938,
+    "D3_noAV_reduced": "M1_noAV",
+    "n_complete_case_fit": 39744,
+    "n_events": 2024,
+    "C_M1": 0.7788,
+    "C_M2": 0.7788,
+    "delta_C": 0.0,
+    "delta_C_CI": [
+      -0.0,
+      0.0001
+    ],
+    "secondary_models": {
+      "M3_D4_HR": 1.0054,
+      "M3_D4_CI": [
+        0.975,
+        1.0366
+      ],
+      "M3_D4_p": 0.7319,
+      "M4_phase_z": {
+        "z_P": {
+          "HR": 1.0046,
+          "CI": [
+            0.9546,
+            1.0573
+          ],
+          "p": 0.8594
+        },
+        "z_AV": {
+          "HR": 1.2401,
+          "CI": [
+            1.1859,
+            1.2967
+          ],
+          "p": 0.0
+        },
+        "z_QRS": {
+          "HR": 0.9864,
+          "CI": [
+            0.9463,
+            1.0283
+          ],
+          "p": 0.5201
+        },
+        "z_STT": {
+          "HR": 1.1257,
+          "CI": [
+            1.0764,
+            1.1773
+          ],
+          "p": 0.0
+        }
+      },
+      "M5_nonlinearity_LRT_p": 0.3543,
+      "M5_nonlinearity_LRT_chi2": 0.8581
+    },
+    "ph_M2": {
+      "A_std": 0.00022924941888144545,
+      "D_std": 0.6045047508000503,
+      "age": 0.3319813725538086,
+      "nn_predicted_age": 0.4032505036573242,
+      "sex": 0.7561785442448071
+    }
+  },
+  "prediction_metrics_frozen_no_refit": {
+    "full_primary_75063": {
+      "n": 74715,
+      "events": 2583,
+      "note": "development-FROZEN coefficients applied without refit (anti-optimism)",
+      "C_M1_frozen": 0.8070647372021281,
+      "C_M2_frozen": 0.8072235295381578,
+      "delta_C_frozen": 0.00015879233602966725,
+      "brier_5y_M2_frozen": 0.08871298775027812,
+      "C_5yrisk_M2_frozen": 0.7888350855744464,
+      "H0_5y_frozen": 0.021379704290138232
+    },
+    "OOS_predictor_robustness_39744": {
+      "n": 39744,
+      "events": 2024,
+      "note": "development-FROZEN coefficients applied without refit (anti-optimism)",
+      "C_M1_frozen": 0.7786526037030003,
+      "C_M2_frozen": 0.778696524349337,
+      "delta_C_frozen": 4.392064633673698e-05,
+      "brier_5y_M2_frozen": 0.08186968277098483,
+      "C_5yrisk_M2_frozen": 0.803520901193688,
+      "H0_5y_frozen": 0.021379704290138232
+    },
+    "frozen_source": "development_model_frozen.json",
+    "frozen_source_sha256": "0cbbfe32030b560731178ba2cd52018049cfdeeee6496337ace5e3a19aa59d9c"
+  },
+  "eligible_pool_N": 75063,
+  "fitted_complete_case_N": 74715,
+  "language": "association (not prediction); OOS reported by HR+CI regardless of significance"
+}

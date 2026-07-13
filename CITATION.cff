@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: "If you use this repository or its results, please cite the paper below."
+title: "From Clocks to Coordinates: biological age is a direction, not a number"
+authors:
+  - family-names: "Mohammed"
+    given-names: "Jaron"
+    affiliation: "University of Miami"
+    email: "jim4226@miami.edu"
+date-released: "2026-07-13"
+license: MIT
+repository-code: "https://github.com/jim4226/ClaudeScienceHackathon_2026"
+keywords:
+  - biological age
+  - electrocardiography
+  - deep learning
+  - cardiac aging
+  - organ-specific aging
+  - brain aging
+  - mortality prediction
+  - state-space geometry
+preferred-citation:
+  type: article
+  title: "From Clocks to Coordinates: a phase-resolved ECG-age representation contains mechanism-aligned physiological directions hidden by its scalar output"
+  authors:
+    - family-names: "Mohammed"
+      given-names: "Jaron"
+      affiliation: "University of Miami"
+  year: 2026

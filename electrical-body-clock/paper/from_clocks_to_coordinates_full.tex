@@ -1,6 +1,6 @@
 % Author: Jaron Mohammed.
 % Figure paths rewritten from Claude Science artifact markers to local figs_full/.
-% Full 54-page technical manuscript; the 6-page judge cut is clocks_to_coordinates.tex.
+% Full 55-page technical manuscript; the 6-page judge cut is clocks_to_coordinates.tex.
 \documentclass[11pt]{article}
 
 % ==================================================================
@@ -45,27 +45,13 @@
 % Marked confirmatory placeholder (used in Abstract and Results). The single
 % pre-registered CODE-15 confirmatory test is NOT executed; no final-test
 % mortality value has been read. This box is replaced only after the authorized reveal.
-\newcommand{\pendingbox}{%
-  \begin{center}
-  \setlength{\fboxrule}{1.2pt}%
-  \fbox{\parbox{0.92\linewidth}{\centering
-  \textbf{\textcolor{pendinggray}{CONFIRMATORY RESULT PENDING --- CODE-15 final-split reveal not yet executed.}}\\[3pt]
-  \small The single pre-registered confirmatory test (primary M2-vs-M1 Cox
-  likelihood-ratio test for \D\ on the locked CODE-15 final-test partition,
-  $n\approx\num{75183}$) has \emph{not} been executed. No mortality value for any
-  final-test patient has been read. This box will be replaced by the frozen result
-  template only after the single authorized reveal. The development association
-  (\S\ref{sec:mortality}) is reported as hypothesis-generating and model-freezing,
-  explicitly \emph{not} as confirmatory evidence.}}
-  \end{center}}
-
 \title{\textbf{From Clocks to Coordinates: Controlled Human Perturbations Reveal
 Hidden Directions in ECG Biological Age}}
 
 \author[1,*]{Jaron Mohammed}
 \affil[1]{University of Miami, Miami, FL, USA}
 \affil[*]{Correspondence: jim4226@miami.edu}
-\date{\today}
+\date{July 13, 2026}
 
 \begin{document}
 \maketitle
@@ -159,7 +145,7 @@ multi-biomarker aging panels, and orthogonalized brain-age models all exploit a
 version of it \citep{disco2025,cohen2013}. Neither is ECG age, nor multi-organ age, nor
 multimodal brain-age, new \citep{lima2021,attia2019,tian2023,oh2023,ladejobi2021,wen2024,li2025},
 and the broad claim that organs and imaging views age heterogeneously is by now crowded. What
-has not, to the authors' knowledge, been reported is (i) to train \emph{independent} age clocks for the individual
+has not, to the author's knowledge, been reported is (i) to train \emph{independent} age clocks for the individual
 electrical phases of a single heartbeat, (ii) to compress them into a shared axis and
 an orthogonal disagreement radius under a geometry frozen \emph{before any outcome is
 read}, (iii) to ask, across multiple cohorts and physiological perturbations,
@@ -580,7 +566,12 @@ heartbeat-scale result. The shared body axis $\A_{\text{body}}$ carried mortalit
 the body disagreement radius $\D_{\text{body}}$ added mortality information beyond it
 (hazard ratio \num{1.21} per SD, 95\% CI \numrange{1.108}{1.328}, $p=\num{3.1e-5}$;
 cross-validated concordance improvement $+\num{0.0041}$, 95\% CI
-\numrange{0.0029}{0.0054}). The concordance ladder rose from \num{0.8147} (age and
+\numrange{0.0029}{0.0054}).\footnote{The $\D_{\text{body}}$ interval
+\numrange{1.108}{1.328} is the design-based survey Cox estimate (\texttt{svycoxph},
+combined-cycle MEC weights, robust standard errors, design degrees of freedom~47),
+which is the appropriate model for the NHANES Linked Mortality File and matches the
+canonical released Cox table; a naïve non-survey Cox model yields a narrower nominal
+interval that is not used here.} The concordance ladder rose from \num{0.8147} (age and
 sex) to \num{0.8288} (adding $\A_{\text{body}}$) to \num{0.8329} (adding
 $\D_{\text{body}}$). The disagreement signal was robust to leaving out any single
 organ system (all six design-based $p<\num{0.05}$). This NHANES analysis is reported as
@@ -592,7 +583,7 @@ electrical disagreement radius was null (\S\ref{sec:mortality}). What it does sh
 that an organ-system disagreement radius behaves differently from the electrical one,
 a cross-scale contrast revisited in the Discussion. That the same two-coordinate
 geometry is informative both within a single heartbeat and across the organ systems of
-the whole body is, to the authors' knowledge, a new observation about the structure of
+the whole body is, to the author's knowledge, a new observation about the structure of
 biological age.
 
 \subsection{At a third scale, brain-imaging disagreement does not predict motor decline, but is visible in the raw anatomy}
@@ -698,7 +689,7 @@ most age-informative on volume alone (MAE \num{9.71}~years, $R^2=\num{0.288}$;
 $R^2=\num{0.111}$; \num{63} structures) and digestive (MAE \num{11.20}~years,
 $R^2=\num{0.107}$; \num{9} structures) systems, consistent with CT age
 predictors that draw heavily on large-vessel and body-composition change
-\citep{pickhardt2020automated,kerber2023deeplearning}. To the authors'
+\citep{pickhardt2020automated,kerber2023deeplearning}. To the author's
 knowledge, this is the first CT structural age clock to couple a single
 whole-body volume model with per-structure permutation importance across the
 full TotalSegmentator label set.
@@ -877,7 +868,7 @@ not-yet-drugged candidate. This coda is forward-looking and explicitly non-causa
 deep-time regulatory screen to present-day druggability, and makes no claim that HAR substitutions
 cause any age-related skeletal phenotype.
 
-To the authors' knowledge this is the first \textit{in-silico} variant-effect screen to score the
+To the author's knowledge this is the first \textit{in-silico} variant-effect screen to score the
 complete HAR substitution catalogue for skeletal-lineage regulatory effect; the concentration of
 prior HAR functional work on neural contexts is empirically the case, leaving the skeletal question
 open until now.
@@ -1988,7 +1979,7 @@ controlled-access data-use agreement within a secure environment. No new human-s
 were collected for this work; no individual-level or identifiable data are reported.
 
 \section*{Competing interests}
-The authors declare no competing interests.
+The author declares no competing interests.
 
 \bibliographystyle{unsrtnat}
 \bibliography{references_c2c}

@@ -1,10 +1,10 @@
 % Author: Jaron Mohammed.
 % Figure paths rewritten from Claude Science artifact markers to local figs_c2c/.
-% JUDGE CUT (6 pp) — condensed companion to from_clocks_to_coordinates_full.pdf (54 pp).
+% JUDGE CUT (6 pp) — condensed companion to from_clocks_to_coordinates_full.pdf (55 pp).
 \documentclass[10pt]{article}
 % ==================================================================
 % JUDGE CUT v2 — condensed companion to the full technical manuscript
-% "From Clocks to Coordinates" (manuscript_bodyvector.pdf, 54 pp).
+% "From Clocks to Coordinates" (from_clocks_to_coordinates_full.pdf, 55 pp).
 % Redesigned for visual priority: the perturbation discovery leads, the
 % external-transport figure (Chapman) is promoted to a full panel, and
 % the multiscale atlas (CT skeleton + brain MRI) closes the account.
@@ -92,7 +92,7 @@ permutation $p=\num{0.069}$). Carried unchanged into an independent external coh
 intervals, \A\ and \D\ (fully adjusted odds ratio \num{1.23} per SD, $p=\num{1.9e-4}$; marginally
 null---a suppression effect). The shared axis \A\ was separately mortality-associated; its
 underlying whole-ECG clock reconstructed on the geographically distinct cohort at $r=\num{0.646}$
-with chronological age. This condensed account presents that result; a \num{54}-page technical
+with chronological age. This condensed account presents that result; a \num{55}-page technical
 manuscript provides the full methods, the supporting multiscale atlas and every frozen artifact.
 \end{abstract}
 
@@ -201,7 +201,8 @@ diffuse because ischemia moves the vector along the shared axis \A\ rather than 
 contrast subspace. \textbf{(b)}~The two \Ikr\ blockers separate from zero; the active multichannel
 comparators do not (no formal specificity contrast is claimed). \textbf{(c)}~In raw whitened
 coordinates the signed score is bounded by the unsigned radius, $|S_{\text{raw}}|\le\D_{\text{raw}}$:
-the radius keeps the magnitude and discards exactly the sign the perturbation axis recovers.}
+the radius keeps the magnitude but discards the angular (directional) information of the
+contrast, while the signed score $S$ retains one signed projection of it onto the frozen axis.}
 \label{fig:compass}
 \end{figure}
 
@@ -331,7 +332,7 @@ content-hashed artifact; the geometry, the \Ikr\ scorer and the protocol lock we
 the outcomes reported here were read. Source cohorts are open where licensing permits (CODE-15,
 SaMi-Trop, PhysioNet ecg-arrhythmia, NHANES, LEMON); access-controlled arms (EchoNext, AABC)
 contributed only aggregate results. Full methods, the claim-to-artifact ledger and the
-\num{54}-page technical manuscript are in the repository.
+\num{55}-page technical manuscript are in the repository.
 \end{minipage}\hfill
 \begin{minipage}{0.19\linewidth}
 \centering
@@ -349,12 +350,13 @@ answer ``old in which direction.''
 \centering
 \begin{subfigure}{0.60\linewidth}\centering
 \includegraphics[width=\linewidth]{\figAtlas}
-\caption{Whole-body CT: shared-axis / disagreement structure across organ systems.}
+\caption{NHANES blood-biomarker organ-system clocks: shared-axis / disagreement structure
+(\num{14362} participants).}
 \label{fig:atlas}
 \end{subfigure}\hfill
 \begin{subfigure}{0.33\linewidth}\centering
 \includegraphics[width=\linewidth]{\figSkeleton}
-\caption{Where the skeleton ages (CT organ clock).}
+\caption{Whole-body CT organ clock: where the skeleton ages (\num{1227} examinations).}
 \label{fig:skeleton}
 \end{subfigure}\\[4pt]
 \begin{subfigure}{0.62\linewidth}\centering
@@ -364,9 +366,11 @@ answer ``old in which direction.''
 \label{fig:lemonanat}
 \end{subfigure}
 \caption{\textbf{The supporting multiscale atlas.} The same shared-axis/disagreement decomposition
-read at other biological scales. \textbf{(a,b)}~A whole-body CT age clock over \num{1227}
-examinations localizes age-informative structure to the cardiovascular system and the weight-bearing
-skeleton---the structural bridge to the deep-time genomic arm. \textbf{(c)}~A brain-imaging arm
+read at other biological scales. \textbf{(a)}~Six blood-biomarker organ-system age clocks in NHANES
+(\num{14362} participants) carry a shared axis and a disagreement radius, each adding mortality
+information (secondary, non-confirmatory). \textbf{(b)}~A separate whole-body CT age clock over
+\num{1227} examinations localizes age-informative structure to the cardiovascular system and the
+weight-bearing skeleton---the structural bridge to the deep-time genomic arm. \textbf{(c)}~A brain-imaging arm
 rebuilds an image-derived disagreement coordinate from \num{220} real T1 volumes: the older brain
 shows enlarged ventricles (ventricle--brain ratio \num{0.045} versus \num{0.009}), widened sulci and
 thinned cortex, and across all \num{220} subjects the image-derived disagreement radius is elevated
