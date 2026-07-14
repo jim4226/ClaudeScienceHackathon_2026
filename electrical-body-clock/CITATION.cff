@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this software or its results, please cite the paper below."
-title: "From Clocks to Coordinates: biological age as a direction in a state space"
+title: "HumanVector: From Clocks to Coordinates"
 authors:
   - family-names: "Mohammed"
     given-names: "Jaron"
@@ -16,9 +16,11 @@ keywords:
   - cardiac aging
   - organ-specific aging
   - mortality prediction
+  - controlled human perturbation
+  - state-space geometry
 preferred-citation:
   type: article
-  title: "From Clocks to Coordinates: a phase-resolved ECG-age representation contains mechanism-aligned physiological directions hidden by its scalar output"
+  title: "From Clocks to Coordinates: Controlled Human Perturbations Reveal Hidden Directions in ECG Biological Age"
   authors:
     - family-names: "Mohammed"
       given-names: "Jaron"

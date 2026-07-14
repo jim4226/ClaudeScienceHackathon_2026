@@ -28,6 +28,19 @@ FILES = [
     "demo/hf_space/hv_bundle/FROZEN_DISAGREEMENT_DEFINITIONS_RC2.json",
     "demo/hf_space/inference.py",
     "demo/hf_space/app.py",
+    "demo/hf_space/smoke_test.py",
+    "demo/hf_space/README.md",
+    "demo/hf_space/requirements.txt",
+    "demo/hf_space/requirements-lock.txt",
+    "scripts/lemon_balanced_sensitivity.py",
+    "paper/relabel_figures.py",
+    "paper/remove_emdashes_from_figure_pdfs.py",
+    "src/brain_imaging/aabc/README.md",
+    "src/brain_imaging/aabc/neuromotionvector_pipeline.py",
+    "src/brain_imaging/aabc/run_pipeline.py",
+    "src/brain_imaging/aabc/make_figures.py",
+    "src/brain_imaging/aabc/make_fixture.py",
+    "src/brain_imaging/aabc/prepare_demographics.py",
     # compiled PDFs
     "paper/from_clocks_to_coordinates_full.pdf",
     "paper/clocks_to_coordinates.pdf",
@@ -67,7 +80,7 @@ def main():
         h = hashlib.sha256(open(os.path.join(ARM, rel), "rb").read()).hexdigest()
         rows.append(f"{h}  {rel}")
     out = os.path.join(ARM, "RELEASE_MANIFEST.sha256")
-    with open(out, "w") as fh:
+    with open(out, "w", encoding="utf-8", newline="\n") as fh:
         fh.write("# SHA-256 release manifest — electrical-body-clock/\n")
         fh.write("# regenerate: python scripts/make_manifest.py ; verify: make verify\n")
         fh.write("\n".join(rows) + "\n")

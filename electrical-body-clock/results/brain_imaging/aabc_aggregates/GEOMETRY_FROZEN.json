@@ -1,0 +1,38 @@
+{
+  "frozen_hash": "5a3d8800faf1358eba9534a7a90dc18335029180e5f950ab4153f8975ee8e3e0",
+  "n_clocks_passed": 4,
+  "clock_metrics": {
+    "S_structure": {
+      "heldout_r": 0.5871734746242023,
+      "cv_r_dev": 0.5858720120644114,
+      "passed": true,
+      "alpha": 0.4248751402844768,
+      "l1_ratio": 0.1,
+      "n_features": 786
+    },
+    "M_myelin": {
+      "heldout_r": 0.505443581654566,
+      "cv_r_dev": 0.5328245635324621,
+      "passed": true,
+      "alpha": 0.04837742366383294,
+      "l1_ratio": 0.1,
+      "n_features": 360
+    },
+    "P_perfusion": {
+      "heldout_r": 0.5141430575954098,
+      "cv_r_dev": 0.5150776392923795,
+      "passed": true,
+      "alpha": 0.10296435995815625,
+      "l1_ratio": 0.5,
+      "n_features": 758
+    },
+    "F_function": {
+      "heldout_r": 0.4966736295719871,
+      "cv_r_dev": 0.516521052919807,
+      "passed": true,
+      "alpha": 0.2670968430389973,
+      "l1_ratio": 0.1,
+      "n_features": 379
+    }
+  }
+}

@@ -180,14 +180,15 @@ def run_example(record_label, age, sex_label):
             plot_fingerprint(res, age), plot_beat(res), plot_geometry(res))
 
 
-def run_upload(file, age, sex_label, csv_fs):
-    if file is None:
-        return "Upload a WFDB record (`.hea` **and** its `.dat`) or a 12-column CSV.", None, None, None
+def run_upload(files, age, sex_label, csv_fs):
+    if not files:
+        return "Select one 12-column CSV or one matching WFDB `.hea` + `.dat` pair.", None, None, None
     sex = 1 if sex_label == "female" else 0
     try:
-        sig, fs = inf.parse_uploaded(file.name, csv_fs=int(csv_fs))
+        sig, fs = inf.parse_uploaded_files(files, csv_fs=int(csv_fs))
     except Exception as e:
-        return f"Could not read file: `{e}`", None, None, None
+        safe_error = str(e).replace("`", "'")
+        return f"Upload rejected: `{safe_error}`", None, None, None
     res, qa = inf.score_signal(sig, fs=fs, age=age, sex=sex)
     if res is None:
         return f"Inference failed: `{qa.get('reason','unknown')}`.", None, None, None
@@ -273,13 +274,26 @@ def build():
                     demo.load(lambda: run_example(ex_labels[0], 0, "male"),
                               None, [e_md, e_fp, e_beat, e_geo])
                 with gr.Tab("Upload your own"):
-                    gr.Markdown("Upload a WFDB record (`.hea` **with** its `.dat`) or a 12-column CSV "
-                                "(canonical lead order I, II, III, aVR, aVL, aVF, V1–V6; samples in "
-                                "rows; millivolts). WFDB leads are reordered from the header; a CSV has "
-                                "no header, so set its sampling rate below.")
+                    gr.Markdown(
+                        "> ### Privacy notice\n"
+                        "> **Do not upload identifiable, private, restricted, or protected health data.** "
+                        "Use the bundled licensed examples or synthetic mode unless you are authorized "
+                        "to process the record here. This app processes selected files in the running "
+                        "Space and does not save their contents to an application database or results "
+                        "store. The hosting platform may keep temporary upload or cache files under its "
+                        "own retention policy.\n\n"
+                        "Select **exactly one** 12-column CSV, or **exactly two** matching WFDB files "
+                        "(`record.hea` + `record.dat`). CSV lead order: I, II, III, aVR, aVL, aVF, "
+                        "V1-V6; samples in rows; amplitudes in millivolts. WFDB leads are reordered from "
+                        "the header. Maximum duration is 5 minutes; each signal file is limited to 25 MiB.")
                     with gr.Row():
                         with gr.Column(scale=1):
-                            up = gr.File(label="ECG file (.hea + .dat, or .csv)")
+                            up = gr.File(
+                                label="ECG input: one CSV or matching .hea + .dat pair",
+                                file_count="multiple",
+                                file_types=[".hea", ".dat", ".csv"],
+                                type="filepath",
+                            )
                             u_fs = gr.Number(value=500, label="CSV sampling rate (Hz) — ignored for WFDB", precision=0)
                             u_age = gr.Slider(20, 90, 55, step=1, label="Chronological age (y)")
                             u_sex = gr.Radio(["male", "female"], value="male", label="Sex")
@@ -328,4 +342,4 @@ def build():
 
 
 if __name__ == "__main__":
-    build().launch()
+    build().launch(max_file_size=inf.MAX_SIGNAL_FILE_BYTES)

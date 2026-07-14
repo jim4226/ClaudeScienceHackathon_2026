@@ -8,6 +8,10 @@ re-standardizes: all constants come from FROZEN_DISAGREEMENT_DEFINITIONS_RC2.jso
 and the five checkpoints in hv_bundle/models/.
 """
 import os, sys, functools
+import math
+import re
+import shutil
+import tempfile
 import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -17,6 +21,14 @@ sys.path.insert(0, BUNDLE)
 # canonical 12-lead order the frozen harness expects
 LEADS = ["I", "II", "III", "aVR", "aVL", "aVF", "V1", "V2", "V3", "V4", "V5", "V6"]
 PHASES = ["global", "P", "AV", "QRS", "STT"]
+
+# Upload limits are deliberately conservative. The frozen models consume a
+# single short 12-lead recording, not Holter data or arbitrary clinical files.
+MAX_HEADER_BYTES = 64 * 1024
+MAX_SIGNAL_FILE_BYTES = 25 * 1024 * 1024
+MAX_TOTAL_UPLOAD_BYTES = 26 * 1024 * 1024
+MAX_DURATION_SECONDS = 300
+SAFE_UPLOAD_NAME = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$")
 
 
 @functools.lru_cache(maxsize=1)
@@ -145,8 +157,207 @@ def _reorder_to_canonical(sig, names):
     return sig[:, idx]
 
 
+def _file_path_and_name(item):
+    """Return a Gradio/local upload's filesystem path and original basename."""
+    if isinstance(item, dict):
+        path = item.get("path") or item.get("name")
+        original = item.get("orig_name") or item.get("original_name")
+    elif isinstance(item, (str, os.PathLike)):
+        path, original = os.fspath(item), None
+    else:
+        path = getattr(item, "path", None) or getattr(item, "name", None)
+        original = getattr(item, "orig_name", None) or getattr(item, "original_name", None)
+    if not path:
+        raise ValueError("The upload did not provide a readable local file path.")
+    path = os.fspath(path)
+    if not os.path.isfile(path) or os.path.islink(path):
+        raise ValueError("Every selected upload must be a regular file.")
+    if original:
+        original = os.fspath(original)
+        if "/" in original or "\\" in original:
+            raise ValueError("Uploaded filenames may not contain directory paths.")
+        name = original
+    else:
+        name = os.path.basename(path)
+    if not SAFE_UPLOAD_NAME.fullmatch(name):
+        raise ValueError(
+            "Use a simple filename containing only letters, numbers, dot, dash, or underscore "
+            "(maximum 128 characters).")
+    return path, name
+
+
+def _normalize_uploads(files):
+    if files is None:
+        return []
+    if isinstance(files, (str, os.PathLike, dict)) or not isinstance(files, (list, tuple)):
+        files = [files]
+    items = [_file_path_and_name(item) for item in files]
+    real_paths = [os.path.realpath(path) for path, _ in items]
+    if len(set(real_paths)) != len(real_paths):
+        raise ValueError("The same file was selected more than once.")
+    return items
+
+
+def _check_file_sizes(items):
+    total = 0
+    for path, name in items:
+        size = os.path.getsize(path)
+        ext = os.path.splitext(name)[1].lower()
+        limit = MAX_HEADER_BYTES if ext == ".hea" else MAX_SIGNAL_FILE_BYTES
+        if size <= 0:
+            raise ValueError(f"{name} is empty.")
+        if size > limit:
+            raise ValueError(
+                f"{name} is too large ({size / 1024 / 1024:.1f} MiB); "
+                f"the limit for this file type is {limit / 1024 / 1024:.1f} MiB.")
+        total += size
+    if total > MAX_TOTAL_UPLOAD_BYTES:
+        raise ValueError(
+            f"The selected files total {total / 1024 / 1024:.1f} MiB; "
+            f"the combined limit is {MAX_TOTAL_UPLOAD_BYTES / 1024 / 1024:.1f} MiB.")
+
+
+def _parse_wfdb_header(header_path, header_name, dat_name):
+    """Validate the bounded WFDB header before wfdb reads the signal payload."""
+    try:
+        with open(header_path, "rb") as handle:
+            raw = handle.read(MAX_HEADER_BYTES + 1)
+        text = raw.decode("utf-8-sig")
+    except (OSError, UnicodeDecodeError) as exc:
+        raise ValueError("The WFDB header must be a small UTF-8/ASCII text file.") from exc
+    if "\x00" in text:
+        raise ValueError("The WFDB header contains binary data.")
+    lines = [line.strip() for line in text.splitlines()
+             if line.strip() and not line.lstrip().startswith("#")]
+    if not lines:
+        raise ValueError("The WFDB header is empty.")
+    first = lines[0].split()
+    if len(first) < 4:
+        raise ValueError("The WFDB header's first line must include record, leads, rate, and samples.")
+    record_name, n_sig_token, fs_token, n_samples_token = first[:4]
+    if "/" in record_name or "\\" in record_name or record_name != os.path.splitext(header_name)[0]:
+        raise ValueError("The WFDB record name must match the .hea/.dat filename stem.")
+    try:
+        n_sig = int(n_sig_token)
+        fs = int(round(float(fs_token.split("/")[0])))
+        n_samples = int(n_samples_token)
+    except (TypeError, ValueError) as exc:
+        raise ValueError("The WFDB header has invalid lead, sampling-rate, or sample-count metadata.") from exc
+    if n_sig != 12:
+        raise ValueError(f"WFDB record declares {n_sig} channels; exactly 12 standard leads are required.")
+    _validate_sample_count(n_samples, fs)
+    if len(lines) < 1 + n_sig:
+        raise ValueError("The WFDB header has fewer signal lines than its declared lead count.")
+    data_refs = []
+    for line in lines[1:1 + n_sig]:
+        ref = line.split()[0]
+        if "/" in ref or "\\" in ref or os.path.basename(ref) != ref:
+            raise ValueError("WFDB signal references must be local filenames, not paths.")
+        data_refs.append(ref)
+    if set(data_refs) != {dat_name}:
+        raise ValueError(
+            "The WFDB header must reference only the selected matching .dat file on every lead.")
+    return fs, n_samples
+
+
+def _validate_sample_count(n_samples, fs):
+    if fs < 100 or fs > 2000:
+        raise ValueError(f"Sampling rate {fs} Hz is outside the supported 100-2000 Hz range.")
+    minimum = int(math.ceil(2.0 * fs))
+    maximum = int(MAX_DURATION_SECONDS * fs)
+    if n_samples < minimum:
+        raise ValueError(
+            f"Record has {n_samples} samples at {fs} Hz; at least 2 seconds are required.")
+    if n_samples > maximum:
+        raise ValueError(
+            f"Record has {n_samples} samples ({n_samples / fs:.1f}s); "
+            f"the upload limit is {MAX_DURATION_SECONDS} seconds.")
+
+
+def _validate_csv_structure(path, fs):
+    """Count rows/columns with bounded memory before NumPy parses numeric values."""
+    fs = int(fs)
+    if fs < 100 or fs > 2000:
+        raise ValueError(f"Sampling rate {fs} Hz is outside the supported 100-2000 Hz range.")
+    max_rows = int(MAX_DURATION_SECONDS * fs)
+    rows = 0
+    try:
+        with open(path, "r", encoding="utf-8-sig", newline="") as handle:
+            for line_no, line in enumerate(handle, start=1):
+                if len(line) > 8192:
+                    raise ValueError(f"CSV row {line_no} is unreasonably long.")
+                stripped = line.strip()
+                if not stripped:
+                    raise ValueError(f"CSV row {line_no} is blank; provide a dense numeric matrix.")
+                column_count = len(stripped.split(","))
+                if column_count != 12:
+                    raise ValueError(
+                        f"CSV row {line_no} has {column_count} columns; exactly 12 are required.")
+                rows += 1
+                if rows > max_rows:
+                    raise ValueError(
+                        f"CSV exceeds the {MAX_DURATION_SECONDS}-second limit at {fs} Hz.")
+    except UnicodeDecodeError as exc:
+        raise ValueError("CSV input must be UTF-8 text containing numeric samples only.") from exc
+    _validate_sample_count(rows, fs)
+    return rows
+
+
+def parse_uploaded_files(files, csv_fs=500):
+    """Safely accept exactly one CSV or one matching WFDB .hea/.dat pair.
+
+    Selected uploads are size- and structure-checked before numeric/signal
+    parsing. WFDB files are copied into a short-lived private directory so only
+    the validated pair can be resolved by the WFDB reader; that copy is removed
+    immediately after parsing.
+    """
+    items = _normalize_uploads(files)
+    if not items:
+        raise ValueError("Select exactly one CSV or one matching .hea + .dat pair.")
+    if len(items) not in (1, 2):
+        raise ValueError("Select exactly one CSV or exactly two matching WFDB files (.hea + .dat).")
+    _check_file_sizes(items)
+    extensions = [os.path.splitext(name)[1].lower() for _, name in items]
+    if len(items) == 1:
+        path, name = items[0]
+        if extensions != [".csv"]:
+            raise ValueError("A single upload must be a 12-column .csv file.")
+        _validate_csv_structure(path, int(csv_fs))
+        return _parse_validated_path(path, csv_fs=int(csv_fs))
+
+    if sorted(extensions) != [".dat", ".hea"]:
+        raise ValueError("Two-file uploads must contain exactly one .hea and one .dat file.")
+    by_ext = {os.path.splitext(name)[1].lower(): (path, name) for path, name in items}
+    hea_path, hea_name = by_ext[".hea"]
+    dat_path, dat_name = by_ext[".dat"]
+    if os.path.splitext(hea_name)[0] != os.path.splitext(dat_name)[0]:
+        raise ValueError("WFDB .hea and .dat filenames must have the same stem.")
+    _parse_wfdb_header(hea_path, hea_name, dat_name)
+    with tempfile.TemporaryDirectory(prefix="heartvector_upload_") as tmp:
+        staged_hea = os.path.join(tmp, hea_name)
+        staged_dat = os.path.join(tmp, dat_name)
+        shutil.copyfile(hea_path, staged_hea)
+        shutil.copyfile(dat_path, staged_dat)
+        return _parse_validated_path(staged_hea, csv_fs=int(csv_fs))
+
+
 def parse_uploaded(path, csv_fs=500):
-    """Accept a WFDB record (needs BOTH .hea and .dat) or a 12-column CSV.
+    """Backward-compatible local-file wrapper around :func:`parse_uploaded_files`.
+
+    A WFDB path automatically includes its same-stem sibling; a CSV is passed as
+    the single permitted upload.
+    """
+    ext = os.path.splitext(os.fspath(path))[1].lower()
+    if ext == ".csv":
+        return parse_uploaded_files([path], csv_fs=csv_fs)
+    if ext in (".hea", ".dat", ""):
+        base = os.fspath(path)[:-4] if ext in (".hea", ".dat") else os.fspath(path)
+        return parse_uploaded_files([base + ".hea", base + ".dat"], csv_fs=csv_fs)
+    raise ValueError(f"Unsupported file type {ext!r}. Use WFDB (.hea + .dat) or a 12-column CSV.")
+
+
+def _parse_validated_path(path, csv_fs=500):
+    """Parse a file only after the public upload validator has accepted it.
 
     - WFDB: leads are reordered to canonical order using the header `sig_name`;
       units are converted to mV using the header if needed.
@@ -161,10 +372,6 @@ def parse_uploaded(path, csv_fs=500):
     if ext in (".hea", ".dat", ""):
         import wfdb
         base = path[:-4] if ext in (".hea", ".dat") else path
-        if not (os.path.exists(base + ".hea") and os.path.exists(base + ".dat")):
-            raise ValueError(
-                "WFDB upload needs BOTH the .hea header and the .dat signal file. "
-                "Upload them together (or zip the pair).")
         rec = wfdb.rdrecord(base)
         sig = np.asarray(rec.p_signal, float)   # wfdb returns physical units (mV for PTB-XL)
         fs = int(rec.fs)
@@ -179,15 +386,15 @@ def parse_uploaded(path, csv_fs=500):
         return sig.astype(np.float32), fs
     if ext == ".csv":
         arr = np.loadtxt(path, delimiter=",")
-        if arr.ndim != 2 or arr.shape[1] < 12:
+        if arr.ndim != 2 or arr.shape[1] != 12:
             raise ValueError(
-                "CSV must have >=12 columns (one per lead in canonical order "
+                "CSV must have exactly 12 columns (one per lead in canonical order "
                 "I, II, III, aVR, aVL, aVF, V1-V6), samples in rows.")
         if arr.shape[0] < arr.shape[1]:
             raise ValueError(
                 f"CSV looks transposed ({arr.shape[0]} rows x {arr.shape[1]} cols): "
                 "samples should be in rows, leads in columns.")
-        sig = arr[:, :12].astype(float)
+        sig = arr.astype(float)
         fs = int(csv_fs)
         _validate_signal(sig, fs)
         return sig.astype(np.float32), fs
@@ -196,11 +403,19 @@ def parse_uploaded(path, csv_fs=500):
 
 def _validate_signal(sig, fs):
     """Sanity-check duration, sampling rate, and amplitude units (expect mV)."""
+    sig = np.asarray(sig)
+    if sig.ndim != 2 or sig.shape[1] != 12:
+        raise ValueError(f"Signal shape must be samples x 12 leads; received {sig.shape}.")
+    if not np.isfinite(sig).all():
+        raise ValueError("Signal contains NaN or infinite values.")
     if fs < 100 or fs > 2000:
         raise ValueError(f"Sampling rate {fs} Hz is outside the supported 100-2000 Hz range.")
     dur = sig.shape[0] / float(fs)
     if dur < 2.0:
         raise ValueError(f"Record is only {dur:.1f}s; need at least ~2s of signal.")
+    if dur > MAX_DURATION_SECONDS:
+        raise ValueError(
+            f"Record is {dur:.1f}s; the upload limit is {MAX_DURATION_SECONDS} seconds.")
     # PTB-XL-style ECGs are in mV, typically |amp| < ~10 mV. Flag likely-microvolt input.
     p99 = float(np.nanpercentile(np.abs(sig), 99))
     if p99 > 50:

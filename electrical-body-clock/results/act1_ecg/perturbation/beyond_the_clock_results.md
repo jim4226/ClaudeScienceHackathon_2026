@@ -24,7 +24,7 @@ state**; no claim is made that they caused biological aging or rejuvenation.
 
 
 
-![Discovery compass: IKr blockade displaces the frozen ECG age model along a stable signed direction (panel a, tight red spread) that transports to an external QT-extension phenotype (panel c, OR 1.23), while ischemia moves a different, diffuse direction (panel a, blue) and the unsigned radius D does not transport (panel c). Panel b: IKr blockers project positively on the frozen direction; mechanistic comparators do not.]({{artifact:676848c5-f0d0-41bc-94d5-a7ab62f2857b}})
+[Open the discovery compass figure](../../../paper/figs_full/fig_perturbation_compass_no_emdash.pdf).
 
 ## Coordinate system (frozen)
 
@@ -51,7 +51,7 @@ phase-age increase under delayed-rectifier potassium-current blockade
 (‖**m**_IKr‖_Σ = 0.563). The frozen covariance-scaled direction was
 **w**_IKr = (−0.381, −0.939, +0.703), with **w**ᵀΣ_q**w** = 1.
 
-The direction passed every pre-registered stability-gate criterion: pipeline
+The direction passed every prespecified stability-gate criterion: pipeline
 yield 22/22; participant-bootstrap median covariance-aware cosine
 cos_Σ = 0.941 (95% CI 0.635–0.998); sign stable in 99.99% of bootstraps; and
 an exact participant sign-flip permutation test of the Mahalanobis norm
@@ -93,7 +93,7 @@ model — a signed contrast for IKr blockade, the shared radius for ischemia.
 The frozen S_IKr was transported, without refitting, onto 44,550 usable
 one-record-per-patient clinical ECGs from the combined ecg-arrhythmia 1.0.0
 release (pipeline yield 99.3%; reconstructed z reproduced the stored z to
-0.0). The pre-registered test — a one-degree-of-freedom nested likelihood-ratio
+0.0). The prespecified test — a one-degree-of-freedom nested likelihood-ratio
 test for S_IKr in the model
 `QT-extension ~ S_IKr + age + sex + HR + QTc + QRS + whole-age + A + D`
 (physician-assigned QT-interval extension, SNOMED 111975006; 386 cases,
@@ -122,7 +122,7 @@ and sinus bradycardia, where automated QT delineation is unreliable — so a
 post-hoc reliable-interval subset (QTc 350–600 ms, HR 40–120 bpm) was examined
 and preserved the effect (OR 1.25, p = 1.3×10⁻³) with the label then behaving
 correctly (case QTc 465 vs 427 ms); this subset analysis is post-hoc
-robustness, not pre-registered confirmation. Rhythm-exclusion sensitivities
+robustness, not prespecified confirmation. Rhythm-exclusion sensitivities
 show the signal holds excluding atrial flutter/fibrillation (p = 0.014) but
 attenuates to null when both flutter and bradycardia are removed (OR 0.93,
 p = 0.48, 86 cases), so the association is not independent of rhythm context.
@@ -157,14 +157,14 @@ independent of the Chapman-Shaoxing derivation site. The frozen scorer and the
 deterministic header-gate procedure are in place, so this arm can be executed
 unchanged if a US replication is later required.
 
-## Arm 5 — Open MIMIC portability (dropped by pre-registered gate)
+## Arm 5 — Open MIMIC portability (dropped by prespecified gate)
 
 The open MIMIC-IV-ECG module supplies no chronological age or sex. The
-pre-registered invariance gate — S_IKr computable without age, S(p,a)=S(p,a+1)
+prespecified invariance gate — S_IKr computable without age, S(p,a)=S(p,a+1)
 to numerical tolerance — failed by construction, because the phase z-scores are
 age- and sex-adapted (numerically, the same ECG's S_IKr moves on average
 0.33 SD, up to ~1 SD, across ages 30–80; max |ΔS| per +1 yr = 0.029). Per the
-pre-registered rule the score was not redefined and the MIMIC arm was dropped;
+prespecified rule the score was not redefined and the MIMIC arm was dropped;
 the external evidence is carried by the Chapman-Shaoxing + Ningbo phenotype
 test (Arm 3), with the CPSC/Georgia cross-national arm available but deferred.
 

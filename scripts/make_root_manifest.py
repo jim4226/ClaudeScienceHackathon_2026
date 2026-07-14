@@ -24,9 +24,15 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FILES = [
     # root release docs
     "README.md",
+    ".gitattributes",
     "LICENSE",
+    "NOTICE.md",
     "CITATION.cff",
     "DATA_LICENSES.md",
+    "SUBMISSION.md",
+    "REPRODUCE.md",
+    "HACKATHON_PROVENANCE.md",
+    "CLAUDE_SCIENCE_METHODS.md",
     "Makefile",
     # manuscript source + bibliography + toolchain
     "electrical-body-clock/paper/from_clocks_to_coordinates_full.tex",
@@ -62,7 +68,7 @@ def main() -> None:
         h = hashlib.sha256(open(p, "rb").read()).hexdigest()
         rows.append(f"{h}  {rel}")
     out = os.path.join(ROOT, "RELEASE_MANIFEST.sha256")
-    with open(out, "w") as fh:
+    with open(out, "w", encoding="utf-8", newline="\n") as fh:
         fh.write("# SHA-256 ROOT release manifest — repository-relative paths\n")
         fh.write("# seals manuscript .tex/.bib, Skeletome result tables + scorer,\n")
         fh.write("# root release docs, the build recipe, and the per-arm manifest.\n")

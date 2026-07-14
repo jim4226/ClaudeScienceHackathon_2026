@@ -36,11 +36,14 @@ Everything is frozen from the manuscript: the five checkpoints in
      the signed subsystem age-gap fingerprint (a diverging bar chart, not a radar),
      the median beat with the four subsystem windows highlighted, and the record's
      position in the frozen calibration reference frame.
-   - *Upload your own* — a WFDB record (needs **both** `.hea` and `.dat`; leads are
-     reordered to canonical order from the header `sig_name`) or a 12-column CSV
-     (canonical lead order I, II, III, aVR, aVL, aVF, V1–V6; samples in rows;
-     millivolts; set the CSV sampling rate since a bare CSV has no header). Inputs
-     are validated (sampling rate, duration, amplitude units, lead completeness).
+   - *Upload your own* — select **exactly one** 12-column CSV, or **exactly two**
+     matching WFDB files (`record.hea` + `record.dat`). WFDB leads are reordered
+     to canonical order from the header `sig_name`; CSV columns must use canonical
+     lead order I, II, III, aVR, aVL, aVF, V1–V6, with samples in rows and
+     amplitudes in millivolts. The validator rejects unexpected or mixed files,
+     mismatched WFDB names or references, unsafe filenames, non-12-lead inputs,
+     invalid sampling rates, short or over-5-minute records, non-finite values,
+     implausible units, and files over the published size limits.
    - *Synthetic (interface illustration)* — a synthetic trace to exercise the
      controls without a record. It is **clearly labeled not a biological result**:
      the clocks run on out-of-distribution input, so the ages shown are interface
@@ -56,8 +59,26 @@ pip install -r requirements.txt
 python app.py
 ```
 
+`requirements.txt` retains lower bounds for hosted-platform compatibility.
+`requirements-lock.txt` records the exact environment used for the judged CPU
+smoke test.
+
 The app is self-contained: model weights, frozen definitions, and result figures
 all ship inside this folder.
+
+## Privacy and upload handling
+
+**Do not upload identifiable, private, restricted, or protected health data.**
+Prefer the bundled, explicitly licensed PTB-XL examples or synthetic interface
+mode. If you use the upload tab, you are responsible for confirming that you are
+authorized to process the record in the hosted environment.
+
+The application reads a validated upload in the running Space, computes the
+displayed result, and does not write the signal contents to an application
+database or results store. Its short-lived validated WFDB working copy is deleted
+immediately after parsing. The Gradio/Hugging Face hosting layer may still retain
+temporary upload or cache files under the platform's own retention policy, so
+this interface must not be treated as a private clinical-data vault.
 
 ---
 *Research demonstration only. Not a medical device; not for clinical or diagnostic use.*
