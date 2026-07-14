@@ -70,7 +70,7 @@ electrical-body-clock/paper/from_clocks_to_coordinates_full.pdf
 The released canonical PDF is 54 pages and has SHA-256:
 
 ```text
-49825c9cf14635fa986c4443ffc7f608c0df5c92ddfc9a0acdaa5a2ed8b3deb3
+c1cb1807f852be288d89966abba1676179622403559cf094482206f1edc77bc0
 ```
 
 Tectonic may produce a byte-different PDF when its engine or dependency bundle

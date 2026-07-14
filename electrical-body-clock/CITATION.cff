@@ -4,8 +4,6 @@ title: "HumanVector: From Clocks to Coordinates"
 authors:
   - family-names: "Mohammed"
     given-names: "Jaron"
-    affiliation: "University of Miami"
-    email: "jim4226@miami.edu"
 date-released: "2026-07-13"
 license: MIT
 repository-code: "https://github.com/jim4226/ClaudeScienceHackathon_2026"
@@ -24,5 +22,4 @@ preferred-citation:
   authors:
     - family-names: "Mohammed"
       given-names: "Jaron"
-      affiliation: "University of Miami"
   year: 2026

@@ -4,7 +4,7 @@
 
 **[Read the canonical 54-page paper](paper/from_clocks_to_coordinates_full.pdf) | [Launch the public Atlas](https://jim4226.github.io/) | [Return to the project overview](../README.md)**
 
-Jaron Mohammed | University of Miami | 2026
+Jaron Mohammed | 2026
 
 This directory contains the primary scientific experiment behind HumanVector.
 It asks what a whole-ECG age model erases when four electrically distinct phases

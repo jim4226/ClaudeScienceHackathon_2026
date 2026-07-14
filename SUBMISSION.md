@@ -7,7 +7,7 @@ Perturbations Reveal Hidden Directions in ECG Biological Age*
 
 **Track:** Researcher
 
-**Researcher:** Jaron Mohammed, University of Miami
+**Researcher:** Jaron Mohammed
 
 ## Link to the work
 

@@ -17,7 +17,7 @@ the claim-to-artifact ledger provide the auditable record.
 | Electrical release seal | `electrical-body-clock/RELEASE_MANIFEST.sha256` |
 
 The canonical PDF is 54 pages and has SHA-256
-`49825c9cf14635fa986c4443ffc7f608c0df5c92ddfc9a0acdaa5a2ed8b3deb3`.
+`c1cb1807f852be288d89966abba1676179622403559cf094482206f1edc77bc0`.
 
 The six-page judge brief and earlier manuscript remain in `paper/` for
 historical transparency. When they differ, the canonical 54-page paper and its

@@ -11,7 +11,7 @@
 **[Read the full paper](electrical-body-clock/paper/from_clocks_to_coordinates_full.pdf) | [Launch the HumanVector Atlas](https://jim4226.github.io/) | [Open presentation mode](https://jim4226.github.io/?present=1) | [Verify the evidence](#reproduce-and-verify)**
 
 **Built with Claude: Life Sciences 2026 | Researcher Track**
-**Jaron Mohammed | University of Miami**
+**Jaron Mohammed**
 
 HumanVector asks what biological-age models erase when they compress a complex
 system into one number. The anchor experiment trains separate age clocks for the
@@ -48,7 +48,7 @@ confirm the electrical result.
 | [Data and license map](DATA_LICENSES.md) | Source, access, redistribution, and attribution boundaries |
 
 The PDF above has SHA-256
-`49825c9cf14635fa986c4443ffc7f608c0df5c92ddfc9a0acdaa5a2ed8b3deb3`.
+`c1cb1807f852be288d89966abba1676179622403559cf094482206f1edc77bc0`.
 The other manuscripts in `electrical-body-clock/paper/` are retained as a
 condensed judge brief and a historical earlier analysis. They are not the
 canonical submission paper.

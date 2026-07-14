@@ -13,7 +13,7 @@ short_description: Live 12-lead ECG to subsystem phase-age clocks and A/D geomet
 
 # HeartVector — live demo
 
-Jaron Mohammed · University of Miami · 2026 · MIT license ·
+Jaron Mohammed · 2026 · MIT license ·
 [github.com/jim4226/ClaudeScienceHackathon_2026](https://github.com/jim4226/ClaudeScienceHackathon_2026)
 
 A deployable Gradio app for **From Clocks to Coordinates**. It runs the five
