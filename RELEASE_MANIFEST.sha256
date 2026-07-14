@@ -2,7 +2,7 @@
 # seals manuscript .tex/.bib, Skeletome result tables + scorer,
 # root release docs, the build recipe, and the per-arm manifest.
 # regenerate: python scripts/make_root_manifest.py ; verify: make verify-root
-4b2a3de5e53a0351b5ca9dd7c32e0e0ad4d9dd0103b66456edbf7f7c30d2c266  .gitattributes
+65fe20e3e6d689f8bf5b1ceabe054cf02a3048c7180df315f450937b9ec48908  .gitattributes
 71623791eb09b55ba91b67c0a228b1fbeb5da6078a1b2f78c4f198b6ff35368f  CITATION.cff
 b734683f978de004ad68b04ef212eaf718064e6a9ff3a9f97acbf09a991ad676  CLAUDE_SCIENCE_METHODS.md
 40a04621dd598e4584d44c714e7cb4ce75110527ef453a57159c6db26b6c8ea5  DATA_LICENSES.md
@@ -13,7 +13,7 @@ cac1ccf3000a5bb42d18e5baa32eab28e433e5041e7f476d449b74e8f0e8d7ac  HACKATHON_PROV
 4e11ad8e6fe36b71b15c43401477b27cb7062016b7d38039f4e0753e10503c2a  README.md
 8bb942565b7529a69224f135b537b59de2841e5c90ddb6078fe55fd0901f950e  REPRODUCE.md
 d713fb0bbb85ffd410037519ca6a78b4b1b0271f1552d2d3809bf216a05686d1  SUBMISSION.md
-e4b2c87358a1bdf48cb9ba80394f338c4ae3cfddc813a3a2b7c25f3e257d0a09  electrical-body-clock/RELEASE_MANIFEST.sha256
+395ebb67b2aa7f343d59afea32616aff83c48758ab3ad04dd04bb16410e7c63b  electrical-body-clock/RELEASE_MANIFEST.sha256
 3a1fef36750c7a43cc377386fd659f756f85b6bd2f0453a40eebf6f16b2b20d9  electrical-body-clock/paper/TOOLCHAIN.md
 e860b02514270aa6a49298676d13937781d94cd7fe34b724174eff0c253f94ab  electrical-body-clock/paper/clocks_to_coordinates.pdf
 f7fe59983674c7a3191498cc250e3045e5477fdf7ba979a110ef58944dbfd29e  electrical-body-clock/paper/clocks_to_coordinates.tex

@@ -68,7 +68,10 @@ def iter_files():
                 continue
             for fn in fns:
                 if os.path.splitext(fn)[1].lower() in KEEP:
-                    yield os.path.relpath(os.path.join(dp, fn), ARM)
+                    # Manifests are portable release artifacts. Always record
+                    # POSIX separators so Linux CI and Windows verify the same
+                    # repository-relative path.
+                    yield os.path.relpath(os.path.join(dp, fn), ARM).replace(os.sep, "/")
     for f in FILES:
         if os.path.exists(os.path.join(ARM, f)):
             yield f
