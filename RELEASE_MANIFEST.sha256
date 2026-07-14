@@ -2,7 +2,7 @@
 # seals manuscript .tex/.bib, Skeletome result tables + scorer,
 # root release docs, the build recipe, and the per-arm manifest.
 # regenerate: python scripts/make_root_manifest.py ; verify: make verify-root
-65fe20e3e6d689f8bf5b1ceabe054cf02a3048c7180df315f450937b9ec48908  .gitattributes
+4b2a3de5e53a0351b5ca9dd7c32e0e0ad4d9dd0103b66456edbf7f7c30d2c266  .gitattributes
 71623791eb09b55ba91b67c0a228b1fbeb5da6078a1b2f78c4f198b6ff35368f  CITATION.cff
 b734683f978de004ad68b04ef212eaf718064e6a9ff3a9f97acbf09a991ad676  CLAUDE_SCIENCE_METHODS.md
 40a04621dd598e4584d44c714e7cb4ce75110527ef453a57159c6db26b6c8ea5  DATA_LICENSES.md
