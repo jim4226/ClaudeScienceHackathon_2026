@@ -1,0 +1,239 @@
+{
+  "artifact": "NEUROMOTIONVECTOR_PROTOCOL_LOCK.json",
+  "version": "1.0",
+  "created_utc": "2026-07-12T06:35:50Z",
+  "title": "NeuroMotionVector: brain-channel disagreement (D) vs longitudinal gait decline",
+  "role": "Brain-imaging extension of HeartVector/BodyVector/MotionVector. NOT a replacement for the frozen CODE-15 confirmation. Tests the SAME prespecified shared-aging(A)/disagreement(D) geometry at a new biological scale.",
+  "dataset": {
+    "name": "AABC / HCP-Aging Release 2",
+    "release_date": "2026-01-28",
+    "access": "BALSA project AABC2, controlled-access, DUA-governed",
+    "n_participants": 1396,
+    "n_visits": 2878,
+    "visit_counts": {
+      "V1": 1396,
+      "V2": 915,
+      "V3": 471,
+      "V4": 96
+    },
+    "verified_from": "AABC_Release2_Completeness_Summary + Data_Dictionary (schema/aggregate only)"
+  },
+  "governance": {
+    "dua_key_clause": "Re-distribution/transfer/sharing of Data OUTSIDE institution NOT permitted without prior written agreement; within-institution sharing requires each user be an approved registered BALSA user.",
+    "posture": "Participant-level AABC data is NOT redistributed. Only code, schema, checksums, simulated fixtures, group-level maps, and AGGREGATE results are shared. No participant ID is ever associated with data elements in any public output.",
+    "execution_env": "User-approved environment (Modal under UM affiliation, per data-owner decision 2026-07-12)."
+  },
+  "channels": {
+    "count": 4,
+    "definition": {
+      "S_structure": {
+        "files": [
+          "Cortical_Areal_Thicknesses.csv",
+          "Cortical_Areal_Volumes.csv",
+          "asegstats.csv"
+        ],
+        "features": "360 HCP-MMP v1.0 cortical thickness+volume ROIs + FreeSurfer subcortical volumes",
+        "key_column": "x___ (cortical) / Session (aseg) == id_event"
+      },
+      "M_myelin": {
+        "files": [
+          "Cortical_Areal_Myelin.csv"
+        ],
+        "covariate_file": "Cortical_Areal_Myelin_Covariates.csv",
+        "features": "360 T1w/T2w areal myelin ROIs; global covariate correction REQUIRED before clock"
+      },
+      "P_perfusion": {
+        "package": "ProcASL / ASL IDP (SEPARATE BALSA export)",
+        "features": "CBF (PV-corrected) + ATT parcel summaries",
+        "completeness_flag": "PCASL"
+      },
+      "F_function": {
+        "package": "RestFmriRecommended + VISMOTOR/FACENAME/CARIT tfMRI IDP (SEPARATE BALSA export)",
+        "features": "resting-state + visuomotor amplitudes aggregated to Ji-2019 networks",
+        "sensitivity_only": "high-dimensional connectivity (ConcatFmri)"
+      }
+    },
+    "ordering_for_A_and_C": [
+      "S_structure",
+      "M_myelin",
+      "P_perfusion",
+      "F_function"
+    ],
+    "outcome_blind_rule": "No gait/endurance/grip/cognition/diagnosis/medication/outcome variable may enter clock training, model/feature/channel selection, standardization, or covariance estimation."
+  },
+  "split": {
+    "unit": "participant id (ALL visits of a participant stay in one partition)",
+    "fractions": {
+      "development": 0.6,
+      "calibration": 0.2,
+      "final_test": 0.2
+    },
+    "hash": "sha256(salt + participant_id) -> uniform(0,1); salt frozen in this lock",
+    "salt": "neuromotionvector-aabc-r2-v1",
+    "learned_only_in_dev_cal": [
+      "preprocessing params",
+      "nuisance adjustment",
+      "feature selection",
+      "hyperparameters",
+      "age-bias correction",
+      "standardization scales",
+      "Ledoit-Wolf covariance",
+      "missing-data handling"
+    ]
+  },
+  "channel_clocks": {
+    "model": "ElasticNet (primary) via participant-grouped nested CV on development set; ridge fallback",
+    "nonlinear": "prespecified SENSITIVITY only (e.g. gradient-boosting), never replaces linear primary",
+    "target": "chronological age (age_open)",
+    "gap": "g_{im} = predicted_age_{im} - age_i",
+    "age_bias_correction": {
+      "fit_on": "calibration partition only",
+      "formula": "g_{im} = alpha_m + beta_m*age_i + eps ; z_{im} = (g_{im} - alpha_m - beta_m*age_i)/s_m",
+      "s_m": "calibration residual scale (std of calibration residuals)"
+    },
+    "freeze": "ALL clock + bias + scale coefficients frozen before ANY outcome access."
+  },
+  "geometry": {
+    "shared_A": "A_brain = (1/4) * 1^T z_i   (equal-weight, identical to HeartVector)",
+    "helmert_C": [
+      [
+        0.7071067811865475,
+        -0.7071067811865475,
+        0,
+        0
+      ],
+      [
+        0.4082482904638631,
+        0.4082482904638631,
+        -0.8164965809277261,
+        0
+      ],
+      [
+        0.2886751345948129,
+        0.2886751345948129,
+        0.2886751345948129,
+        -0.8660254037844387
+      ]
+    ],
+    "helmert_properties": "C\u00b71 = 0 ; C\u00b7C^T = I_3 (rows orthonormal, orthogonal to all-ones)",
+    "q": "q_i = C z_i   (3-vector in contrast subspace)",
+    "D": "D_brain,i = sqrt(q_i^T Sigma_q^{-1} q_i), Sigma_q = Ledoit-Wolf covariance on CALIBRATION q",
+    "standardization": "D standardized using calibration-only constants",
+    "honesty": "q lies in contrast subspace orthogonal to all-ones; D is a nonnegative norm of that residual. D is NOT an orthogonal direction and NOT guaranteed independent of A. Adjust for A in all D tests."
+  },
+  "availability_gate": {
+    "evaluated_on": "participant-visit manifest, using AVAILABILITY COUNTS ONLY (outcome-blind)",
+    "bounds_from_completeness": {
+      "total": 1396,
+      "final_test_ceiling_20pct": 279,
+      "v1_four_channel_upper": 1268,
+      "longitudinal_complete_upper": 903,
+      "longitudinal_finaltest20_upper": 181,
+      "xsec_finaltest20_upper": 254,
+      "mrs_total": 282
+    },
+    "primary_selection_LOCKED": "Longitudinal is PRIMARY. Because 20% final-test (<=279) cannot reach the original 300 threshold, the longitudinal test is run on the 40% NON-TRAINING holdout (calibration+final, ~360 complete) \u2014 clocks remain frozen on the untouched 60% development set, so no clock leakage. Threshold: >=150 complete longitudinal participants in the holdout. If <150, longitudinal is labeled underpowered and cross-sectional becomes primary.",
+    "rationale": "Data-adaptive but OUTCOME-BLIND: selection uses only availability counts, decided/hashed before any outcome value is read. Corrects an arithmetic impossibility in the original >=300@20% rule."
+  },
+  "primary_test": {
+    "design": "longitudinal (preferred)",
+    "outcome": "annualized change in 4-meter gait speed: (gait_1 - gait_0)/\u0394t_i, using tlbx_walk_4_rawscore and days_from_V1",
+    "model": "\u0394gait = b0 + bD*D_brain0 + bA*A_brain0 + bg*gait0 + f(age0) + sex + education + site + height_inches + bmi + eps",
+    "inference": "1-df nested LRT / partial-F on bD, two-sided alpha=0.05",
+    "reporting": "Report bD effect size + 95% CI whether significant or not."
+  },
+  "cross_sectional_primary_or_secondary": {
+    "role": "confirmatory secondary if longitudinal powered; PROMOTED to primary only if longitudinal <150",
+    "model": "gait_i = b0 + f(age) + sex + education + site + height_inches + bmi + bA*A_brain + bD*D_brain + eps; compare +A vs +A+D",
+    "set": "20% final-test (~254)"
+  },
+  "secondaries": {
+    "family": [
+      "2-min walk endurance (tlbx_walk_2_rawscore)",
+      "grip (tlbx_grip_dominant/non_dominant_score)",
+      "cognition: moca_sum, RAVLT episodic memory, Trails exec/proc-speed",
+      "within-person \u0394D vs \u0394gait beyond \u0394A",
+      "leave-one-channel-out D scores",
+      "raw functional-reserve score vs fMRI age-gap transform (extends MotionVector boundary result)",
+      "within-vector SD and range (does covariance normalization add anything)"
+    ],
+    "multiplicity": "Benjamini-Hochberg FDR within secondary families",
+    "rule": "A favorable secondary NEVER replaces a null primary."
+  },
+  "mrs_anchor": {
+    "role": "secondary molecular anchor (NOT omics, NOT causal mediation). Use 'association'/'incremental attenuation'.",
+    "metabolites_mM": [
+      "NAA_mM",
+      "NAAG_mM",
+      "Glu_mM",
+      "Gln_mM",
+      "GABA_mM",
+      "GSH_mM",
+      "mIns_mM",
+      "sIns_mM",
+      "tCho_mM",
+      "tCr_mM",
+      "Asc_mM",
+      "Asp_mM",
+      "Glc_mM",
+      "Tau_mM",
+      "PE_mM",
+      "Mac_mM",
+      "MSM_mM"
+    ],
+    "qc": [
+      "SD*_pct (Cramer-Rao)",
+      "MRS_SNR",
+      "linewidth_Hz",
+      "mrs_days_from_3T"
+    ],
+    "gates": [
+      "inventory names/voxels/QC without inspecting gait/cognition",
+      "require >=100 matched QC-passing visits",
+      "build cross-fitted MRS age score ONLY if held-out age r>=0.20",
+      "if pass, add MRS z-gap as exploratory 5th channel D5",
+      "test prespecified metabolite associations with A_brain, D_brain, gait via FDR"
+    ],
+    "n_available": 282
+  },
+  "stop_rules": [
+    "1. exact chronological age (age_open) and visit interval (days_from_V1) available",
+    "2. >=500 complete baseline participants for four-channel analysis",
+    "3. >=3 of 4 channel clocks achieve held-out age r>=0.20",
+    "4. no visit leakage across participant splits (verified)",
+    "5. longitudinal primary requires >=150 complete holdout participants (revised from 300@20%, unreachable)",
+    "6. MRS analysis requires >=100 matched QC-passing visits",
+    "7. missingness by age/sex/site/visit reported",
+    "8. scanner/site and head-motion sensitivity results MANDATORY",
+    "9. channels cannot be dropped after seeing gait/cognition",
+    "10. if <3 clocks pass, STOP A/D analysis and report technical failure \u2014 do not manufacture a vector"
+  ],
+  "mandatory_sensitivities": [
+    "scanner/site adjustment",
+    "head-motion adjustment",
+    "surface-area (ICV-dependent) as structure variant",
+    "nonlinear clock variant",
+    "leave-one-channel-out D",
+    "raw SD/range vs Mahalanobis D",
+    "connectivity-IDP function variant"
+  ],
+  "required_artifacts": [
+    "NEUROMOTIONVECTOR_PROTOCOL_LOCK.json",
+    "aabc_data_inventory.csv",
+    "aabc_participant_visit_manifest.parquet",
+    "brain_channel_clock_metrics.csv",
+    "neuromotionvector_scores.parquet",
+    "neuromotionvector_primary_result.csv",
+    "neuromotionvector_sensitivities.csv",
+    "neuromotionvector_mrs_results.csv",
+    "fig_neuro_layers.png",
+    "fig_neurovector_geometry.png",
+    "fig_neurovector_gait_result.png",
+    "fig_molecule_to_network.png",
+    "NEUROMOTIONVECTOR_CLAIMS_LEDGER.json",
+    "NEUROMOTIONVECTOR_REPORT.md"
+  ],
+  "novelty_boundary": "To our knowledge, first prespecified test of a common calibration-frozen shared-aging vs subsystem-disagreement geometry across cardiac electrical phases, brain imaging processes, and whole-body function, with a longitudinal locomotor endpoint and in-vivo metabolite layer. Do NOT say 'first ever' without qualifier + documented search. A negative result is informative if test + CI reported unchanged.",
+  "integrity_notes": "Do not claim null tests prove orthogonality, stability, or absence of effect. Do not promote MRS/EEG to rescue a null primary.",
+  "self_sha256": "c5d2b30f575d050a82fcc5e00ef8e86173884d7ff7dd525bb7c7d5d9d1bd1411"
+}

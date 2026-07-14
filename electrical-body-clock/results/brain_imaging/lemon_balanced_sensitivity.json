@@ -1,0 +1,55 @@
+{
+  "analysis": "LEMON balanced-group sensitivity",
+  "input_rows": 220,
+  "group_counts": {
+    "young": 151,
+    "older": 69
+  },
+  "seed": 20260713,
+  "balanced_subsampling_draws": 5000,
+  "global_scaling": {
+    "young_mean": 0.33959847608924126,
+    "older_mean": 0.5167138991351096,
+    "difference": 0.1771154230458683,
+    "cohens_d": 0.8437122628072352,
+    "mann_whitney_p": 8.526516320196091e-08
+  },
+  "equal_group_weight_scaling": {
+    "young_mean": 0.33530114380899034,
+    "older_mean": 0.45665067893705696,
+    "difference": 0.12134953512806662,
+    "cohens_d": 0.6200180408657493,
+    "mann_whitney_p": 5.5409950919820457e-05
+  },
+  "young_reference_scaling": {
+    "young_mean": 0.6174028288419081,
+    "older_mean": 2.313624219980483,
+    "difference": 1.6962213911385748,
+    "cohens_d": 4.880168013087585,
+    "mann_whitney_p": 4.2257801972101675e-32
+  },
+  "linear_age_residual_diagnostic": {
+    "young_mean": 0.5158501353463351,
+    "older_mean": 0.663643183574799,
+    "difference": 0.14779304822846395,
+    "cohens_d": 0.5152918819576844,
+    "mann_whitney_p": 0.0052022703639499025
+  },
+  "within_group_scaling_diagnostic": {
+    "young_mean": 0.6174028288419081,
+    "older_mean": 0.5192720101694027,
+    "difference": -0.0981308186725054,
+    "cohens_d": -0.3321247488672909,
+    "mann_whitney_p": 0.019404870898646683
+  },
+  "balanced_69_vs_69_subsampling": {
+    "difference_median": 0.12204488044650272,
+    "difference_2_5_percentile": 0.09273863173208682,
+    "difference_97_5_percentile": 0.15367114600012197,
+    "cohens_d_median": 0.6015385663331806,
+    "cohens_d_2_5_percentile": 0.4444095239279039,
+    "cohens_d_97_5_percentile": 0.7844148407038689,
+    "fraction_positive": 1.0
+  },
+  "interpretation": "The older-younger contrast persists after equal group weighting and balanced subsampling, but it is attenuated. The within-group standardization diagnostic does not support excess older-group dispersion after removing each group's mean profile and marginal scale. The defensible claim is therefore a nonuniform between-group shift across T1-derived views, not unexplained within-group biological disorganization."
+}

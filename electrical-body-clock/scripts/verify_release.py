@@ -46,7 +46,9 @@ def check_ledger_files() -> bool:
     # every backtick-quoted results/... path in the ledger must exist
     import re
     missing = []
-    for m in re.finditer(r"`([^`]*results/[^`]+?)`", open(ledger).read()):
+    with open(ledger, encoding="utf-8") as fh:
+        ledger_text = fh.read()
+    for m in re.finditer(r"`([^`]*results/[^`]+?)`", ledger_text):
         rel = m.group(1).strip()
         p = os.path.join(ARM, rel)
         if not os.path.exists(p):
@@ -65,7 +67,7 @@ def check_manifest() -> bool:
     if not os.path.exists(mpath):
         _fail("RELEASE_MANIFEST.sha256 missing (run scripts/make_manifest.py)"); return False
     bad = 0
-    for line in open(mpath):
+    for line in open(mpath, encoding="utf-8"):
         line = line.strip()
         if not line or line.startswith("#"):
             continue

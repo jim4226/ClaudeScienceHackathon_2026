@@ -1,9 +1,9 @@
 # ============================================================================
-# ClaudeScienceHackathon_2026 — root .gitignore
+# ClaudeScienceHackathon_2026 root .gitignore
 # Global protections layered on top of each entry's own .gitignore.
 # ============================================================================
 
-# --- Data: never commit (PhysioNet / NHANES / GEO / GWAS data-use agreements) ---
+# --- Source data: never commit unless already tracked as an explicitly licensed demo asset ---
 **/data/ptbxl/
 **/data/nhanes/
 **/work/
@@ -18,6 +18,12 @@
 *.bw
 *.h5
 *.hdf5
+**/AABC2_PRIVATE/
+**/raw_never_share/
+**/*participant_visit_manifest*
+**/neuromotionvector_scores.parquet
+**/*outcomes*.parquet
+**/*.locked
 
 # --- Large model checkpoints (re-train from src/, or fetch from a release) ---
 *.pt
@@ -34,6 +40,14 @@
 .env
 .env.*
 *.env
+*.pem
+*.key
+*.p12
+*.pfx
+credentials*.json
+secrets*.json
+*password*
+*token*.txt
 
 # --- Python ---
 __pycache__/

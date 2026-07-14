@@ -1,0 +1,31 @@
+* text=auto
+
+*.md text eol=lf
+*.txt text eol=lf
+*.py text eol=lf
+*.R text eol=lf
+*.sh text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.json text eol=lf
+*.csv text eol=lf
+*.tsv text eol=lf
+*.tex text eol=lf
+*.bib text eol=lf
+*.cff text eol=lf
+*.sha256 text eol=lf
+Makefile text eol=lf
+
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.glb binary
+*.stl binary
+*.parquet binary
+*.pt binary
+*.dat binary
+*.docx binary
+*.zip binary

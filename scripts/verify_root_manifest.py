@@ -17,7 +17,7 @@ def main() -> int:
         print(f"[FAIL] root manifest not found: {MANIFEST}")
         return 1
     ok = bad = miss = 0
-    for line in open(MANIFEST):
+    for line in open(MANIFEST, encoding="utf-8"):
         line = line.rstrip("\n")
         if not line or line.startswith("#"):
             continue

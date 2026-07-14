@@ -1,7 +1,7 @@
 # Skeletome — prospective methods prototype
 
 > **Prospective methods prototype; no biological discovery is claimed.**
-> This is a screening *method* plus a pre-registered analysis plan and a
+> This is a screening *method* plus a prespecified analysis plan and a
 > partial real run — not a validated result. Nothing here should be read as a
 > demonstrated skeletal-regulatory finding.
 
@@ -14,6 +14,10 @@ organ of the parent study — has not been screened at the level of individual H
 substitutions.
 
 ## What is real vs. illustrative
+
+The electrical result and its public verification do not depend on this
+directory. Files labeled historical or TODO are retained as an explicit record
+of ideas not promoted to findings; they are not release blockers for HumanVector.
 
 **Real (committed result tables in [`results/`](results/), from public reference data
 and a real Borzoi run):**

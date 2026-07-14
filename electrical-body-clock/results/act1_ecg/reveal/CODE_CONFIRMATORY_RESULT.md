@@ -1,10 +1,13 @@
 # CODE-15 Confirmatory Reveal — Result
 
-**Single locked, pre-registered confirmatory analysis. Executed once, 2026-07-12, on the untouched final split. Not re-run, not re-fit, not amended after unblinding.**
+**Single locked, prespecified confirmatory analysis. Executed once on 2026-07-12. The released primary estimand, model, and success criterion were not changed after the reveal.**
+
+This file is the machine-result summary for the CODE analysis. Interpretive
+claims are governed by the current paper and `CLAIM_TO_ARTIFACT_LEDGER.md`.
 
 ---
 
-## 1. The pre-registered question
+## 1. The prespecified question
 
 > Does the **phase-disagreement score D** — the spread among the four electrical-phase age estimates (P, AV, QRS, ST-T) — add mortality information **beyond** age, sex, the shared electrical-aging axis A, and a whole-ECG neural age (nn_predicted_age)?
 
@@ -52,7 +55,13 @@ Critically, the **development point estimate — HR 1.0495 (+4.9%/SD) — lies a
 | z_P | 1.0154 | [0.9711, 1.0617] | 0.503 |
 | z_QRS | 1.0053 | [0.9688, 1.0432] | 0.779 |
 
-This is the mechanistic core of the null, and it is reproducible on the OOS arm (z_AV p=3.7×10⁻²¹, z_STT p=2.2×10⁻⁷). **The mortality signal is real, but it lives in specific phase-age-gaps — AV conduction and ST-T repolarization — not in their *disagreement*.** Once age, sex, A, and the whole-ECG clock are in the model, the composite disagreement scalar D adds nothing; the individual AV/repolarization gaps still carry strong, independent hazard. The composite averages a real signal (AV/STT) together with two null channels (P, QRS), and that dilution is exactly why D4 is null while z_AV/z_STT are not.
+The AV and ST-T coefficients were also large in the OOS arm (z_AV
+p=3.7×10⁻²¹, z_STT p=2.2×10⁻⁷), but this mixed phase-gap
+parameterization does not estimate phase effects at fixed A and does not include
+the separately trained whole-ECG age as a covariate. These coefficients therefore
+generated a directional hypothesis; they do not establish that mortality risk
+is independently carried by AV or ST-T. The identifiable external SaMi-Trop
+signed-contrast test did not support that hypothesis.
 
 **Prediction (development-frozen coefficients, applied without refit — anti-optimism):** C-index M1 → M2 = 0.8071 → 0.8072, ΔC = **+0.00016** (negligible); 5-yr Brier 0.0887. Adding D to the model does not improve discrimination.
 
@@ -60,12 +69,14 @@ This is the mechanistic core of the null, and it is reproducible on the OOS arm 
 
 ## 5. What this means for the project thesis
 
-**The null strengthens the honest headline rather than weakening it, because the headline was never D.**
-
-- **A — the shared electrical-aging axis — is the robust, transferable, mortality-associated signal.** It is significant in CODE development (HR 1.22/SD, p=1.4×10⁻²⁰), independently in NHANES BodyVector (HR 1.21/SD, p=1.95×10⁻⁸), transfers cross-cohort to Chapman-Ningbo (age-r = 0.65), and separates disease in EchoNext and acute ischemia in STAFF-III.
-- **D — disagreement among the phases — is a *distance*, not a *direction*.** It is now null on every confirmatory-grade test that mattered: structural heart disease (EchoNext D4 p=0.89), acute ischemic stress (STAFF D4 p=0.54; ECGRDVQ p=0.16), and — as of this reveal — **all-cause mortality on the pre-registered final split (D4 p=0.478).**
-
-The **A-vs-D dissociation is the discovery**, and it survived the most rigorous test the project could run: a single, locked, firewall-protected confirmatory reveal on an untouched cohort. A composite "how much do the phases disagree" scalar is *not* an independent predictor of the outcomes people assume disorder should drive; the predictive content is in the shared-aging axis and in a small number of specific phase gaps (AV, repolarization), not in phase discordance per se.
+The exact confirmatory conclusion is narrow and useful: **D4 did not add
+mortality information under the locked model**. The confidence interval excludes
+the development-sized effect, and the frozen prediction model gained essentially
+no discrimination. A showed consistent associations in development and
+supporting analyses, but it was not the confirmatory endpoint. The later
+controlled-perturbation work asks whether the unsigned radius failed because it
+discarded physiological direction; that directional analysis is exploratory and
+is reported separately.
 
 ## 6. Governance trail
 

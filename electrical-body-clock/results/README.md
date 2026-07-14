@@ -48,8 +48,34 @@ without re-training.
 ## `brain_imaging/` — image-derived disagreement (LEMON, supporting multiscale atlas)
 | file | contents |
 |---|---|
-| `lemon_imaging_feature_table.csv` | 220 real LEMON T1 (MP2RAGE) volumes processed end-to-end via ANTsPyNet into four independent structural-aging views (deep brain-age, GM fraction, ventricle–brain ratio, brain-tissue fraction), the per-view cohort z-scores, and the image-derived disagreement radius `D_std`. Open LEMON derived data (ODbL); aggregate imaging-derived features keyed by public subject ID + age bin. |
+| `lemon_imaging_feature_table.csv` | 220 real LEMON T1 (MP2RAGE) volumes processed end-to-end via ANTsPyNet into four structural-aging views, per-view cohort z-scores, and `D_std`. Derived features are keyed by public BIDS ID; the GWDG BIDS metadata declares CC0 and the official INDI distribution lists PDDL. |
 | `lemon_disagreement_result.json` | Primary result + controls: older > young image-derived disagreement (D 0.34 → 0.52, Cohen's d = 0.84, Mann–Whitney p = 4.3e-8), surviving permutation, leave-one-view-out, extremity-adjusted OLS, and a within-older step (not gradient). Backs the brain-MRI panel of the multiscale atlas. |
+| `lemon_balanced_sensitivity.json` | Equal-weight, balanced-subsample, young-reference, linear-residual, and within-group-scaling diagnostics. The between-group contrast persists but attenuates under balanced sampling; within-group scaling does not support universal excess dysregulation. |
+
+### `brain_imaging/aabc_aggregates/` - controlled-access AABC, aggregate release only
+
+| file | contents |
+|---|---|
+| `brain_channel_clock_metrics.csv` | Held-out chronological-age performance for the structural, myelin, perfusion, and functional MRI-derived channels. |
+| `neuromotionvector_primary_result.csv` | Prespecified longitudinal and cross-sectional gait models. The longitudinal primary result is null and is reported with its confidence interval. |
+| `neuromotionvector_{secondaries,sensitivities}.csv` | Disclosure-checked secondary and sensitivity estimates. |
+| `GEOMETRY_FROZEN.json` | Frozen AABC shared/disagreement geometry and content hash. |
+| `NEUROMOTIONVECTOR_PROTOCOL_LOCK.json`, `run_log_real.json` | Outcome-independent protocol and aggregate execution receipt. |
+
+No AABC participant IDs, per-visit scores, source spreadsheets, or images are
+included. Reproducible source code is in `src/brain_imaging/aabc/`.
+
+## `ct_atlas/` - TotalSegmentator structural atlas, aggregate release
+
+| file | contents |
+|---|---|
+| `ct_clock_summary.json` | Five-fold out-of-fold whole-body and per-system volume-clock performance for n = 1,227 examinations. |
+| `specificity_matrix_ct.{csv,png}` | Aggregate system-by-pathology effect sizes and multiplicity-adjusted results. |
+| `organ_age_ranking.{csv,png}` | Organ-level age associations, importance, and aggregate pathology-separation summaries. |
+| `ct_methods.md`, `ct_handoff_summary.json` | Methods, limitations, and Claude Science artifact provenance. |
+
+Raw CT images, masks, scan identifiers, and scan-level feature rows are not
+distributed. This is a cross-sectional, volume-only exploratory atlas.
 
 > These tables report the **A/D (shared-axis / disagreement) framing** of the current
 > manuscript. The `act1_ecg/` and `act2_nhanes/` tables above them report the original
@@ -58,6 +84,7 @@ without re-training.
 > controlled-perturbation result and the supporting multiscale atlas in
 > `from_clocks_to_coordinates_full` and `clocks_to_coordinates`.
 
-Re-running `src/nhanes/nhanes_organ_clocks.py` regenerates the Act II tables
-plus `organ_gaps.parquet`, `surv.parquet`, `clock_stats.json`, and `ladder.json`
-(the C-index ladder: 0.813 → 0.817 → 0.830 → 0.845, ΔC = +0.028).
+Re-running `src/nhanes/nhanes_organ_clocks.py` regenerates the original Act II
+tables. The current manuscript's prediction ladder is the cross-validated
+`robustness/nhanes_cv_cindex_ladder.csv`; the older in-sample exploratory ladder
+is not used as headline evidence.

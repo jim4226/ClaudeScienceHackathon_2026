@@ -1,0 +1,9 @@
+# Exact versions used by the judged CPU demo smoke test on 2026-07-13.
+# Install torch from the PyTorch CPU index when a GPU build is not wanted.
+gradio==6.20.0
+torch==2.13.0
+numpy==2.5.1
+scipy==1.18.0
+matplotlib==3.11.0
+neurokit2==0.2.13
+wfdb==4.3.1

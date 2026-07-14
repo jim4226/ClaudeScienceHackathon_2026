@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this repository or its results, please cite the paper below."
-title: "From Clocks to Coordinates: biological age is a direction, not a number"
+title: "HumanVector: From Clocks to Coordinates"
 authors:
   - family-names: "Mohammed"
     given-names: "Jaron"
@@ -18,9 +18,11 @@ keywords:
   - brain aging
   - mortality prediction
   - state-space geometry
+  - controlled human perturbation
+  - multimodal aging atlas
 preferred-citation:
   type: article
-  title: "From Clocks to Coordinates: a phase-resolved ECG-age representation contains mechanism-aligned physiological directions hidden by its scalar output"
+  title: "From Clocks to Coordinates: Controlled Human Perturbations Reveal Hidden Directions in ECG Biological Age"
   authors:
     - family-names: "Mohammed"
       given-names: "Jaron"

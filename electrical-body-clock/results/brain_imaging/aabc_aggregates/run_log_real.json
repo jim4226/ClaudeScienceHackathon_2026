@@ -1,0 +1,156 @@
+{
+  "availability_gate": {
+    "n_baseline_all4": 1226,
+    "n_longitudinal_complete_total": 1116,
+    "n_longitudinal_holdout": 453,
+    "n_finaltest_all4": 240,
+    "baseline_gate_pass": true,
+    "primary_selected": "longitudinal",
+    "longitudinal_gate_threshold": 150
+  },
+  "clock_metrics": {
+    "S_structure": {
+      "heldout_r": 0.5871734746242023,
+      "cv_r_dev": 0.5858720120644114,
+      "passed": true,
+      "alpha": 0.4248751402844768,
+      "l1_ratio": 0.1,
+      "n_features": 786
+    },
+    "M_myelin": {
+      "heldout_r": 0.505443581654566,
+      "cv_r_dev": 0.5328245635324621,
+      "passed": true,
+      "alpha": 0.04837742366383294,
+      "l1_ratio": 0.1,
+      "n_features": 360
+    },
+    "P_perfusion": {
+      "heldout_r": 0.5141430575954098,
+      "cv_r_dev": 0.5150776392923795,
+      "passed": true,
+      "alpha": 0.10296435995815625,
+      "l1_ratio": 0.5,
+      "n_features": 758
+    },
+    "F_function": {
+      "heldout_r": 0.4966736295719871,
+      "cv_r_dev": 0.516521052919807,
+      "passed": true,
+      "alpha": 0.2670968430389973,
+      "l1_ratio": 0.1,
+      "n_features": 379
+    }
+  },
+  "n_clocks_passed": 4,
+  "frozen_hash": "5a3d8800faf1358eba9534a7a90dc18335029180e5f950ab4153f8975ee8e3e0",
+  "primary": {
+    "beta": -0.02078051740676823,
+    "se": 0.014546794061565338,
+    "ci_low": -0.05074020059552477,
+    "ci_high": 0.009179165781988307,
+    "F": 2.0406951495633603,
+    "p_value": 0.16551520473052564,
+    "n": 295,
+    "df_resid": 25,
+    "status": "RUN",
+    "design": "longitudinal",
+    "outcome": "annualized 4m gait-speed change"
+  },
+  "secondaries": [
+    {
+      "beta": -2.8842905972982393,
+      "se": 10.607350899050587,
+      "ci_low": -23.989591609247476,
+      "ci_high": 18.221010414650998,
+      "F": 0.07393739693812315,
+      "p_value": 0.7863797825161676,
+      "n": 89,
+      "df_resid": 81,
+      "secondary": "endurance_2min",
+      "q_value_bh": 0.7863797825161676
+    },
+    {
+      "beta": -2.229119396461309,
+      "se": 1.8036070444701402,
+      "ci_low": -5.810725537737021,
+      "ci_high": 1.3524867448144025,
+      "F": 1.527505617029437,
+      "p_value": 0.21959984550465114,
+      "n": 101,
+      "df_resid": 93,
+      "secondary": "grip_dominant",
+      "q_value_bh": 0.3293997682569767
+    },
+    {
+      "beta": 0.48007706702092023,
+      "se": 0.36243406813262774,
+      "ci_low": -0.23954427138749002,
+      "ci_high": 1.1996984054293305,
+      "F": 1.7545425034464481,
+      "p_value": 0.18851805449619768,
+      "n": 102,
+      "df_resid": 94,
+      "secondary": "moca",
+      "q_value_bh": 0.3293997682569767
+    }
+  ],
+  "sensitivities": [
+    {
+      "beta": -0.009033165384427791,
+      "se": 0.012653837352182574,
+      "ci_low": -0.03386521559159088,
+      "ci_high": 0.015798884822735296,
+      "F": 0.5096070499628036,
+      "p_value": 0.4754807397858077,
+      "n": 977,
+      "df_resid": 970,
+      "sensitivity": "D_site_adj"
+    },
+    {
+      "beta": -0.017683927427457617,
+      "se": 0.026582913365163958,
+      "ci_low": -0.06985057229290316,
+      "ci_high": 0.03448271743798792,
+      "F": 0.4425397601212019,
+      "p_value": 0.5060572990176972,
+      "n": 977,
+      "df_resid": 970,
+      "sensitivity": "raw_sd_vs_D"
+    },
+    {
+      "beta": -0.008088570302548625,
+      "se": 0.011949455342245372,
+      "ci_low": -0.031538332358776525,
+      "ci_high": 0.015361191753679275,
+      "F": 0.45819179519076686,
+      "p_value": 0.49863164176194724,
+      "n": 977,
+      "df_resid": 970,
+      "sensitivity": "raw_range_vs_D"
+    }
+  ],
+  "provenance": {
+    "data": "REAL AABC / HCP-Aging Release 2 (controlled access)",
+    "channels": "Structure(thick+vol+aseg), Myelin, Perfusion(CBF+ATT), Function(rfMRI FullAmplitudes)",
+    "age_source": "AABC_Release2_Non-imaging_Data-XL.csv (age_open, 36-89)",
+    "protocol_lock_sha256": "c5d2b30f575d050a82fcc5e00ef8e86173884d7ff7dd525bb7c7d5d9d1bd1411",
+    "run_environment": "Claude Science sandbox (user-directed; data owner decision); aggregate-only outputs",
+    "outcome_blinding": "clocks+geometry frozen and hashed BEFORE gait outcome opened; Phase A hash reproduced identically across 2 runs",
+    "real_data_fixes_applied": [
+      "aseg _MR key-suffix normalization",
+      "dev-fit median imputer hardened for QC NaNs",
+      "require valid age_open in manifest",
+      "education ordinal + robust categorical covariate coding"
+    ],
+    "visit_counts": {
+      "raw_4channel_intersection": 2789,
+      "complete_case_all4": 2469,
+      "complete_case_baseline_V1": 1226,
+      "valid_age_manifest_rows": 6175,
+      "primary_longitudinal_holdout_n": 295,
+      "crosssectional_finaltest_n": 254,
+      "definition_note": "The primary/secondary regressions use complete-case visits; figure and inventory report complete_case_all4=2469. '2789' is the raw intersection only."
+    }
+  }
+}
