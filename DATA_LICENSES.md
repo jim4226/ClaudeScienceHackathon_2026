@@ -58,7 +58,7 @@ environment. The required AABC acknowledgment is included in the manuscript.
 
 | Asset | Public location | Terms |
 |---|---|---|
-| Frozen subsystem ECG clock state dictionaries | `electrical-body-clock/demo/hf_space/hv_bundle/models/` | Released with this repository under MIT; research use only, not a medical device. |
+| Frozen subsystem ECG clock state dictionaries | `electrical-body-clock/demo/hf_space/hv_bundle/models/` | Released with this repository under MIT; intended for research demonstration, not clinically validated. |
 | HumanVector analysis and verification code | This repository | MIT. |
 | Third-party sequence models such as Borzoi or AlphaGenome | Provider repositories | Provider terms apply; weights are not redistributed here. |
 

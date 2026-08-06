@@ -25,7 +25,9 @@
 **/*outcomes*.parquet
 **/*.locked
 
-# --- Large model checkpoints (re-train from src/, or fetch from a release) ---
+# --- Large model checkpoints (ignored by default) ---
+# Approved frozen demo .pt files are explicitly unignored and checksummed in
+# electrical-body-clock/RELEASE_MANIFEST.sha256.
 *.pt
 *.pth
 *.ckpt
